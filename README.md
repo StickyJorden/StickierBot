@@ -5,7 +5,7 @@ This is a Discord Bot made in Javascript.
 
 **It currently has a lot of basic functionality such as:**
 -Embeds\n
--Add and remove roles\n
+-Add and remove roles
 -Make API requests\n
 -Read and write data from a json file\n
 -Display images
