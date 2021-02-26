@@ -3,7 +3,7 @@
 
 This is a Discord Bot made in Javascript. 
 
-**It currently has a lot of basic functionality such as:**
+**It currently has a lot of basic functionality such as:**\
 -Embeds\
 -Add and remove roles\
 -Make API requests\
