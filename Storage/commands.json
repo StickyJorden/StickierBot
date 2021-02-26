@@ -1,0 +1,86 @@
+{
+  "Gif":
+  {
+    "name": "Gif",
+    "group": "User",
+    "desc": "Put a gif in chat!",
+    "usage": "gif <search word>"
+  },
+  "Punish":
+  {
+    "name": "Wheel of Punishment",
+    "group": "User",
+    "desc": "It is time to face justice use the wheel of judgement.",
+    "usage": "!punish <user>"
+  },
+  "Ping":
+  {
+    "name":"Ping",
+    "group":"User",
+    "desc":"Command Jordan uses for server to client feedback.",
+    "usage":"ping"
+  },
+  "Help":
+  {
+    "name":"Help",
+    "group":"User",
+    "desc":"Display a list of commands.",
+    "usage":"help [group OR command]"
+  },
+  "Hook":
+  {
+    "name":"Hook",
+    "group":"User",
+    "desc":"Returns a hook in the channel.",
+    "usage":"hook <title>,<description>,[color],[avatarURL]"
+  },
+  "Weather":
+  {
+    "name":"Weather",
+    "group":"User",
+    "desc":"Returns the weather in the channel.",
+    "usage":"weather <location>"
+  },
+  "Purge":
+  {
+    "name":"Purge",
+    "group":"User",
+    "desc":"Clears a specified number of messages.",
+    "usage":"purge <message>"
+  },
+  "Quote":
+  {
+    "name":"Quote",
+    "group":"User",
+    "desc":"Send random or specific quote in chat.",
+    "usage":"quote [number]"
+  },
+  "Timeout":
+  {
+    "name":"Timeout",
+    "group":"Admin",
+    "desc":"Timeout someone in chat.",
+    "usage":"timeout <user>"
+  },
+  "Forgive":
+  {
+    "name":"Forgive",
+    "group":"Admin",
+    "desc":"Take someone out of timeout in chat.",
+    "usage":"forgive <user>"
+  },
+  "Nuke":
+  {
+    "name":"Nuke",
+    "group":"Admin",
+    "desc":"Timeout everyone in chat.",
+    "usage":"nuke"
+  },
+  "Cleanse":
+  {
+    "name":"Cleanse",
+    "group":"Admin",
+    "desc":"Take everyone out of timeout in chat.",
+    "usage":"cleanse"
+  }
+}
