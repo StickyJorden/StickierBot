@@ -1,15 +1,27 @@
+const { DiscordAPIError } = require('discord.js');
+const Discord = require('discord.js');
+const Pagination = require('discord-paginationembed');
+const fs = require('fs');
+
+//We can call the JSON file whereconst Commnand
+const commands = JSON.parse(fs.readFileSync('Storage/commands.json','utf8'));
+
 exports.run = (bot, message, args, func) => {
+  
+ //Variables
+ let msg = message.content.toUpperCase(); //Variable takes message and turns it into upper case.
+ var prefix = "!";
 
-if(msg.startsWith(prefix + 'HELP'))
-{
-
+  //Check if they asked for basic help command or another group like admin or user. 
   if(msg === `${prefix}HELP`)
   {
-        const embed = new Discord.MessageEmbed()
-          .setColor(0x9679ed)
+        //Setup array to hold commands
+        const embeds = [];
 
         //Variables
         let commandsFound = 0;
+        const embed = new Discord.MessageEmbed()
+          .setColor(0x9679ed)
 
         //loop to go through commands
         for(var cmd in commands)
@@ -19,26 +31,43 @@ if(msg.startsWith(prefix + 'HELP'))
                         {
                           //count for commands found
                            commandsFound++
-                           embed.addField(`${commands[cmd].name}`,`**Description: ** ${commands[cmd].desc}\n**Usage:** ${prefix + commands[cmd].usage}`);
+                           embeds.push(new Discord.MessageEmbed().addField(`${commands[cmd].name}`,`**Description: ** ${commands[cmd].desc}\n**Usage:** ${prefix + commands[cmd].usage}`,commands[cmd], false));
+                           //Adding more to the embeds
+                          
                         }
         }
 
-        //Adding more to the embeds
-        embed.setFooter(`Currently showing user commands. To view another group do ${prefix}help [group / command]`)
-        embed.setDescription(`**${commandsFound} commands found** - <> means required, [] means optional`)
+       //Setup pagination
+       const myImage = bot.user.displayAvatarURL();
 
-        message.author.send({embed})
+       new Pagination.Embeds()
+          .setArray(embeds)
+          .setChannel(message.author)
+          .setAuthorizedUsers([message.author.id])
+          .setColor(0x9679ed)
+          .setPageIndicator(true)
+          .setPage(1)
+          .setThumbnail(myImage)
+          .setFooter(`Currently showing user commands. To view another group do ${prefix}help [group / command]`)
+          .setTitle("Help")
+          .setDescription(`${commandsFound} commands found - <> means required, [] means optional`)
+          .setTimestamp()
+          .build();
+
+        //Notify user to check their DM's
         message.channel.send({embed: {
             color: 0x9679ed,
             description: `**Check you DMs ${message.author}!**`
         }})
   }
+  //If user wanted to see possible groups of commands to check from such as admin or user
   else if(args.join(" ").toUpperCase() === 'GROUPS') {
     //handling ?help [cmd / group]
 
     //Variables
     let groups = '';
 
+    //loop through the commands in the group
     for(var cmd in commands)
     {
               if(!groups.includes(commands[cmd].group))
@@ -47,6 +76,7 @@ if(msg.startsWith(prefix + 'HELP'))
               }
     }
 
+    //Notify user of groups
     message.channel.send({embed: {
         description: `**${groups}**`,
         title:"Groups",
@@ -146,7 +176,4 @@ if(msg.startsWith(prefix + 'HELP'))
 
 
               }
-
-
-}
   }

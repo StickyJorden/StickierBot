@@ -11,7 +11,7 @@
     "name": "Wheel of Punishment",
     "group": "User",
     "desc": "It is time to face justice use the wheel of judgement.",
-    "usage": "!punish <user>"
+    "usage": "punish <user>"
   },
   "Ping":
   {
