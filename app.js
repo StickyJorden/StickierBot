@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const bot = new Discord.Client();
+bot.commands = new Discord.Collection();
 const fs = require('fs');
 //const db = require('quick.db');
 const request = require('request');
@@ -13,6 +14,9 @@ const prefix = '!';
 //We can call the JSON file whereconst Commnand
 const commands = JSON.parse(fs.readFileSync('Storage/commands.json','utf8'));
 
+//This is for holding all the command folders that hold several commands within them
+const commandFolders = fs.readdirSync('./commands');
+
 //Listner Event: Runs whenever a message is received.
 bot.on('message', message => {
 
@@ -22,40 +26,40 @@ bot.on('message', message => {
   //let channelID = client.channels.get("the channel id");
   let args = message.content.slice(prefix.length).trim().split(" "); //This variable slices off the prefix, then puts the rest into an array by spaces
   let cmd1 = args.shift().toLowerCase(); //This takes away the first object in the cont array, then puts it in this
+  let cmd2 = cmd1.concat(".js"); //add js to command reciece for comparison later 
 
   //Global Variables
   let cont = message.content.slice(prefix.length).split(" ");
   let args1 = cont.slice(1);
 
-/*
-  //Message Leveling System -require db
-  db.set(message.author.id + message.guild.id, 1).then(i => { //Pass key which is authorID + guildID, then pass it an increase by 1
-    //Also returns the new updated object that we will use
-
-    let messages; //empty Variable - These If statements will run if the new amount of messages sent is the smae as the user
-
-    if(i.value == 25) messages = 25; //Level 1
-    else if(i.value == 50) messages = 50; //Level 2
-    else if(i.value == 100) messages = 100; //Level 3
-
-    if(!isNaN(messages)) //is messages empty run this
-    {
-      db.add(`userLevel_${message.author.id + message.guild.id}`,1).then(o => {
-            message.channel.send(`You sent ${messages} messages, so you have leveled up! You are now level ${o.value}`) //Send their updated level tp their channel
-      })
-    }
-  })
-*/
-
-
   //We also need to make sure it doesnt respond to bots
   if(sender.bot) return;
   if(!message.content.startsWith(prefix)) return; //We also want to make sure that the message does not start with a prefix
 
-  //Command Handler - .trim() removes the blank spaces on both sides of the string
+  //Command Handler
   try{
-    let commandFile = require(`./commands/${cmd1}.js`); //This will assign that filename to commandFile
-    commandFile.run(bot, message, args, func); // This will try and run that file, added the fucntions from the function.js file int  commandsFile
+    //loop to run through all the folders
+    for(const folder of commandFolders)
+    {
+      //Find each file when going through the folder
+      const commandFiles = fs.readdirSync(`./commands/${folder}`).filter(file => file.endsWith('.js'));
+
+      //loop through each file in the folders
+      for (const file of commandFiles) 
+      {
+        //require the folder and file to run the command
+        const command = require(`./commands/${folder}/${file}`);
+
+        //if the command in chat matches the file name run it
+        if(cmd2 == file)
+        {
+          //run the command
+          command.run(bot, message, args, func);
+          break;
+        }
+      }
+    
+    }
   }catch(e){ //If an error occurs, this will run
     console.log(e.message); //logs error message
   } finally { //This will run after the first two clear up

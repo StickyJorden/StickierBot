@@ -1,0 +1,31 @@
+{
+  "name": "StickierBot-jordan",
+  "version": "1.0.0",
+  "description": "This is a Discord Bot made in Javascript.",
+  "main": "app.js",
+  "dependencies": {
+    "better-sqlite3": "^7.1.2",
+    "discord.js": "^12.5.1",
+    "express": "^4.17.1",
+    "node-cron": "^2.0.3",
+    "quick.db": "^7.0.0-b22",
+    "request": "^2.88.2",
+    "uws": "^100.0.1",
+    "weather-js": "^2.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/StickyJorden/StickierBot-jordan.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/StickyJorden/StickierBot-jordan/issues"
+  },
+  "homepage": "https://github.com/StickyJorden/StickierBot-jordan#readme"
+}
