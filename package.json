@@ -5,13 +5,17 @@
   "main": "app.js",
   "dependencies": {
     "better-sqlite3": "^7.1.2",
+    "discord-paginationembed": "^2.1.0",
     "discord.js": "^12.5.1",
     "express": "^4.17.1",
     "node-cron": "^2.0.3",
+    "node-fetch": "^2.6.1",
     "quick.db": "^7.0.0-b22",
     "request": "^2.88.2",
+    "request-promise": "^4.2.6",
     "uws": "^100.0.1",
-    "weather-js": "^2.0.0"
+    "weather-js": "^2.0.0",
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {},
   "scripts": {
