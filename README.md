@@ -1,5 +1,5 @@
 # Welcome To Stickier Bot
-## Made by: Jordan Black
+## Made By: Jordan Black
 
 This is a Discord Bot made in Javascript. 
 
@@ -11,6 +11,7 @@ This is a Discord Bot made in Javascript.
 -Display images\
 -Purge chat\
 -Pagination\
--Help
+-Help\
+-API Calls
 
 I am looking forward to adding more to the bot over time thank you so much for stopping by!
