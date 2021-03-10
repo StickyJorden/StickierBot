@@ -11,6 +11,7 @@ This is a Discord Bot made in Javascript.
 -Display images\
 -Purge chat\
 -Pagination\
--Help
+-Help\
+-API Calls
 
 I am looking forward to adding more to the bot over time thank you so much for stopping by!
