@@ -4,6 +4,13 @@ var fs = require('fs');
 const fetch = require("node-fetch");
 const Pagination = require('discord-paginationembed');
 
+//Get tokens
+require('dotenv').config();
+var apiKey = process.env.APIKEY; 
+
+function numberWithCommas(x) {
+  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
 
 exports.run = (bot, message, args, func) => {
 
@@ -16,7 +23,7 @@ exports.run = (bot, message, args, func) => {
 
     //Pull the crypto the user is asking for 
     const crypto = args[0];
-    const apiKey = '';
+    var apiKey = process.env.APIKEY; 
     
 
     //Array to make sure the crypto is correct before making the request
@@ -81,27 +88,38 @@ exports.run = (bot, message, args, func) => {
         embeds.push(new Discord.MessageEmbed().addField(`Change (7 Days)`, `${resultJSON[0].quote.USD.percent_change_7d}%`));
         embeds.push(new Discord.MessageEmbed().addField(`Change (30 Days)`, `${resultJSON[0].quote.USD.percent_change_30d}%`));
 
-
         //Store Values into array
         //Name, Symbol, Pricem Currency, Percent, Dominance
         var cryptoInfo = [    resultJSON[0].name, 
                           resultJSON[0].symbol, 
                           resultJSON[0].quote.USD.price.toFixed(4), 
                           resultJSON[0].quote.USD.percent_change_24h.toFixed(4), 
-                          1 ];
+                          1,
+                          resultJSON[0].quote.USD.market_cap,
+                         resultJSON[0].max_supply];
         
+        cryptoInfo[2] = numberWithCommas(cryptoInfo[2]);
+        if(cryptoInfo[5] != null)
+        {
+        cryptoInfo[5] = numberWithCommas(cryptoInfo[5]);
+        }
+        if(cryptoInfo[6] != null)
+        {
+        cryptoInfo[6] = numberWithCommas(cryptoInfo[6]);
+        }
+
        //First request for the crypto dominance
-    const requestOptions1 = {
-        method: 'GET',
-        uri: 'https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest',
-        qs: {
-  
-        },
-        headers: {
-          'X-CMC_PRO_API_KEY': apiKey
-        },
-        json: true,
-        gzip: true
+        const requestOptions1 = {
+          method: 'GET',
+          uri: 'https://pro-api.coinmarketcap.com/v1/global-metrics/quotes/latest',
+          qs: {
+    
+          },
+          headers: {
+            'X-CMC_PRO_API_KEY': apiKey
+          },
+          json: true,
+          gzip: true
       };
       
       //Request for crypto dominance
@@ -149,8 +167,6 @@ exports.run = (bot, message, args, func) => {
          //console.log(resultJSON.logo);
          //console.log(resultJSON.urls.website[0]);
 
-         
-
         new Pagination.Embeds()
         .setArray(embeds)
         .setChannel(message.channel)
@@ -164,6 +180,8 @@ exports.run = (bot, message, args, func) => {
         .setColor('#4169e1')
         .addField('Price',`$${cryptoInfo[2]}`)
         .addField('Dominance ', `${cryptoInfo[4]}%`)
+        .addField('Market Cap ', `$${cryptoInfo[5]}`)
+        .addField('Max Supply ', `${cryptoInfo[6]}`)
         .setTimestamp()
         .build();
 

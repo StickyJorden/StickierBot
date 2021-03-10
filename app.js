@@ -5,6 +5,10 @@ const fs = require('fs');
 //const db = require('quick.db');
 const request = require('request');
 
+//Get tokens
+require('dotenv').config();
+var token = process.env.TOKEN; 
+
 //We can call the file with the functions here.
 const func = require('./functions.js'); //If this returns an error for you try '../functions.js'
 
@@ -87,5 +91,5 @@ bot.on("ready", () => {
 
 //TOKEN GOES HERE
 {
-bot.login('');
+bot.login(token);
 }

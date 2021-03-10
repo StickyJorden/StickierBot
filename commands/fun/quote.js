@@ -43,10 +43,7 @@ exports.run = (bot, message, args, func) => {
         var minusOne = args[0];
         minusOne--;
         getQuote(minusOne);
-    }
-    
-
-    
+    }   
   
   }
   
