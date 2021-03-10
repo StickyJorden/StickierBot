@@ -89,5 +89,19 @@
     "group":"User",
     "desc":"Look at the current cryptocurreny market.",
     "usage":"shambles [cryptocurreny symbol]"
+  },
+  "Add Role":
+  {
+    "name":"Add Role",
+    "group":"Admin",
+    "desc":"Add a role to a user in chat",
+    "usage":"arole [user] [role]"
+  },
+  "Remove Role":
+  {
+    "name":"Remove Role",
+    "group":"Admin",
+    "desc":"Remove a role from a user in chat",
+    "usage":"rrole [user] [role]"
   }
 }
