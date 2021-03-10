@@ -82,5 +82,12 @@
     "group":"Admin",
     "desc":"Take everyone out of timeout in chat.",
     "usage":"cleanse"
+  },
+  "Shambles":
+  {
+    "name":"Shambles",
+    "group":"User",
+    "desc":"Look at the current cryptocurreny market.",
+    "usage":"shambles [cryptocurreny symbol]"
   }
 }
