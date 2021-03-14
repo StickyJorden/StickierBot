@@ -78,11 +78,10 @@ module.exports.run = async (bot, message, args) => {
 
     //If role is not found exit
     if(!gRole) return message.reply("That role does not exist.");
-    console.log("HERE")
+
     //Add role to the victum
     rMember.roles.remove(gRole.id); 
     
     message.channel.send(`Congrats, you have lost the role ${gRole.name}!`)
-
     
 }
