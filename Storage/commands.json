@@ -103,5 +103,12 @@
     "group":"Admin",
     "desc":"Remove a role from a user in chat",
     "usage":"rrole [user] [role]"
+  },
+  "Duel":
+  {
+    "name":"Duel",
+    "group":"User",
+    "desc":"Duel another user in chat",
+    "usage":"duel [user]"
   }
 }
