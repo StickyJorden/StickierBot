@@ -11,6 +11,7 @@ var token = process.env.TOKEN;
 
 //We can call the file with the functions here.
 const func = require('./functions.js'); //If this returns an error for you try '../functions.js'
+const perspective = require('./perspective.js');
 
 // Bot Settings - Global settings this file can use.
 const prefix = '!';
@@ -21,8 +22,52 @@ const commands = JSON.parse(fs.readFileSync('Storage/commands.json','utf8'));
 //This is for holding all the command folders that hold several commands within them
 const commandFolders = fs.readdirSync('./commands');
 
+/**
+ * Analyzes a user's message for attribues
+ * and reacts to it.
+ * @param {string} message - message the user sent
+ * @return {bool} shouldKick - whether or not we should
+ * kick the users
+ */
+async function evaluateMessage(message) {
+  let scores;
+  try {
+    scores = await perspective.analyzeText(message.content);
+  } catch (err) {
+    console.log(err);
+    return false;
+  }
+
+  const userid = message.author.id;
+
+  print("HERE")
+
+  for (const attribute in emojiMap) {
+    if (scores[attribute]) {
+      message.react(emojiMap[attribute]);
+      users[userid][attribute] =
+                users[userid][attribute] ?
+                users[userid][attribute] + 1 : 1;
+    }
+  }
+  // Return whether or not we should kick the user
+  //return (users[userid]['TOXICITY'] > process.env.KICK_THRESHOLD);
+  return("done");
+}
+
+// Set your emoji "awards" here
+const emojiMap = {
+  'FLIRTATION': '💋',
+  'TOXICITY': '🧨',
+  'INSULT': '👊',
+  'INCOHERENT': '🤪',
+  'SPAM': '🐟',
+};
+
 //Listner Event: Runs whenever a message is received.
 bot.on('message', message => {
+
+  //evaluateMessage(message);
 
   //Variables
   let msg = message.content.toUpperCase(); //Variable takes message and turns it into upper case.
@@ -42,6 +87,7 @@ bot.on('message', message => {
 
   //Command Handler
   try{
+
     //loop to run through all the folders
     for(const folder of commandFolders)
     {
