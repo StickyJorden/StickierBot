@@ -110,5 +110,12 @@
     "group":"User",
     "desc":"Duel another user in chat",
     "usage":"duel [user]"
+  },
+  "Holiday":
+  {
+    "name":"Holiday",
+    "group":"User",
+    "desc":"Celebrate a holiday with the chat",
+    "usage":"holiday [text]"
   }
 }

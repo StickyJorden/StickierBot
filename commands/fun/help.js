@@ -7,7 +7,6 @@ const fs = require('fs');
 const commands = JSON.parse(fs.readFileSync('Storage/commands.json','utf8'));
 
 exports.run = (bot, message, args, func) => {
-  console.log("here")
  //Variables
  let msg = message.content.toUpperCase(); //Variable takes message and turns it into upper case.
  var prefix = "!";
