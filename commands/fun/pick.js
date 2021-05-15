@@ -7,7 +7,6 @@ function getRandomInt(max)
     return Math.floor(Math.random() * Math.floor(max));
 }
 
-
 module.exports.run = async (bot, message, args) => {
 
     if(!args[0]) return message.reply("I have nothing to choose from.");
@@ -16,6 +15,4 @@ module.exports.run = async (bot, message, args) => {
 
     message.channel.send(args[choice]);
 
-
-  
 }

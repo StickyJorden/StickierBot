@@ -1,3 +1,6 @@
+const Discord = require('discord.js');
+const fs = require('fs');
+
 exports.run = (bot, message, args, func) => {
 
   //functions
@@ -9,7 +12,7 @@ exports.run = (bot, message, args, func) => {
   async function purge()
   {
     await sleep(1000);
-    message.delete(); //Delete the message so it does not affect the following deleted message
+    //message.delete(); //Delete the message so it does not affect the following deleted message
 
     if(isNaN(args[0]))
     {
@@ -17,7 +20,7 @@ exports.run = (bot, message, args, func) => {
       return;
     }
 
-    const fetched = await message.channel.fetchMessages({limit: args[0]});
+    const fetched = await message.channel.messages.fetch({limit: args[0]});
     if(fetched.size > 50)
     {
           message.channel.send('Whoa whoa what are you trying to hide? Do I need to get the Sticky Authorities? (the limit is 50 messages)');
@@ -28,8 +31,7 @@ exports.run = (bot, message, args, func) => {
     await sleep(1000);
 
     //Deleting messages
-    message.channel.bulkDelete(fetched)
-    .catch(error => message.channel.send(`Error: ${error}`));
+    message.channel.bulkDelete(fetched).catch(error => message.channel.send(`Error: ${error}`));
     }
   }
   purge();
