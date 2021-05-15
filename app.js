@@ -5,7 +5,6 @@ const fs = require('fs');
 const mongo = require('./mongo.js');
 const request = require('request');
 
-
 //Get tokens
 require('dotenv').config();
 var token = process.env.TOKEN; 
@@ -14,7 +13,7 @@ var token = process.env.TOKEN;
 const func = require('./functions.js'); //If this returns an error for you try '../functions.js'
 const perspective = require('./perspective.js');
 const { Mongoose } = require('mongoose');
-const welcome = require('./commands/admin/welcome')
+const messageCount = require('./mongo-listeners/message-counter');
 
 // Bot Settings - Global settings this file can use.
 const prefix = '!';
@@ -86,6 +85,7 @@ bot.on('message', message => {
 
   //We also need to make sure it doesnt respond to bots
   if(sender.bot) return;
+
   if(!message.content.startsWith(prefix)) return; //We also want to make sure that the message does not start with a prefix
 
   //Command Handler
@@ -122,20 +122,13 @@ bot.on('message', message => {
 
 });
 
+
 //Listner Event: Runs whenever the bot sends a ready event (when it first starts)
 bot.on("ready", async () => {
     console.log('Stickier Bot: Online');
 
-    bot.user.setPresence({
-      status: "online",
-      game: {
-          name: "use !help",
-          type: "WATCHING"
-          }
-      })
-      //.then(console.log)
-      .catch(console.error);
-
+    //Uncomment to enable counter the number of messages sent per user
+    //messageCount.run(bot);
 })
 
 //TOKEN GOES HERE

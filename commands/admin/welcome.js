@@ -19,11 +19,16 @@ module.exports.run = async (bot, message, args) => {
     let text = message.content.slice(9)
 
     cache[message.guild.id] = [message.channel.id, text]
+
+   
     
     //Establish connection with database
     //Add contents to database, if the contents already exists update
     //Close connection 
     await mongo().then(async (mongoose) => {
+
+        mongoose.set('useFindAndModify', false);
+
         try{
             await welcomeSchema.findOneAndUpdate(
                 {
@@ -43,6 +48,7 @@ module.exports.run = async (bot, message, args) => {
         }
     })
 
+    //Send message with new user joined
     const onJoin = async member => {
         const {guild} = member
         
