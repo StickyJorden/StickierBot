@@ -2,8 +2,9 @@ const Discord = require('discord.js');
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 const fs = require('fs');
-//const db = require('quick.db');
+const mongo = require('./mongo.js');
 const request = require('request');
+
 
 //Get tokens
 require('dotenv').config();
@@ -12,6 +13,8 @@ var token = process.env.TOKEN;
 //We can call the file with the functions here.
 const func = require('./functions.js'); //If this returns an error for you try '../functions.js'
 const perspective = require('./perspective.js');
+const { Mongoose } = require('mongoose');
+const welcome = require('./commands/admin/welcome')
 
 // Bot Settings - Global settings this file can use.
 const prefix = '!';
@@ -55,7 +58,7 @@ async function evaluateMessage(message) {
   return("done");
 }
 
-// Set your emoji "awards" here
+// Set your emoji "awards" here DEAD
 const emojiMap = {
   'FLIRTATION': '💋',
   'TOXICITY': '🧨',
@@ -120,7 +123,7 @@ bot.on('message', message => {
 });
 
 //Listner Event: Runs whenever the bot sends a ready event (when it first starts)
-bot.on("ready", () => {
+bot.on("ready", async () => {
     console.log('Stickier Bot: Online');
 
     bot.user.setPresence({
@@ -133,7 +136,7 @@ bot.on("ready", () => {
       //.then(console.log)
       .catch(console.error);
 
-});
+})
 
 //TOKEN GOES HERE
 {
