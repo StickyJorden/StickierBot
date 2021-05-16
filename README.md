@@ -16,7 +16,7 @@ This is a Discord Bot made in Javascript.
 -API Calls\
 -Pokemon Duels\
 -MongoDB\
--Per Server Settings\ 
+-Per Server Settings\
 -Per User Data\
 -Basic Economy System
 
