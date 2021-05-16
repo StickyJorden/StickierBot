@@ -8,7 +8,7 @@ module.exports.run = async (bot, message, args) => {
 
     if(!user)
     {
-        message.reply("Please @ the user who's balance I am adding too.")
+        message.reply("Please @ the user who's balance I am adding too. Usage !pay <user> <amount>")
         return
     }
       //If user not an admin tell them no
@@ -19,7 +19,7 @@ module.exports.run = async (bot, message, args) => {
 
     const coins = args[2]
     if(isNaN(coins)){
-        message.reply('Please provide a number I can use thank you')
+        message.reply('Please provide a number I can use thank you. Usage !pay <user> <amount>')
         return
     }
 

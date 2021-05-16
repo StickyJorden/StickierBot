@@ -109,13 +109,34 @@
     "name":"Duel",
     "group":"User",
     "desc":"Duel another user in chat",
-    "usage":"duel [user]"
+    "usage":"duel <user>"
   },
   "Holiday":
   {
     "name":"Holiday",
     "group":"User",
     "desc":"Celebrate a holiday with the chat",
-    "usage":"holiday [text]"
+    "usage":"holiday <text>"
+  },
+  "Balance":
+  {
+    "name":"Balance",
+    "group":"User",
+    "desc":"Check yours or another users balance",
+    "usage":"bal [user]"
+  },
+  "Add Balance":
+  {
+    "name":"Add Balance",
+    "group":"Admin",
+    "desc":"Add money to a users balance",
+    "usage":"addbal [user] [amount]"
+  },
+  "Pay":
+  {
+    "name":"Pay",
+    "group":"User",
+    "desc":"Pay another user",
+    "usage":"pay [user] [amount]"
   }
 }
