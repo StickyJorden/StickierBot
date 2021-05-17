@@ -14,6 +14,7 @@ const func = require('./functions.js'); //If this returns an error for you try '
 const perspective = require('./perspective.js');
 const { Mongoose } = require('mongoose');
 const messageCount = require('./mongo-listeners/message-counter');
+const levels = require('./mongo-listeners/levels');
 
 // Bot Settings - Global settings this file can use.
 const prefix = '!';
@@ -129,6 +130,7 @@ bot.on("ready", async () => {
 
     //Uncomment to enable counter the number of messages sent per user
     //messageCount.run(bot);
+    levels.run(bot);
 })
 
 //TOKEN GOES HERE

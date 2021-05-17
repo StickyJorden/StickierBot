@@ -9,10 +9,17 @@ const profileSchema = mongoose.Schema({
     //User ID
     guildID: reqString,
     userID: reqString,
-    //How many messages sent
     coins: {
         type:Number,
-        required:true,
+        default: 0
+    },
+    xp: {
+        type: Number,
+        default: 0
+    },
+    level: {
+        type: Number,
+        default: 1
     }
 })
 
