@@ -1,6 +1,6 @@
 //This program is not useful yet but it can be helpful in making user specific data on mongodb. In this case it only tracks messages each user has sent.
 
-const mongo = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/mongo.js')
+const mongo = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/util/mongo.js')
 const messageCountSchema = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/schemas/message-count-schema.js')
 
 module.exports.run = (bot) => {

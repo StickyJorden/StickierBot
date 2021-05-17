@@ -1,5 +1,5 @@
 const { Guild } = require('discord.js')
-const mongo = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/mongo.js')
+const mongo = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/util/mongo.js')
 const welcomeSchema = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/schemas/welcome-schema.js')
 
 module.exports.run = async (bot, message, args) => {

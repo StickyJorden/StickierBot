@@ -1,4 +1,4 @@
-const mongo = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/mongo.js')
+const mongo = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/util/mongo.js')
 const profileSchema = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/schemas/profile-schema.js')
 
 const coinsCache = {} // guildID-userID: coins

@@ -1,5 +1,5 @@
 const { get } = require('request-promise');
-const mongo = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/mongo.js');
+const mongo = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/util/mongo.js')
 const profileSchema = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/schemas/profile-schema.js');
 
 module.exports.run = (bot) => {
@@ -7,7 +7,15 @@ module.exports.run = (bot) => {
     bot.on('message', async (message) => {
     const { guild, member} = message
 
-    addXP(guild.id, member.id, 23, message)
+    if(member.user.bot == true)
+    {
+        return
+    }
+    else
+    {
+        addXP(guild.id, member.id, 23, message)
+    }
+    
     })
 
 }
