@@ -4,7 +4,7 @@ const Pagination = require('discord-paginationembed');
 const fs = require('fs');
 
 //We can call the JSON file whereconst Commnand
-const commands = JSON.parse(fs.readFileSync('Storage/commands.json','utf8'));
+const commands = JSON.parse(fs.readFileSync('storage/commands.json','utf8'));
 
 exports.run = (bot, message, args, func) => {
  //Variables
