@@ -4,10 +4,10 @@ const profileSchema = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jorda
 
 module.exports.run = (bot) => {
    
-    bot.on('message', async (message) => {
+    bot.on('message',(message) => {
     const { guild, member} = message
 
-    if(member.user.bot == true)
+    if(!message.member || message.member == null)
     {
         return
     }
