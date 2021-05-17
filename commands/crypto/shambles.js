@@ -1,12 +1,8 @@
 const Discord = require('discord.js');
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-var fs = require('fs');
-const fetch = require("node-fetch");
 const Pagination = require('discord-paginationembed');
 
 //Get tokens
 require('dotenv').config();
-var apiKey = process.env.APIKEY; 
 
 function numberWithCommas(x) {
   return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");

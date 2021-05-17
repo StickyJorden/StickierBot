@@ -1,10 +1,9 @@
-const { get } = require('request-promise');
-const mongo = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/util/mongo.js')
-const profileSchema = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/schemas/profile-schema.js');
+const mongo = require('@storage/mongo.js')
+const profileSchema = require('@schemas/profile-schema.js');
 
 module.exports.run = (bot) => {
    
-    bot.on('message',(message) => {
+    bot.on('message', async (message) => {
     const { guild, member} = message
 
     if(!message.member || message.member == null)

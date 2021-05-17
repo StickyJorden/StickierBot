@@ -1,6 +1,4 @@
-const Discord = require('discord.js');
-const fs = require('fs');
-const economy = require('C:/Users/bigbo/OneDrive/Desktop/StickierBot-jordan/mongo-listeners/economy.js'); 
+const economy = require('@listeners/economy.js'); 
 
 module.exports.run = async (bot, message, args) => {
    

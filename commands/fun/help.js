@@ -1,4 +1,3 @@
-const { DiscordAPIError } = require('discord.js');
 const Discord = require('discord.js');
 const Pagination = require('discord-paginationembed');
 const fs = require('fs');
@@ -6,7 +5,7 @@ const fs = require('fs');
 //We can call the JSON file whereconst Commnand
 const commands = JSON.parse(fs.readFileSync('storage/commands.json','utf8'));
 
-exports.run = (bot, message, args, func) => {
+exports.run = (bot, message, args) => {
  //Variables
  let msg = message.content.toUpperCase(); //Variable takes message and turns it into upper case.
  var prefix = "!";

@@ -1,7 +1,3 @@
-const Discord = require('discord.js');
-const fs = require('fs');
-
-//Function to get random number with the max being the total number of quotes in JSON file
 function getRandomInt(max) 
 {
     return Math.floor(Math.random() * Math.floor(max));

@@ -1,8 +1,4 @@
 const Discord = require('discord.js');
-const fs = require('fs');
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-const fetch = require("node-fetch");
-const Pagination = require('discord-paginationembed');
 const request = require('request');
 
 //Get tokens

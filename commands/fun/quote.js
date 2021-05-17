@@ -1,10 +1,21 @@
-const Discord = require('discord.js');
 const fs = require('fs');
 
 //We can call the JSON file for quotes
-const quotes = JSON.parse(fs.readFileSync('Storage/quotes.json','utf8'));
+const quotes = JSON.parse(fs.readFileSync('storage/quotes.json','utf8'));
 
-exports.run = (bot, message, args, func) => {
+//Function to get quote from JSON file
+function getQuote(number, message)
+{
+    message.channel.send(quotes[number].quote);
+}
+
+//Function to get random number with the max being the total number of quotes in JSON file
+function getRandomInt(max) 
+{
+    return Math.floor(Math.random() * Math.floor(max));
+}
+
+module.exports.run = (bot, message, args) => {
 
     //number of quotes in JSON file quotes
     var count = Object.keys(quotes).length; 
@@ -12,24 +23,12 @@ exports.run = (bot, message, args, func) => {
     //Variable to hold the selected quote number
     var quoteNum;
 
-    //Function to get quote from JSON file
-    function getQuote(number)
-    {
-        message.channel.send(quotes[number].quote);
-    }
-
-    //Function to get random number with the max being the total number of quotes in JSON file
-    function getRandomInt(max) 
-    {
-        return Math.floor(Math.random() * Math.floor(max));
-    }
-
     //Check if user did not enter in a number
     if(args[0] == undefined)
     {
         //take length of JSON file and get random number for quote
         var quoteNum = getRandomInt(count);
-        getQuote(quoteNum);
+        getQuote(quoteNum, message);
     }
     //Check if user pick a number that was out of range
     else if(args[0] > count || args[0] <= 0)
@@ -42,7 +41,7 @@ exports.run = (bot, message, args, func) => {
     {
         var minusOne = args[0];
         minusOne--;
-        getQuote(minusOne);
+        getQuote(minusOne, message);
     }   
   
   }

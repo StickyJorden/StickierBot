@@ -1,6 +1,6 @@
+//FIX SPACE ISSUE MAYBE ARG 2 TO 3 ISSUE RUN !AROLE @USER TIMEOUT WITH NO SPACE BETWEEN USER AND TIMEOUT SEE ERROR  
+
 const Discord = require('discord.js');
-const { rm } = require('fs');
-const { getPriority } = require('os');
 
 //Array to get user ID only
 function getUserFromMention(mention) {

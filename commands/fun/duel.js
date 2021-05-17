@@ -3,7 +3,7 @@ const fs = require('fs');
 const createBar = require('string-progressbar');
 
 //We can call the JSON file for quotes
-const moves = JSON.parse(fs.readFileSync('Storage/moves.json','utf8'));
+const moves = JSON.parse(fs.readFileSync('storage/moves.json','utf8'));
 
 //Function to get random number with the max being the total number of quotes in JSON file
 function getRandomInt(max) 

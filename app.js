@@ -1,3 +1,5 @@
+require('module-alias/register')
+
 const Discord = require('discord.js');
 const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
@@ -8,8 +10,8 @@ require('dotenv').config();
 var token = process.env.TOKEN; 
 
 //Mongo Listeners
-const messageCount = require('./mongo-listeners/message-counter');
-const levels = require('./mongo-listeners/levels');
+const messageCount = require('@listeners/message-counter');
+const levels = require('@listeners/levels');
 
 // Bot Settings - Global settings this file can use.
 const prefix = '!';
@@ -52,7 +54,7 @@ bot.on('message', message => {
       for (const file of commandFiles) 
       {
         //require the folder and file to run the command
-        const command = require(`./commands/${folder}/${file}`);
+        const command = require(`@root/commands/${folder}/${file}`);
 
         //if the command in chat matches the file name run it
         if(cmd2 == file)

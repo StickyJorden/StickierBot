@@ -1,7 +1,5 @@
-const Discord = require('discord.js');
-const fs = require('fs');
 
-exports.run = (bot, message, args, func) => {
+module.exports.run = (bot, message, args) => {
 
   //functions
   function sleep(ms)

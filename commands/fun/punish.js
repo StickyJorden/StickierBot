@@ -1,25 +1,33 @@
 const Discord = require('discord.js');
+const fs = require('fs');
 
-exports.run = (bot, message, args, func) => {
+//We can call the JSON file for punishments
+const punishments = JSON.parse(fs.readFileSync('storage/links.json','utf8'));
 
-  if(!args[0]) return message.reply("Please select someone to face the wheel of punishment.");
+//Function to get random number with the max being the total number of punishments in JSON file
+function getRandomInt(max) 
+{
+    return Math.floor(Math.random() * Math.floor(max));
+}
 
-  let replies = ["Bed of nails","Whipping post","Boiled in oil","Eaten by shark","Razor pit", "Mauled by platypus bear", "Burned alive", "Community Service"];
-  let images = ["./images/wopPins.png", "./images/wopPole.png", "./images/wopOil.png", "./images/wopShark.png", "./images/wopPit.png", "./images/wopBear.png", "./images/wopStake.png", "./images/wopCom.png"];
+module.exports.run = (bot, message, args) => {
 
-  let result = Math.floor((Math.random() * replies.length));
+  if(!args[0]) return message.reply('Please select someone to face the wheel of punishment.');
 
-  let victum = args.slice(0).join(" ");
+  //number of quotes in JSON file quotes
+  var count = Object.keys(punishments).length; 
 
-  const attachment = new Discord.Attachment(images[result], 'wopPins.png');
+  //Get randon number for punishment 
+  let number = getRandomInt(count)
+
+  let victim = args.slice(0).join(' ');
 
   let ballembed = new Discord.MessageEmbed()
-    .setTitle("Wheel of Punishment")
-    .setColor("#FF990")
-    .addField("Victum ", victum)
-    .addField("Sentence ", replies[result])
-    .attachFile(attachment)
-    .setImage('attachment://wopPins.png');
+    .setTitle('Wheel of Punishment')
+    .setColor('#FF990')
+    .addField('Victim ', victim)
+    .addField('Sentence ', punishments[number].name)
+    .setImage(punishments[number].link);
 
   message.channel.send(ballembed);
 }

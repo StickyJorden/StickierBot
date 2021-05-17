@@ -1,7 +1,4 @@
 const Discord = require('discord.js');
-const { rm } = require('fs');
-const { waitForDebugger } = require('inspector');
-const { getPriority } = require('os');
 
 //Array to get user ID only
 function getUserFromMention(mention) {

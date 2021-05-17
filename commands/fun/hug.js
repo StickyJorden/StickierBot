@@ -1,6 +1,3 @@
-const Discord = require('discord.js');
-const fs = require('fs');
-
 let hug = 4;
 
 module.exports.run = async (bot, message, args) => {
