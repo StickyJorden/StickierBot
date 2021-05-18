@@ -10,29 +10,20 @@ module.exports.run = (bot) => {
         const { author } = message
         const { id } = author
 
-        await mongo().then(async (mongoose) => {
-
-            mongoose.set('useFindAndModify', false);
-
-            try{
-                await messageCountSchema.findOneAndUpdate(
-                    {
-                    _id: id
-                    },
-                    {
-                       $inc: 
-                       {
-                            messageCount: 1,
-                       },     
-                    },
-                    {
-                        upsert: true,
-                    }
-                ).exec()
-            }finally{
-                mongoose.connection.close()
+        await messageCountSchema.findOneAndUpdate(
+            {
+            _id: id
+            },
+            {
+               $inc: 
+               {
+                    messageCount: 1,
+               },     
+            },
+            {
+                upsert: true,
             }
-        })
+        ).exec()
     })
 
 }

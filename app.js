@@ -12,6 +12,7 @@ var token = process.env.TOKEN;
 //Mongo Listeners
 const messageCount = require('@listeners/message-counter');
 const levels = require('@listeners/levels');
+const mongo = require('@storage/mongo')
 
 // Bot Settings - Global settings this file can use.
 const prefix = '!';
@@ -80,8 +81,11 @@ bot.on('message', message => {
 bot.on("ready", async () => {
     console.log('Stickier Bot: Online');
 
+
+
     //Uncomment to enable counter the number of messages sent per user
     //messageCount.run(bot);
+    await mongo()
     levels.run(bot);
 })
 

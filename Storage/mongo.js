@@ -7,8 +7,10 @@ const mongoPath = 'mongodb+srv://StickierBot:VH3wsQiar8NPWVJ@stickier-bot.c0vgp.
 module.exports = async () => {
 
     await mongoose.connect(mongoPath, {
+        keepAlive: true,
         useNewUrlParser: true,
         useUnifiedTopology: true,
+        useFindAndModify: false
     })
     return mongoose
 
