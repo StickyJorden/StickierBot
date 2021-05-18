@@ -12,8 +12,9 @@ module.exports.run = async (bot, message, args) => {
         return
     }
 
-    const coinsToGive = args[2]
-    if(isNaN(coinsToGive)){
+    const coinsToGive = args[1]
+    if(isNaN(args[1]))
+    {
         message.reply('Please provide a number I can use thank you. Usage !pay <user> <amount>')
         return
     }
