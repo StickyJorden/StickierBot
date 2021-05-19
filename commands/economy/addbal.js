@@ -15,7 +15,7 @@ module.exports.run = async (bot, message, args) => {
         return
     }
 
-    const coins = args[2]
+    const coins = args[1]
     if(isNaN(coins)){
         message.reply('Please provide a number I can use thank you. Usage !pay <user> <amount>')
         return
@@ -23,8 +23,9 @@ module.exports.run = async (bot, message, args) => {
 
     const userID = user.id
     const guildID = message.guild.id
+    const username = user.tag
 
-    const newCoins = await economy.addCoins(guildID, userID, coins)
+    const newCoins = await economy.addCoins(username, guildID, userID, coins)
 
     message.reply(`You have given <@${userID}> ${coins} coin(s). They now have ${newCoins} coin(s)!`)
 

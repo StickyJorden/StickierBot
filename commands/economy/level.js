@@ -7,8 +7,9 @@ module.exports.run = async (bot, message, args) => {
     const userID = user.id
 
     const guildID = message.guild.id
+    const username = user.tag
 
-    const level = await economy.getLevels(guildID, userID)
+    const level = await economy.getLevels(username, guildID, userID)
 
     message.reply(`That user is currently level ${level}!`)
    

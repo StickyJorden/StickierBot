@@ -11,15 +11,17 @@ module.exports.run = async (bot, message, args) => {
 }
 
 //Add number of coins based off arg
-module.exports.addCoins = async (guildID, userID, coins) => {
+module.exports.addCoins = async (username, guildID, userID, coins) => {
 
     //Look for user coins based off guild and user ID
     const result = await profileSchema.findOneAndUpdate(
         {
+            username,
             guildID,
             userID
         },
         {
+            username,
             guildID,
             userID,
             $inc: {
@@ -31,13 +33,13 @@ module.exports.addCoins = async (guildID, userID, coins) => {
             new: true
         })
     
-        coinsCache[`${guildID}-${userID}`] = result.coins
+    coinsCache[`${guildID}-${userID}`] = result.coins
     
     return result.coins
 } 
 
 //Return number of coins based off ID
-module.exports.getCoins = async (guildID, userID) => {
+module.exports.getCoins = async (username, guildID, userID) => {
 
     //check cache to see if we already know the users balance
     const cachedValue = coinsCache[`${guildID}-${userID}`]
@@ -47,6 +49,7 @@ module.exports.getCoins = async (guildID, userID) => {
 
     //Look for user coins based off guild and user ID
     const result = await profileSchema.findOne({
+        username, 
         guildID,
         userID
     })
@@ -60,6 +63,7 @@ module.exports.getCoins = async (guildID, userID) => {
         coins = result.coins
     }else {
         await new profileSchema({
+            username, 
             guildID,
             userID,
             coins

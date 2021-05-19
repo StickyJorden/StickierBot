@@ -26,13 +26,19 @@ module.exports.run = async (bot, message, args) => {
         return
     }
 
+    let username = message.member.user.tag
+
     const remainingCoins = await economy.addCoins(
+        username,
         guild.id,
         member.id,
         coinsToGive * -1
     )
 
+    let username = message.mentions.users.tag
+
     const newBalance = await economy.addCoins(
+        username,
         guild.id,
         user.id,
         coinsToGive

@@ -7,6 +7,7 @@ module.exports.run = (bot) => {
    
     bot.on('message', message => {
     const { guild, member} = message
+    const username = message.member.user.tag
 
     if(!message.member || message.member == null)
     {
@@ -14,7 +15,7 @@ module.exports.run = (bot) => {
     }
     else
     {
-        addXP(guild.id, member.id, 23, message)
+        addXP(username, guild.id, member.id, 23, message)
     }
     
     })
@@ -24,14 +25,16 @@ module.exports.run = (bot) => {
 //Find out how much xp until the next level
 const getNeededXP = level => level * level * 100
 
-const addXP = async (guildID, userID, xpToAdd, message) => {
+const addXP = async (username, guildID, userID, xpToAdd, message) => {
 
     const result = await profileSchema.findOneAndUpdate(
         {
+            username,
             guildID,
             userID
         },
         {
+            username,
             guildID,
             userID,
             $inc: {
@@ -57,6 +60,7 @@ const addXP = async (guildID, userID, xpToAdd, message) => {
 
         await profileSchema.updateOne(
             {
+                username,
                 guildID,
                 userID
             },
@@ -69,7 +73,7 @@ const addXP = async (guildID, userID, xpToAdd, message) => {
 }
 
 //Return number of levels based off ID
-module.exports.getLevels = async (guildID, userID) => {
+module.exports.getLevels = async (username, guildID, userID) => {
 
     //check cache to see if we already know the users balance
     const cachedValue = levelsCache[`${guildID}-${userID}`]
@@ -79,6 +83,7 @@ module.exports.getLevels = async (guildID, userID) => {
 
     //Look for user levels based off guild and user ID
     const result = await profileSchema.findOne({
+        username,
         guildID,
         userID
     })
@@ -92,6 +97,7 @@ module.exports.getLevels = async (guildID, userID) => {
         level = result.level
     }else {
         await new profileSchema({
+            username,
             guildID,
             userID,
             level
