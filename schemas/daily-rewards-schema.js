@@ -7,7 +7,7 @@ const reqString = {
 
 const dailyRewardsSchema = mongoose.Schema(
     {
-        userNAME: reqString,
+        username: reqString,
         guildID: reqString,
         userID: reqString,
     }, 

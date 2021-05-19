@@ -19,28 +19,34 @@ module.exports.run = async (bot, message, args) => {
         return
     }
 
-    const coinsOwned = await economy.getCoins(guild.id, member.id)
+    let username = message.member.user.tag
+    let guildID = guild.id
+    let userID = member.id
+
+    const coinsOwned = await economy.getCoins(username, guildID, userID)
     if(coinsOwned < coinsToGive)
     {
         message.reply(`You do not have ${coinsToGive} coins!`)
         return
     }
 
-    let username = message.member.user.tag
+    
 
     const remainingCoins = await economy.addCoins(
         username,
-        guild.id,
-        member.id,
+        guildID,
+        userID,
         coinsToGive * -1
     )
 
     username = message.mentions.users.tag
+    guildID = guild.id
+    userID = user.id
 
     const newBalance = await economy.addCoins(
         username,
-        guild.id,
-        user.id,
+        guildID,
+        userID,
         coinsToGive
     )
 
