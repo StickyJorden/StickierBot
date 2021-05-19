@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 
-exports.run = (bot, message, args, func) => {
+exports.run = (bot, message, args) => {
 
     const embed = new Discord.MessageEmbed()
       .setTitle('Monopoly Leaderboard')

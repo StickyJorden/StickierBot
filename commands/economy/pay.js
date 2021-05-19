@@ -35,7 +35,7 @@ module.exports.run = async (bot, message, args) => {
         coinsToGive * -1
     )
 
-    let username = message.mentions.users.tag
+    username = message.mentions.users.tag
 
     const newBalance = await economy.addCoins(
         username,
