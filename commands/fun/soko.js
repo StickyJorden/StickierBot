@@ -21,22 +21,38 @@ const generateRandom = (len, absentArray, max) => {
     return randomArray;
  }
 
+function movePlayer(map, position, direction, player)
+ {
+     console.log("OLD", position)
+    let newPosition = position + direction
+    console.log("NEW",newPosition)
+    map[newPosition] = player
+    console.log(map[newPosition])
+    console.log(player)
+
+    return map
+ }
+
+
  //TO.DO add reactions, update embed with new positions
 
-exports.run = (bot, message, args) => {
+exports.run = async (bot, message, args) => {
 
     //Create Map To On
-    
-    var map = [ '🟫','🟫','🟫','🟫',
-                '🟫','🟫','🟫','🟫',
-                '🟫','🟫','🟫','🟫',
-                '🟫','🟫','🟫','🟫']
+    var map = [ 
+                '🟫','🟫','🟫','🟫', '🟫',
+                '🟫','🟫','🟫','🟫', '🟫',
+                '🟫','🟫','🟫','🟫', '🟫',
+                '🟫','🟫','🟫','🟫', '🟫',
+                '🟫','🟫','🟫','🟫', '🟫',
+              ]
     
     //var map = [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 
 
     //Get Size Of Board
     const max = map.length
+    const root = Math.sqrt(max)
     
 
     //Set Emoji Char
@@ -51,14 +67,52 @@ exports.run = (bot, message, args) => {
     //Make sure box doesnt spawn in a corner
     
     //Get corners of map
-    const cornerTopRight = Math.sqrt(max) - 1
-    const cornerBottomLeft = max - Math.sqrt(max)
+    const cornerTopRight = root - 1
+    const cornerBottomLeft = max - root
     const cornerBottomRight = max - 1
+    
 
-    //Exclude Corners From Array
-    const absentArray = [0, cornerTopRight, cornerBottomLeft, cornerBottomRight] 
+    //Exclude Sidse From Array
+    let absentArray = [] 
 
-    //Generate new array without corners and get random number from that array
+    //Find all the tiles surrounding the map
+    let pop = 0
+    let nest = 1
+    while(pop <= root)
+    {
+        if(pop == 0)
+        {
+            while(pop < (root-1))
+            {
+                absentArray.push(pop)
+                pop++
+            }
+            pop = 0
+        }
+        if(pop > 0 && pop < (root - 1))
+        {
+            while(nest < root)
+            {
+    
+                absentArray.push((root * nest) - 1)
+                absentArray.push((root * nest))
+            
+                nest++
+            }
+        }
+        if(pop == root)
+        {
+            nest = (max - root) + 1
+            while(nest <= max)
+            {
+                absentArray.push(nest)
+                nest++
+            }
+        }
+        pop++
+    }
+
+    //Generate new array without sides and get random number from that array
     const mapBoxSelection = generateRandom(1, absentArray, max)
 
     //Set position for the box
@@ -93,7 +147,7 @@ exports.run = (bot, message, args) => {
     let counter = 0
     while(x < max)
     {
-        if(counter <= 3)
+        if(counter <= (root - 1))
         {
             counter++
         }
@@ -109,19 +163,67 @@ exports.run = (bot, message, args) => {
     //Make to string to remove commas
     map = map.toString()
 
-    //Remove commas x is -1 to get the very last element 
-    x = -1
+    //Remove commas x is -1 to get the very last element LOOK INTO THIS
+    x = -2
     while(x <= max)
     {
         map = map.replace(",","");
-        x++
+        ++x
     }
 
-    //Ship the map and characters
-    let embed = new Discord.MessageEmbed()
-      .setTitle('Sokoban')
-      .setColor('#FF0000')
-      .setDescription(map)
+            //Ship the map and characters
+            let embed = new Discord.MessageEmbed()
+                .setTitle('Sokoban')
+                .setColor('#FF0000')
+                .setDescription(map)
 
-    message.channel.send(embed);
+            //Send the message in chat with the ability to react to the embed
+            //Add reactions to the embed
+            message.channel.send({embed: embed}).then(embedMessage => {
+                embedMessage.react('◀️')
+                .then(() => embedMessage.react('🔼'))
+                .then(() => embedMessage.react('🔽'))
+                .then(() => embedMessage.react('▶️'))
+                .catch(() => console.error('One of the emojis failed to react.'));
+
+            //Filter which embeds I care for
+            const filter = (reaction, user) => {
+                return ['◀️', '🔼','🔽','▶️'].includes(reaction.emoji.name) && user.id === message.author.id;
+            };
+            
+            //Wait for the user to react
+            embedMessage.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+                .then(collected => {
+                    const reaction = collected.first();
+            
+                    //Read in which reaction was selected
+                    if (reaction.emoji.name === '◀️') {
+                        let dir = -1
+                        let embed = new Discord.MessageEmbed() 
+                            .setTitle('Sokoban')
+                            .setColor('#FF0000')
+                            .setDescription(movePlayer(map, playerPosition, dir, player))
+
+                        embedMessage.edit(embed)
+                       
+
+                    } 
+                    else if (reaction.emoji.name === '🔼') {
+                        
+                    }
+                    else if (reaction.emoji.name === '🔽') {
+                        
+                    }
+                    else if (reaction.emoji.name === '▶️') {
+                        
+                    }
+                    
+                })
+                .catch(collected => {
+                    message.reply('you didn\'t use a move!');
+                });
+            });
+        
+    
+    
 }
