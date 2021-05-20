@@ -59,7 +59,7 @@ module.exports.run = async (bot, message, args) => {
    //Update cache so they cant claim again
    claimedCache.push(id)
 
-   //Find  users coin balance
+   //Find users coin balance
    const coins = await economy.getCoins(username, guild.id, id)
 
    //Update their balance with daily reward
