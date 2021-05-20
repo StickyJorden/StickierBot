@@ -21,16 +21,68 @@ const generateRandom = (len, absentArray, max) => {
     return randomArray;
  }
 
-function movePlayer(map, position, direction, player)
- {
-     console.log("OLD", position)
-    let newPosition = position + direction
-    console.log("NEW",newPosition)
-    map[newPosition] = player
-    console.log(map[newPosition])
-    console.log(player)
+//Remove New Line Character From Array
+function removeItemAll(arr, value) {
+    var i = 0;
+    while (i < arr.length) {
+      if (arr[i] === value) {
+        arr.splice(i, 1);
+      } else {
+        ++i;
+      }
+    }
+    return arr;
+  }
 
-    return map
+//Move the player give the map, their position, and direction they are going
+function movePlayer(mapObj, position, direction, player, max, root)
+ {
+    mapObj = removeItemAll(mapObj, '\n')
+    console.log(mapObj)
+
+    let newPosition = position + direction
+    console.log("__________________________________")
+    console.log("")
+    console.log("__________________________________")
+    mapObj[newPosition] = player
+    mapObj[position] = '🟫'
+
+    console.log(mapObj)
+
+    let mapString = mapObj
+
+    //Build the box shape from the array
+    let x = 0
+    let counter = 0
+    while(x < max)
+    {
+        if(counter <= (root - 1))
+        {
+            counter++
+        }
+        else
+        {
+            
+            mapString.splice(x, 0, '\n')
+            counter = 0
+        }
+        x++
+    }
+
+
+    //Make to string to remove commas
+    mapString = mapString.toString()
+
+    //Remove commas x is -1 to get the very last element LOOK INTO THIS
+    x = -2
+    while(x <= max)
+    {
+        mapString = mapString.replace(",","");
+        ++x
+    }
+
+
+    return mapString
  }
 
 
@@ -38,8 +90,8 @@ function movePlayer(map, position, direction, player)
 
 exports.run = async (bot, message, args) => {
 
-    //Create Map To On
-    var map = [ 
+    //Create mapObj To On
+    var mapObj = [ 
                 '🟫','🟫','🟫','🟫', '🟫',
                 '🟫','🟫','🟫','🟫', '🟫',
                 '🟫','🟫','🟫','🟫', '🟫',
@@ -47,26 +99,26 @@ exports.run = async (bot, message, args) => {
                 '🟫','🟫','🟫','🟫', '🟫',
               ]
     
-    //var map = [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
-
+    //var mapObj = [ 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
 
     //Get Size Of Board
-    const max = map.length
+    const max = mapObj.length
     const root = Math.sqrt(max)
     
 
     //Set Emoji Char
-    var player = '😎'
-    var target = '❌'
-    var box = '🟧'
+    const player = '✔️'
+    const target = '❌'
+    const box = '🟧'
 
-    //Make Random Positons For Map 
+    //Make Random Positons For mapObj 
     var playerPosition = getRandomInt(max)
     var targetPosition = getRandomInt(max)
+    
 
     //Make sure box doesnt spawn in a corner
     
-    //Get corners of map
+    //Get corners of mapObj
     const cornerTopRight = root - 1
     const cornerBottomLeft = max - root
     const cornerBottomRight = max - 1
@@ -75,7 +127,7 @@ exports.run = async (bot, message, args) => {
     //Exclude Sidse From Array
     let absentArray = [] 
 
-    //Find all the tiles surrounding the map
+    //Find all the tiles surrounding the mapObj
     let pop = 0
     let nest = 1
     while(pop <= root)
@@ -113,10 +165,10 @@ exports.run = async (bot, message, args) => {
     }
 
     //Generate new array without sides and get random number from that array
-    const mapBoxSelection = generateRandom(1, absentArray, max)
+    const mapObjBoxSelection = generateRandom(1, absentArray, max)
 
     //Set position for the box
-    var boxPosition = mapBoxSelection
+    var boxPosition = mapObjBoxSelection
 
 
     //Make sure each of the selected moves are of a different type
@@ -137,10 +189,13 @@ exports.run = async (bot, message, args) => {
 
     }
 
-    //Add Character To The Map
-    map[playerPosition] = player
-    map[targetPosition] = target
-    map[boxPosition] = box
+    //Add Character To The mapObj
+    mapObj[playerPosition] = player
+    mapObj[targetPosition] = target
+    mapObj[boxPosition] = box
+
+    console.log(mapObj.length)
+    let mapString = mapObj
 
     //Build the box shape from the array
     let x = 0
@@ -154,28 +209,29 @@ exports.run = async (bot, message, args) => {
         else
         {
             
-            map.splice(x, 0, '\n')
+            mapString.splice(x, 0, '\n')
             counter = 0
         }
         x++
     }
 
+
     //Make to string to remove commas
-    map = map.toString()
+    mapString = mapString.toString()
 
     //Remove commas x is -1 to get the very last element LOOK INTO THIS
     x = -2
     while(x <= max)
     {
-        map = map.replace(",","");
+        mapString = mapString.replace(",","");
         ++x
     }
 
-            //Ship the map and characters
+            //Ship the mapObj and characters
             let embed = new Discord.MessageEmbed()
                 .setTitle('Sokoban')
                 .setColor('#FF0000')
-                .setDescription(map)
+                .setDescription(mapString)
 
             //Send the message in chat with the ability to react to the embed
             //Add reactions to the embed
@@ -197,25 +253,45 @@ exports.run = async (bot, message, args) => {
                     const reaction = collected.first();
             
                     //Read in which reaction was selected
+                    //Move Player Left
                     if (reaction.emoji.name === '◀️') {
                         let dir = -1
                         let embed = new Discord.MessageEmbed() 
                             .setTitle('Sokoban')
                             .setColor('#FF0000')
-                            .setDescription(movePlayer(map, playerPosition, dir, player))
+                            .setDescription(movePlayer(mapObj, playerPosition, dir, player, max, root))
 
                         embedMessage.edit(embed)
-                       
-
                     } 
+                    //Move Player Up
                     else if (reaction.emoji.name === '🔼') {
-                        
+                        let dir = root * -1
+                        let embed = new Discord.MessageEmbed() 
+                            .setTitle('Sokoban')
+                            .setColor('#FF0000')
+                            .setDescription(movePlayer(mapObj, playerPosition, dir, player, max, root))
+
+                        embedMessage.edit(embed)
                     }
+                    //Move Player Down
                     else if (reaction.emoji.name === '🔽') {
-                        
+                        let dir = root
+                        let embed = new Discord.MessageEmbed() 
+                            .setTitle('Sokoban')
+                            .setColor('#FF0000')
+                            .setDescription(movePlayer(mapObj, playerPosition, dir, player, max, root))
+
+                        embedMessage.edit(embed)
                     }
+                    //Move Player Right
                     else if (reaction.emoji.name === '▶️') {
-                        
+                        let dir = 1
+                        let embed = new Discord.MessageEmbed() 
+                            .setTitle('Sokoban')
+                            .setColor('#FF0000')
+                            .setDescription(movePlayer(mapObj, playerPosition, dir, player, max, root))
+
+                        embedMessage.edit(embed)   
                     }
                     
                 })
