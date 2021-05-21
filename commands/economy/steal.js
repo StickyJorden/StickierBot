@@ -99,7 +99,7 @@ module.exports.run = async (bot, message, args) => {
         return
     }
 
-    if(odds <= 3)
+    if(odds <= 2)
     {
         //Take away their money
         const remainingCoins = await economy.addCoins(
@@ -126,12 +126,12 @@ module.exports.run = async (bot, message, args) => {
         message.reply(`You have stolen <@${user.id}> ${coinsToTake} coins! They now have ${newBalance} coins and you have ${remainingCoins} coins!`)
 
         //Update the status that they got the reward
-        await dailyStealsSchema.findOneAndUpdate(obj, obj, {upsert: true})
+        //await dailyStealsSchema.findOneAndUpdate(obj, obj, {upsert: true})
 
         //Update cache so they cant claim again
-        claimedCache.push(id)
+        //claimedCache.push(id)
     }
-    else if(odds >=4)
+    else if(odds >=3)
     {
         //Take away their money
         const remainingCoins = await economy.addCoins(
@@ -158,9 +158,9 @@ module.exports.run = async (bot, message, args) => {
         message.reply(`You got busted! The sticky authorties have confiscated your coins! With the legal fees you now have ${newBalance} coins and they have ${remainingCoins} coins!`)
 
         //Update the status that they got the reward
-        await dailyStealsSchema.findOneAndUpdate(obj, obj, {upsert: true})
+        //await dailyStealsSchema.findOneAndUpdate(obj, obj, {upsert: true})
 
         //Update cache so they cant claim again
-        claimedCache.push(id)
+        //claimedCache.push(id)
     }
 }
