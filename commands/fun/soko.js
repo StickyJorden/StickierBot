@@ -1,4 +1,5 @@
 const Discord = require('discord.js');
+const { result } = require('lodash');
 const createBar = require('string-progressbar');
 
 
@@ -46,16 +47,15 @@ function movePlayer(mapObj, position, direction, max, root, absentArray)
  {
     
     mapObj = removeItemAll(mapObj, '\n')
-    console.log(mapObj)
+    //console.log(mapObj)
 
+    console.log("OLD: ", position)
     let newPosition = position + direction
-    
+    console.log("NEW: ", newPosition)
 
-    console.log("__________________________________")
-    console.log("")
-    console.log("__________________________________")
-
-
+    //console.log("__________________________________")
+    //console.log("")
+    //console.log("__________________________________")
 
     mapObj[newPosition] = player
     mapObj[position] = wall
@@ -94,12 +94,13 @@ function movePlayer(mapObj, position, direction, max, root, absentArray)
         ++x
     }
 
-
-    return mapString
+    var results = {map: mapString, pos: newPosition};
+    return results
  }
 
- function makeMessage(message, mapObj, mapString, playerPosition, max, root, absentArray)
+function makeFirstMessage(message, mapObj, mapString, playerPosition, max, root, absentArray)
  {
+    var results;
 
     //Ship the mapObj and characters
     let embed = new Discord.MessageEmbed()
@@ -110,7 +111,111 @@ function movePlayer(mapObj, position, direction, max, root, absentArray)
     //Send the message in chat with the ability to react to the embed
     //Add reactions to the embed
     message.channel.send({embed: embed}).then(embedMessage => {
-        embedMessage.react('◀️')
+
+         embedMessage.react('◀️')
+            .then(() => embedMessage.react('🔼'))
+            .then(() => embedMessage.react('🔽'))
+            .then(() => embedMessage.react('▶️'))
+            .catch(() => console.error('One of the emojis failed to react.'));
+
+    //Filter which embeds I care for
+    const filter = (reaction, user) => {
+        return ['◀️', '🔼','🔽','▶️'].includes(reaction.emoji.name) && user.id === message.author.id;
+    };
+
+    //Wait for the user to react
+    embedMessage.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+        .then(collected => {
+            const reaction = collected.first();
+
+            //Read in which reaction was selected
+            //Move Player Left
+            if (reaction.emoji.name === '◀️') {
+                let dir = -1
+
+                results = movePlayer(mapObj, playerPosition, dir, max, root, absentArray)
+
+                let embed = new Discord.MessageEmbed() 
+                    .setTitle('Sokoban')
+                    .setColor('#FF0000')
+                    .setDescription(results.map)
+
+                embedMessage.edit(embed)
+
+                embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+                
+                makeNextMessage(message, embed, embedMessage, mapObj, mapString, results.pos, max, root, absentArray)
+            } 
+            //Move Player Up
+            else if (reaction.emoji.name === '🔼') {
+                let dir = root * -1
+
+                results = movePlayer(mapObj, playerPosition, dir, max, root, absentArray)
+
+                let embed = new Discord.MessageEmbed() 
+                    .setTitle('Sokoban')
+                    .setColor('#FF0000')
+                    .setDescription(results.map)
+
+                embedMessage.edit(embed)
+
+                embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+                
+                makeNextMessage(message, embed, embedMessage, mapObj, mapString, results.pos, max, root, absentArray)
+
+
+            }
+            //Move Player Down
+            else if (reaction.emoji.name === '🔽') {
+                let dir = root
+
+                results = movePlayer(mapObj, playerPosition, dir, max, root, absentArray)
+
+                let embed = new Discord.MessageEmbed() 
+                    .setTitle('Sokoban')
+                    .setColor('#FF0000')
+                    .setDescription(results.map)
+
+                embedMessage.edit(embed)
+
+                embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+                
+                makeNextMessage(message, embed, embedMessage, mapObj, mapString, results.pos, max, root, absentArray)
+            }
+            //Move Player Right
+            else if (reaction.emoji.name === '▶️') {
+                let dir = 1
+
+                results = movePlayer(mapObj, playerPosition, dir, max, root, absentArray)
+
+                let embed = new Discord.MessageEmbed() 
+                    .setTitle('Sokoban')
+                    .setColor('#FF0000')
+                    .setDescription(results.map)
+
+                embedMessage.edit(embed)
+
+                embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+                
+                makeNextMessage(message, embed, embedMessage, mapObj, mapString, results.pos, max, root, absentArray)   
+            }
+        })
+    
+        .catch(collected => {
+            message.reply('you didn\'t use a move!');
+        });
+    });
+ }
+
+ function makeNextMessage(message, embed, embedMessage, mapObj, mapString, playerPosition, max, root, absentArray)
+ {
+
+    //Send the message in chat with the ability to react to the embed
+    //Add reactions to the embed
+
+    var results;
+
+    embedMessage.react('◀️')
         .then(() => embedMessage.react('🔼'))
         .then(() => embedMessage.react('🔽'))
         .then(() => embedMessage.react('▶️'))
@@ -130,56 +235,79 @@ function movePlayer(mapObj, position, direction, max, root, absentArray)
             //Move Player Left
             if (reaction.emoji.name === '◀️') {
                 let dir = -1
+
+                results = movePlayer(mapObj, playerPosition, dir, max, root, absentArray)
+
                 let embed = new Discord.MessageEmbed() 
                     .setTitle('Sokoban')
                     .setColor('#FF0000')
-                    .setDescription(movePlayer(mapObj, playerPosition, dir, max, root, absentArray))
+                    .setDescription(results.map)
 
                 embedMessage.edit(embed)
 
-                embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error));
-
+                embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+                
+                makeNextMessage(message, embed, embedMessage, mapObj, mapString, results.pos, max, root, absentArray)
             } 
             //Move Player Up
             else if (reaction.emoji.name === '🔼') {
                 let dir = root * -1
+
+                results = movePlayer(mapObj, playerPosition, dir, max, root, absentArray)
+
                 let embed = new Discord.MessageEmbed() 
                     .setTitle('Sokoban')
                     .setColor('#FF0000')
-                    .setDescription(movePlayer(mapObj, playerPosition, dir, player, max, root, absentArray))
+                    .setDescription(results.map)
 
                 embedMessage.edit(embed)
+
+                embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+                
+                makeNextMessage(message, embed, embedMessage, mapObj, mapString, results.pos, max, root, absentArray)
+
+
             }
             //Move Player Down
             else if (reaction.emoji.name === '🔽') {
                 let dir = root
+
+                results = movePlayer(mapObj, playerPosition, dir, max, root, absentArray)
+
                 let embed = new Discord.MessageEmbed() 
                     .setTitle('Sokoban')
                     .setColor('#FF0000')
-                    .setDescription(movePlayer(mapObj, playerPosition, dir, player, max, root, absentArray))
+                    .setDescription(results.map)
 
                 embedMessage.edit(embed)
+
+                embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+                
+                makeNextMessage(message, embed, embedMessage, mapObj, mapString, results.pos, max, root, absentArray)
             }
             //Move Player Right
             else if (reaction.emoji.name === '▶️') {
                 let dir = 1
+
+                results = movePlayer(mapObj, playerPosition, dir, max, root, absentArray)
+
                 let embed = new Discord.MessageEmbed() 
                     .setTitle('Sokoban')
                     .setColor('#FF0000')
-                    .setDescription(movePlayer(mapObj, playerPosition, dir, player, max, root, absentArray))
+                    .setDescription(results.map)
 
-                embedMessage.edit(embed)   
+                embedMessage.edit(embed)
+
+                embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+                
+                makeNextMessage(message, embed, embedMessage, mapObj, mapString, results.pos, max, root, absentArray)   
             }
-            
         })
+    
         .catch(collected => {
             message.reply('you didn\'t use a move!');
         });
-    });
  }
-
-
- //TO.DO add reactions, update embed with new positions
 
 exports.run = async (bot, message, args) => {
 
@@ -315,7 +443,18 @@ exports.run = async (bot, message, args) => {
         ++x
     }
 
-   makeMessage(message, mapObj, mapString, playerPosition, max, root, absentArray)
+    /*
+    while(makeMessage(message, mapObj, mapString, playerPosition, max, root, absentArray) == 0)
+    {
+        console.log("HERE")
+        makeMessage(message, mapObj, mapString, playerPosition, max, root, absentArray)
+    }
+    */
+
+    await makeFirstMessage(message, mapObj, mapString, playerPosition, max, root, absentArray)
+    
+   
+   
         
     
     
