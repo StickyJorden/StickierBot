@@ -1,4 +1,5 @@
-const economy = require('@listeners/economy.js'); 
+const economy = require('@listeners/economy.js');
+const Discord = require('discord.js');
 
 module.exports.run = async (bot, message, args) => {
    
@@ -9,8 +10,8 @@ module.exports.run = async (bot, message, args) => {
     if(!user)
     {
         let embed = new Discord.MessageEmbed()
-            .setTitle("Pay") 
-            .setDescription("Please @ the user who's balance I am adding too. Usage !pay <user> <amount>")
+            .setTitle("Charity") 
+            .setDescription("Please @ the user who's balance I am giving too. Usage !charity <user> <amount>")
             .setColor("#197419")
             .setTimestamp();
     
@@ -22,8 +23,8 @@ module.exports.run = async (bot, message, args) => {
     if(isNaN(args[1]))
     {
         let embed = new Discord.MessageEmbed()
-            .setTitle("Pay") 
-            .setDescription('Please provide a number I can use thank you. Usage !pay <user> <amount>')
+            .setTitle("Charity") 
+            .setDescription('Please provide a number I can use thank you. Usage !charity <user> <amount>')
             .setColor("#197419")
             .setTimestamp();
     
@@ -39,7 +40,7 @@ module.exports.run = async (bot, message, args) => {
     if(coinsOwned < coinsToGive && coinsToGive > 0)
     {
         let embed = new Discord.MessageEmbed()
-            .setTitle("Pay") 
+            .setTitle("Charity") 
             .setDescription(`You do not have ${coinsToGive} coins!`)
             .setColor("#197419")
             .setTimestamp();
@@ -48,31 +49,11 @@ module.exports.run = async (bot, message, args) => {
         return
     }
 
-    
-
-    const remainingCoins = await economy.addCoins(
-        username,
-        guildID,
-        userID,
-        coinsToGive * -1
-    )
-
-    username = message.mentions.users.tag
-    guildID = guild.id
-    userID = user.id
-
-    const newBalance = await economy.addCoins(
-        username,
-        guildID,
-        userID,
-        coinsToGive
-    )
-
     let embed = new Discord.MessageEmbed()
-            .setTitle("Pay") 
-            .setDescription(`You have given <@${user.id}> ${coinsToGive} coins! They now have ${newBalance} coins and you have ${remainingCoins} coins!`)
-            .setColor("#197419")
-            .setTimestamp();
+        .setTitle("Charity") 
+        .setDescription(`We do not have a charity command.`)
+        .setColor("#197419")
+        .setTimestamp();
     
-        message.channel.send(embed);
+    message.channel.send(embed);
 }

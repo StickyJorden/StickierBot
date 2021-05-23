@@ -5,23 +5,15 @@ const createBar = require('string-progressbar');
 
 
 //Set Emoji Char
-const player = '✔️'
+const player = '😎'
 const target = '❌'
 const box = '🟧'
-const wall = '🟫'
+const floor = '🟫'
+const wall = '🟥'
 const win = '🟩'
 
-//Create mapObj To On
-var mapObj = [ 
-    '🟫','🟫','🟫','🟫', '🟫',
-    '🟫','🟫','🟫','🟫', '🟫',
-    '🟫','🟫','🟫','🟫', '🟫',
-    '🟫','🟫','🟫','🟫', '🟫',
-    '🟫','🟫','🟫','🟫', '🟫',
-  ]
-
 //Get Size Of Board
-const max = mapObj.length
+const max = 64
 const root = Math.sqrt(max)
 
 
@@ -42,7 +34,7 @@ const generateRandom = (len, absentArray, max) => {
           i++;
        }
     };
-    return randomArray;
+    return Number(randomArray[0]);
 }
 
 //Remove New Line Character From Array
@@ -60,7 +52,7 @@ function removeItemAll(arr, value)
 }
 
 //Find all the tiles surrounding the mapObj
-function buildPerimeter()
+function buildPerimeter(rootCheck, maxCheck)
 {
     //Exclude Sidse From Array
     let absentArray = [] 
@@ -68,32 +60,32 @@ function buildPerimeter()
     //Find all the tiles surrounding the mapObj
     let pop = 0
     let nest = 1
-    while(pop <= root)
+    while(pop <= rootCheck)
     {
         if(pop == 0)
         {
-            while(pop < (root-1))
+            while(pop < (rootCheck-1))
             {
                 absentArray.push(pop)
                 pop++
             }
             pop = 0
         }
-        if(pop > 0 && pop < (root - 1))
+        if(pop > 0 && pop < (rootCheck - 1))
         {
-            while(nest < root)
+            while(nest < rootCheck)
             {
     
-                absentArray.push((root * nest) - 1)
-                absentArray.push((root * nest))
+                absentArray.push((rootCheck * nest) - 1)
+                absentArray.push((rootCheck * nest))
             
                 nest++
             }
         }
-        if(pop == root)
+        if(pop == rootCheck)
         {
-            nest = (max - root) + 1
-            while(nest <= max)
+            nest = (maxCheck - rootCheck) + 1
+            while(nest <= maxCheck)
             {
                 absentArray.push(nest)
                 nest++
@@ -105,7 +97,7 @@ function buildPerimeter()
 }
 
 //Make the new line and comma removed veriso of the map
-function makeEmbedMap()
+function makeEmbedMap(mapObj)
 {
     //Make a string copy of the map
     let mapString = mapObj
@@ -117,11 +109,12 @@ function makeEmbedMap()
     {
         if(counter <= (root - 1))
         {
+            
             counter++
         }
         else
         {
-            
+
             mapString.splice(x, 0, '\n')
             counter = 0
         }
@@ -132,8 +125,8 @@ function makeEmbedMap()
     //Make to string to remove commas
     mapString = mapString.toString()
 
-    //Remove commas x is -1 to get the very last element LOOK INTO THIS
-    x = -2
+    //Remove commas 
+    x = -(root + 1)
     while(x <= max)
     {
         mapString = mapString.replace(",","");
@@ -148,10 +141,6 @@ function movePlayer(mapObj, playerPosition, direction, boxPosition, targetPositi
  {
     //Remove new lines to get correct values for mapping
     mapObj = removeItemAll(mapObj, '\n')
-
-    //Convert to a number instead of obj
-    boxPosition = Number(boxPosition)
-    targetPosition = Number(targetPosition)
     
     //Find new player position
     let newPlayerPosition = playerPosition + direction
@@ -163,7 +152,7 @@ function movePlayer(mapObj, playerPosition, direction, boxPosition, targetPositi
         newBoxPosition = direction + boxPosition
         mapObj[newBoxPosition] = box
         mapObj[newPlayerPosition] = player
-        mapObj[playerPosition] = wall
+        mapObj[playerPosition] = floor
 
         //Check to see if they won! 
         if(newBoxPosition == targetPosition)
@@ -182,40 +171,10 @@ function movePlayer(mapObj, playerPosition, direction, boxPosition, targetPositi
     else
     {
         mapObj[newPlayerPosition] = player
-        mapObj[playerPosition] = wall
+        mapObj[playerPosition] = floor
     }
 
-    let mapString = mapObj
-
-    //Build the box shape from the array
-    let x = 0
-    let counter = 0
-    while(x < max)
-    {
-        if(counter <= (root - 1))
-        {
-            counter++
-        }
-        else
-        {
-            
-            mapString.splice(x, 0, '\n')
-            counter = 0
-        }
-        x++
-    }
-
-
-    //Make to string to remove commas
-    mapString = mapString.toString()
-
-    //Remove commas x is -1 to get the very last element LOOK INTO THIS
-    x = -2
-    while(x <= max)
-    {
-        mapString = mapString.replace(",","");
-        ++x
-    }
+    let mapString = makeEmbedMap(mapObj)
 
     var results = {map: mapString, playerPos: newPlayerPosition, boxPos: newBoxPosition};
     return results
@@ -324,37 +283,61 @@ function movePlayer(mapObj, playerPosition, direction, boxPosition, targetPositi
 
 exports.run = async (bot, message, args) => {
 
-    //Make Random Positons For mapObj 
-    var playerPosition = getRandomInt(max)
-    var targetPosition = getRandomInt(max)
+    //Create mapObj To On
+    var mapObj = [ 
+        '🟥','🟥','🟥','🟥','🟥','🟥','🟥','🟥',
+        '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
+        '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
+        '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
+        '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
+        '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
+        '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
+        '🟥','🟥','🟥','🟥','🟥','🟥','🟥','🟥',
+    ]
 
+    var outerWall = buildPerimeter(root, max)
+    var innerWall = buildPerimeter(6, 36)
+    console.log(outerWall)
+    console.log("___________________________")
+    console.log(innerWall)
+    console.log("___________________________")
+
+    //Make Random Positons For mapObj 
     //Generate new array without sides and get random number from that array
-    var boxPosition = generateRandom(1, buildPerimeter(), max)
+    var boxPosition = generateRandom(1, innerWall, 36)
+    var playerPosition = generateRandom(1, outerWall, max)
+    var targetPosition = generateRandom(1, outerWall, max)
+
 
     //Make sure each of the selected moves are of a different type
     while(playerPosition == targetPosition || targetPosition == boxPosition || boxPosition == playerPosition)
     {
         if(playerPosition == targetPosition)
         {
-            targetPosition = getRandomInt(max);
+            targetPosition = generateRandom(1, outerWall, max)
         }
         if(targetPosition == boxPosition)
         {
-            targetPosition = getRandomInt(max);
+            boxPosition = generateRandom(1, innerWall, 36)
         }
         if(boxPosition == playerPosition)
         {
-            playerPosition = getRandomInt(max);
+            playerPosition = generateRandom(1, outerWall, max)
         }
-
     }
+
+    console.log(boxPosition)
 
     //Add Character To The mapObj
     mapObj[playerPosition] = player
     mapObj[targetPosition] = target
     mapObj[boxPosition] = box
 
-    let mapString = makeEmbedMap()
+    //Remove new lines to get correct values for mapping
+    mapObj = removeItemAll(mapObj, '\n')
+
+    let mapString = makeEmbedMap(mapObj)
+ 
 
     //Ship the mapObj and characters
     let embed = new Discord.MessageEmbed()

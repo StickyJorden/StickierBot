@@ -23,7 +23,14 @@ module.exports.run = async (bot, message, args) => {
 
    //Check if user already claimed daily reward
    if(claimedCache.includes(id)){
-        message.reply(alreadyClaimed)
+        //Let user know that they got the goods.
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Daily") 
+            .setDescription(alreadyClaimed)
+            .setColor("#197419")
+            .setTimestamp();
+
+        message.channel.send(embed);
         return
    }
 
@@ -48,7 +55,14 @@ module.exports.run = async (bot, message, args) => {
         if (diffDays <= 1)
         {
             claimedCache.push(id)
-            message.reply(alreadyClaimed)
+            //Let user know that they got the goods.
+            let embed = new Discord.MessageEmbed()
+                .setTitle("Daily") 
+                .setDescription(alreadyClaimed)
+                .setColor("#197419")
+                .setTimestamp();
+
+            message.channel.send(embed);
             return
         }
    }
@@ -71,6 +85,12 @@ module.exports.run = async (bot, message, args) => {
     )
 
     //Let user know that they got the goods.
-    message.reply(`You have claimed your daily rewards of 50 coins! You new balance is ${newBalance}`)
+    let embed = new Discord.MessageEmbed()
+        .setTitle("Daily") 
+        .setDescription(`You have claimed your daily rewards of 50 coins! You new balance is ${newBalance}`)
+        .setColor("#197419")
+        .setTimestamp();
+    
+    message.channel.send(embed);
 
 }

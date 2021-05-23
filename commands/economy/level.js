@@ -11,6 +11,12 @@ module.exports.run = async (bot, message, args) => {
 
     const level = await economy.getLevels(username, guildID, userID)
 
-    message.reply(`That user is currently level ${level}!`)
+    let embed = new Discord.MessageEmbed()
+        .setTitle("Level") 
+        .setDescription(`That user is currently level ${level}!`)
+        .setColor("#197419")
+        .setTimestamp();
+    
+    message.channel.send(embed);
    
 }

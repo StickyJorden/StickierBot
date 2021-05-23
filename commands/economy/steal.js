@@ -1,6 +1,7 @@
 const mongo = require('@storage/mongo.js')
 const dailyStealsSchema = require('@schemas/daily-steals-schema.js')
-const economy = require('@listeners/economy.js'); 
+const economy = require('@listeners/economy.js');
+const Discord = require('discord.js'); 
 
 let claimedCache = []
 
@@ -30,7 +31,15 @@ module.exports.run = async (bot, message, args) => {
    
    //Check if user already claimed daily reward
    if(claimedCache.includes(id)){
-    message.reply(alreadyClaimed)
+    
+    
+    let embed = new Discord.MessageEmbed()
+        .setTitle("Steal") 
+        .setDescription(alreadyClaimed)
+        .setColor("#197419")
+        .setTimestamp();
+    
+    message.channel.send(embed);
     return
     }   
 
@@ -55,7 +64,14 @@ module.exports.run = async (bot, message, args) => {
             if (diffDays <= 1)
             {
                 claimedCache.push(id)
-                message.reply(alreadyClaimed)
+               
+                let embed = new Discord.MessageEmbed()
+                    .setTitle("Steal") 
+                    .setDescription(alreadyClaimed)
+                    .setColor("#197419")
+                    .setTimestamp();
+            
+                message.channel.send(embed);
                 return
             }
     }
@@ -65,7 +81,13 @@ module.exports.run = async (bot, message, args) => {
     //If user is not found yell at them
     if(!user)
     {
-        message.reply("We gonna do this or what!? I need a name. Usage !user <user> <amount>")
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Steal") 
+            .setDescription("We gonna do this or what!? I need a name. Usage !user <user> <amount>")
+            .setColor("#197419")
+            .setTimestamp();
+    
+        message.channel.send(embed);
         return
     }
 
@@ -73,14 +95,38 @@ module.exports.run = async (bot, message, args) => {
     const coinsToTake = args[1]
     if(isNaN(coinsToTake))
     {
-        message.reply('What are you on? How much we takin?? Usage !steal <user> <amount>')
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Steal") 
+            .setDescription('What are you on? How much we takin?? Usage !steal <user> <amount>')
+            .setColor("#197419")
+            .setTimestamp();
+    
+        message.channel.send(embed);
         return
     }
 
     //Make sure user doesnt take too much!
     if(coinsToTake > 10)
     {
-        message.reply('Thats too big for a two man job! (Max you can take is 10 coins)')
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Steal") 
+            .setDescription('Thats too big for a two man job! (Max you can take is 10 coins)')
+            .setColor("#197419")
+            .setTimestamp();
+
+        message.channel.send(embed);
+        return
+    }
+    //Make sure user does send negative money!
+    else if(coinsToTake < 0)
+    {
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Steal") 
+            .setDescription('I think you might be looking for the charity command....')
+            .setColor("#197419")
+            .setTimestamp();
+
+        message.channel.send(embed);
         return
     }
 
@@ -95,10 +141,17 @@ module.exports.run = async (bot, message, args) => {
     const coinsOwned = await economy.getCoins(username, guildID, userID)
     if(coinsOwned < coinsToTake)
     {
-        message.reply(`The jig is up they only have ${coinsOwned} coins!`)
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Steal") 
+            .setDescription(`The jig is up they only have ${coinsOwned} coins!`)
+            .setColor("#197419")
+            .setTimestamp();
+
+        message.channel.send(embed);
         return
     }
 
+    //RNG To see if the win or not 
     if(odds <= 2)
     {
         //Take away their money
@@ -111,7 +164,6 @@ module.exports.run = async (bot, message, args) => {
 
         //Get the theif user info
         username = message.member.user.tag
-        console.log(username)
         guildID = guild.id
         userID = member.id
 
@@ -122,8 +174,15 @@ module.exports.run = async (bot, message, args) => {
             userID,
             coinsToTake
         )
+        
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Steal") 
+            .setDescription(`You have stolen <@${user.id}> ${coinsToTake} coins! They now have ${newBalance} coins and you have ${remainingCoins} coins!`)
+            .setColor("#197419")
+            .setTimestamp();
 
-        message.reply(`You have stolen <@${user.id}> ${coinsToTake} coins! They now have ${newBalance} coins and you have ${remainingCoins} coins!`)
+        message.channel.send(embed);
+        
 
         //Update the status that they got the reward
         //await dailyStealsSchema.findOneAndUpdate(obj, obj, {upsert: true})
@@ -155,7 +214,13 @@ module.exports.run = async (bot, message, args) => {
             coinsToTake * -1
         )
 
-        message.reply(`You got busted! The sticky authorties have confiscated your coins! With the legal fees you now have ${newBalance} coins and they have ${remainingCoins} coins!`)
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Steal") 
+            .setDescription(`You got busted! The sticky authorties have confiscated your coins! With the legal fees you now have ${newBalance} coins and they have ${remainingCoins} coins!`)
+            .setColor("#197419")
+            .setTimestamp();
+
+        message.channel.send(embed);
 
         //Update the status that they got the reward
         //await dailyStealsSchema.findOneAndUpdate(obj, obj, {upsert: true})

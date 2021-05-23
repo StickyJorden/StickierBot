@@ -10,5 +10,11 @@ module.exports.run = async (bot, message, args) => {
     
     const coins = await economy.getCoins(username, guildID, userID)
 
-    message.reply(`That user ${username} has ${coins} coins!`)
+    let embed = new Discord.MessageEmbed()
+        .setTitle("Balance") 
+        .setDescription(`That user ${username} has ${coins} coins!`)
+        .setColor("#197419")
+        .setTimestamp();
+    
+    message.channel.send(embed);
 }
