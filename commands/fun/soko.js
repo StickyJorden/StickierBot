@@ -312,7 +312,7 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
     };
 
     //Wait for the user to react
-    embedMessage.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
+    embedMessage.awaitReactions(filter, { max: 1, time: 20000, errors: ['time'] })
         .then(collected => {
             const reaction = collected.first();
 
