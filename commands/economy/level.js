@@ -1,4 +1,5 @@
-const economy = require('@listeners/levels.js'); 
+const economy = require('@listeners/levels.js');
+const Discord = require('discord.js');  
 
 module.exports.run = async (bot, message, args) => {
    
