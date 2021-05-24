@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const fs = require('fs');
 const createBar = require('string-progressbar');
+const economy = require('@listeners/economy.js'); 
 
 //We can call the JSON file for quotes
 const moves = JSON.parse(fs.readFileSync('storage/moves.json','utf8'));
@@ -13,19 +14,6 @@ const max = Object.keys(moves).length;
 function getRandomInt(max) 
 {
     return Math.floor(Math.random() * Math.floor(max));
-}
-
-function setDescription(round, choiceMove)
-{
-    if(round == 0)
-    {
-        return 'Select the move you would like to use!';
-    }
-    else if(round > 0)
-    {
-        return `You used ${choiceMove}`;
-    }
-    
 }
 
 function setMoves()
@@ -74,11 +62,13 @@ function setMoves()
 function battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake)
 {
 
+
     //If everything checks out begin
     let moveCPU = getRandomInt(max);
     let choiceChart = "", choiceType = "";
     let space = `\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0`;
     var moveNum = setMoves()
+    const coinsToGive = coinsToTake
     
     //Send the message in chat with the ability to react to the embed
     //Add reactions to the embed
@@ -95,7 +85,7 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
     
     //Wait for the user to react
     embedMessage.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
-        .then(collected => {
+        .then(async collected => {
             const reaction = collected.first();
     
             //Read in which reaction was selected
@@ -126,38 +116,44 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
             let turnCPU = `${rMember.user.username} used ${moves[moveCPU].move} \n **Type:** ${moves[moveCPU].type} **Power:** ${moves[moveCPU].power}`;
 
             //check if player fainted probably need to remove
-        
+
+
             if(current > 0)
             {
-            //Determine who won based off typing with a number breakdown/array in moves.json
-            if(choiceChart.chart[moves[moveCPU].order] == 0)
-            {
-                battleResponse = `Your move does not effect the foe ${rMember.user.username}`;
-                current = current - moves[moveCPU].power;
-            }
-            else if(choiceChart.chart[moves[moveCPU].order] == 0.5)
-            {
-                battleResponse = `Your move was not very effective...`;
-                current = current - moves[moveCPU].power;
-            }
-            else if(choiceChart.chart[moves[moveCPU].order] == 1)
-            {
-                let winner = getRandomInt(2);
-                if(winner == 0){
-                    battleResponse = `It was a close call, but ${choiceMove} came out on top!`;
-                    cpuHealth = cpuHealth - choicePower;
-                }
-                if(winner == 1){
-                    battleResponse = `It was a close call, but ${moves[moveCPU].move} came out on top!`;
+                //Determine who won based off typing with a number breakdown/array in moves.json
+                if(choiceChart.chart[moves[moveCPU].order] == 0)
+                {
+                    battleResponse = `Your move does not effect the foe ${rMember.user.username}`;
                     current = current - moves[moveCPU].power;
                 }
-            }
-            else if(choiceChart.chart[moves[moveCPU].order] == 2)
+                else if(choiceChart.chart[moves[moveCPU].order] == 0.5)
+                {
+                    battleResponse = `Your move was not very effective...`;
+                    current = current - moves[moveCPU].power;
+                }
+                else if(choiceChart.chart[moves[moveCPU].order] == 1)
+                {
+                    let winner = getRandomInt(2);
+                    if(winner == 0){
+                        battleResponse = `It was a close call, but ${choiceMove} came out on top!`;
+                        cpuHealth = cpuHealth - choicePower;
+                    }
+                    if(winner == 1){
+                        battleResponse = `It was a close call, but ${moves[moveCPU].move} came out on top!`;
+                        current = current - moves[moveCPU].power;
+                    }
+                }
+                else if(choiceChart.chart[moves[moveCPU].order] == 2)
+                {
+                    battleResponse = `It's super effective!`;
+                    cpuHealth = cpuHealth - choicePower;
+                }
+            
+            
+            if(current > 0)
             {
-                battleResponse = `It's super effective!`;
-                cpuHealth = cpuHealth - choicePower;
-            }
             var bar = createBar(total, current, size)
+            }
 
             if(current > 0 && cpuHealth > 0)
             {
@@ -193,31 +189,87 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
                     .setTimestamp()   
 
                     embedMessage.edit(embed)
+
+                    //Take coins away from who lost (challenger)
+                    if(coinsToTake > 0)
+                    {
+                        const {guild, member} = message
+                        let user = message.author
+                        let username = message.member.user.tag
+                        let guildID = guild.id
+                        let userID = user.id
+
+                        await economy.addCoins(username, guildID, userID, coinsToGive)
+                        
+                        user = rMember            
+                        username = rMember.user.username                  
+                        guildID = guild.id
+                        userID = user.id                   
+
+                        await economy.addCoins(username, guildID, userID, coinsToGive * -1)
+                    }
                 
                     return 0; 
                 }
             else if(current <= 0)
                 {
+
+                    bar = createBar(total, 0, size)
+
                     let embed = new Discord.MessageEmbed() 
-                    .setTitle(`${message.member.user.username} has challenged ${rMember.user.username}!`)
-                    .setDescription(`${message.member.user.username} LOST! \n You paid ${coinsToTake} pokecoins. `)
-                    .addFields(
-                        {name: 'Move', value: `1. ${moves[moveNum.first].move} \n 2. ${moves[moveNum.second].move} \n 3. ${moves[moveNum.third].move} \n 4. ${moves[moveNum.fourth].move}`, inline:true},
-                        {name: 'Type', value: `${moves[moveNum.first].type} \n ${moves[moveNum.second].type} \n ${moves[moveNum.third].type} \n ${moves[moveNum.fourth].type}`, inline:true},
-                        {name: `Power \t Accuracy`, value: `${moves[moveNum.first].power}${space}${moves[moveNum.first].acc} \n ${moves[moveNum.second].power}${space}${moves[moveNum.second].acc} \n ${moves[moveNum.third].power}${space}${moves[moveNum.third].acc} \n ${moves[moveNum.fourth].power}${space}${moves[moveNum.fourth].acc}`, inline:true},
-                        {name:'Health', value:`${bar[0]} \n ${bar[1]}/${total}`, inline:false}
-                    )
-                    .setColor(0x800080)
-                    .setTimestamp()   
+                        .setTitle(`${message.member.user.username} has challenged ${rMember.user.username}!`)
+                        .setDescription(`${message.member.user.username} LOST! \n You paid ${coinsToTake} pokecoins. `)
+                        .addFields(
+                            {name: 'Move', value: `1. ${moves[moveNum.first].move} \n 2. ${moves[moveNum.second].move} \n 3. ${moves[moveNum.third].move} \n 4. ${moves[moveNum.fourth].move}`, inline:true},
+                            {name: 'Type', value: `${moves[moveNum.first].type} \n ${moves[moveNum.second].type} \n ${moves[moveNum.third].type} \n ${moves[moveNum.fourth].type}`, inline:true},
+                            {name: `Power \t Accuracy`, value: `${moves[moveNum.first].power}${space}${moves[moveNum.first].acc} \n ${moves[moveNum.second].power}${space}${moves[moveNum.second].acc} \n ${moves[moveNum.third].power}${space}${moves[moveNum.third].acc} \n ${moves[moveNum.fourth].power}${space}${moves[moveNum.fourth].acc}`, inline:true},
+                            {name:'Health', value:`${bar[0]} \n ${bar[1]}/${total}`, inline:false}
+                        )
+                        .setColor(0x800080)
+                        .setTimestamp()   
 
                     embedMessage.edit(embed)
-                    return 0; 
+
+                    //Take coins away from who lost (challenger)
+                    if(coinsToTake > 0)
+                    {
+                        const {guild, member} = message
+                        let user = message.author
+                        let username = message.member.user.tag
+                        let guildID = guild.id
+                        let userID = user.id
+
+                        await economy.addCoins(username, guildID, userID, coinsToGive * -1)
+                        
+                        user = rMember            
+                        username = rMember.user.username                  
+                        guildID = guild.id
+                        userID = user.id                   
+
+                        await economy.addCoins(username, guildID, userID, coinsToGive)
+                    }
+                          
+                    return 0;
                 }
             }
 
         })
         .catch(collected => {
-            message.reply('you didn\'t use a move!');
+            let embed = new Discord.MessageEmbed() 
+                .setTitle(`${message.member.user.username} has challenged ${rMember.user.username}!`)
+                .setDescription(`${message.member.user.username} LOST! \n You paid ${coinsToTake} pokecoins. `)
+                .addFields(
+                    {name: 'Move', value: `1. ${moves[moveNum.first].move} \n 2. ${moves[moveNum.second].move} \n 3. ${moves[moveNum.third].move} \n 4. ${moves[moveNum.fourth].move}`, inline:true},
+                    {name: 'Type', value: `${moves[moveNum.first].type} \n ${moves[moveNum.second].type} \n ${moves[moveNum.third].type} \n ${moves[moveNum.fourth].type}`, inline:true},
+                    {name: `Power \t Accuracy`, value: `${moves[moveNum.first].power}${space}${moves[moveNum.first].acc} \n ${moves[moveNum.second].power}${space}${moves[moveNum.second].acc} \n ${moves[moveNum.third].power}${space}${moves[moveNum.third].acc} \n ${moves[moveNum.fourth].power}${space}${moves[moveNum.fourth].acc}`, inline:true},
+                    {name:'Health', value:`Timed Out`, inline:false}
+                )
+                .setColor(0x800080)
+                .setTimestamp()   
+
+            embedMessage.edit(embed)
+
+            return 0; 
         });
     
 }
@@ -255,7 +307,6 @@ module.exports.run = async (bot, message, args) => {
         return
     }
     */
-    
 
     //Make sure we get a useable amount
     const coinsToTake = args[1]
@@ -296,6 +347,45 @@ module.exports.run = async (bot, message, args) => {
         return
     }
 
+    const {guild, member} = message
+    let username = message.member.user.tag
+    let guildID = guild.id
+    let userID = member.id
+
+    const coinsOwned = await economy.getCoins(username, guildID, userID)
+    if(coinsOwned < coinsToTake && coinsToTake > 0)
+    {
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Duel") 
+            .setDescription(`You do not have ${coinsToGive} coins!`)
+            .setColor(0x800080)
+            .setTimestamp();
+    
+        message.channel.send(embed);
+        return
+    }
+
+
+    user = message.mentions.users.first()
+    userID = user.id
+    username = user.tag
+
+    
+    const coins = await economy.getCoins(username, guildID, userID)
+    /*
+    if(coins < coinsToTake && coinsToTake > 0)
+    {
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Duel") 
+            .setDescription(`That user ${username} has ${coins} coins! Wager less coins. (Max is 10)`)
+            .setColor(0x800080)
+            .setTimestamp();
+    
+        message.channel.send(embed);
+        return
+    }
+*/
+
     var round = 0;
     var total = 100;
     var current = 100;
@@ -322,6 +412,7 @@ module.exports.run = async (bot, message, args) => {
         )
         .setColor(0x800080)
         .setTimestamp();
+
 
     message.channel.send({embed: embed}).then(embedMessage => {
 
