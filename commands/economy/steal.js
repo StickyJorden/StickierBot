@@ -202,7 +202,6 @@ module.exports.run = async (bot, message, args) => {
 
         //Get the theif user  info
         username = message.member.user.tag
-        console.log(username)
         guildID = guild.id
         userID = member.id
 

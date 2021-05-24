@@ -298,6 +298,7 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
     //Send the message in chat with the ability to react to the embed
     //Add reactions to the embed
     var results;
+    let reactor = message.member.user
 
     embedMessage.react('◀️')
         .then(() => embedMessage.react('🔼'))
@@ -334,6 +335,7 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                     embedMessage.edit(embed)
 
                     embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+
                     return
                 }
                 else
@@ -341,13 +343,13 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                     let embed = new Discord.MessageEmbed() 
                         .setTitle('Sokoban')
                         .setColor('#FF0000')
-                        .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Be careful where you move or else you'll be stuck!`)
+                        .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Use the 🗑 to end the game early \n 4. Be careful where you move or else you'll be stuck!`)
                         .addField(`\u200B`, results.map, false)
 
                     embedMessage.edit(embed)
 
-                    embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
-                    
+                    reaction.users.remove(reactor.id)
+                
                     makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                 }
             } 
@@ -375,17 +377,15 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                     let embed = new Discord.MessageEmbed() 
                         .setTitle('Sokoban')
                         .setColor('#FF0000')
-                        .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Be careful where you move or else you'll be stuck!`)
+                        .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Use the 🗑 to end the game early \n 4. Be careful where you move or else you'll be stuck!`)
                         .addField(`\u200B`, results.map, false)
 
                     embedMessage.edit(embed)
 
-                    embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+                    reaction.users.remove(reactor.id)
                     
                     makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                 }
-
-
             }
             //Move Player Down
             else if (reaction.emoji.name === '🔽') {
@@ -411,12 +411,12 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                     let embed = new Discord.MessageEmbed() 
                         .setTitle('Sokoban')
                         .setColor('#FF0000')
-                        .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Be careful where you move or else you'll be stuck!`)
+                        .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Use the 🗑 to end the game early \n 4. Be careful where you move or else you'll be stuck!`)
                         .addField(`\u200B`, results.map, false)
 
                     embedMessage.edit(embed)
 
-                    embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+                    reaction.users.remove(reactor.id)
                     
                     makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                 }
@@ -445,20 +445,36 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                     let embed = new Discord.MessageEmbed() 
                         .setTitle('Sokoban')
                         .setColor('#FF0000')
-                        .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Be careful where you move or else you'll be stuck!`)
+                        .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Use the 🗑 to end the game early. \n 4. Be careful where you move or else you'll be stuck!`)
                         .addField(`\u200B`, results.map, false)
 
                     embedMessage.edit(embed)
 
-                    embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+                    reaction.users.remove(reactor.id)
                     
                     makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                 }
             }
             //Move Player Right
             else if (reaction.emoji.name === '🗑') {
+
+                let direction = 0
+
+                results = movePlayer(mapObj, playerPosition, direction, boxPosition, targetPosition, outerWall, innerWall)
+
+                let embed = new Discord.MessageEmbed() 
+                    .setTitle('Sokoban')
+                    .setColor('#FF0000')
+                    .addField(`Game Ended!`, `Thanks for playing!`)
+                    .addField(`\u200B`, results.map, false)
+
+                embedMessage.edit(embed)
+
+                embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+
                 return 0
             }
+
         })
         .catch(collected => {
                 let direction = 0
@@ -495,6 +511,7 @@ exports.run = async (bot, message, args) => {
     var outerWall = buildPerimeter(root, max)
     var innerWall = buildInnerPerimeter(root, max)
     
+    let reactor = message.member.user
 
     //Make Random Positons For mapObj 
     //Generate new array without sides and get random number from that array
@@ -536,7 +553,7 @@ exports.run = async (bot, message, args) => {
     let embed = new Discord.MessageEmbed()
         .setTitle('Sokoban')
         .setColor('#FF0000')
-        .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Be careful where you move or else you'll be stuck!`)
+        .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Use the 🗑 to end the game early \n 4. Be careful where you move or else you'll be stuck!`)
         .addField(`\u200B`,mapString, false)
 
      //Send the message in chat with the ability to react to the embed
