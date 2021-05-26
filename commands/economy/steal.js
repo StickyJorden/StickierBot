@@ -118,7 +118,7 @@ module.exports.run = async (bot, message, args) => {
         return
     }
     //Make sure user does send negative money!
-    else if(coinsToTake < 0)
+    else if(coinsToTake <= 0)
     {
         let embed = new Discord.MessageEmbed()
             .setTitle("Steal") 

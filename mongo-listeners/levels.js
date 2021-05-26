@@ -1,5 +1,6 @@
 const mongo = require('@storage/mongo.js')
 const profileSchema = require('@schemas/profile-schema.js');
+const Discord = require('discord.js'); 
 
 const levelsCache = {} // guildID-userID: level
 
@@ -56,7 +57,13 @@ const addXP = async (username, guildID, userID, xpToAdd, message) => {
         ++level
         xp -= needed
 
-        message.reply(`You are now level ${level} with ${xp} experience! You now need ${getNeededXP(level)} xp to level up again!`);
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Level Up") 
+            .setDescription(`You are now level ${level} with ${xp} experience! You now need ${getNeededXP(level)} xp to level up again!`)
+            .setColor("#197419")
+            .setTimestamp();
+    
+        message.channel.send(embed);
 
         await profileSchema.updateOne(
             {

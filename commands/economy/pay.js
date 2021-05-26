@@ -37,7 +37,8 @@ module.exports.run = async (bot, message, args) => {
     let userID = member.id
 
     const coinsOwned = await economy.getCoins(username, guildID, userID)
-    if(coinsOwned < coinsToGive && coinsToGive > 0)
+
+    if(coinsOwned < coinsToGive || coinsToGive <= 0)
     {
         let embed = new Discord.MessageEmbed()
             .setTitle("Pay") 
