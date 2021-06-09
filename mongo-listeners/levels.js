@@ -1,6 +1,7 @@
 const mongo = require('@storage/mongo.js')
 const profileSchema = require('@schemas/profile-schema.js');
 const Discord = require('discord.js'); 
+const mongoose = require('mongoose')
 
 const levelsCache = {} // guildID-userID: level
 
@@ -28,6 +29,8 @@ const getNeededXP = level => level * level * 100
 
 const addXP = async (username, guildID, userID, xpToAdd, message) => {
 
+    mongoose.set('useFindAndModify', false);
+    
     const result = await profileSchema.findOneAndUpdate(
         {
             username,

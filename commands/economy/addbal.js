@@ -6,6 +6,7 @@ module.exports.run = async (bot, message, args) => {
    
     const user = message.mentions.users.first() 
 
+    //Make sure a user was mentioned
     if(!user)
     {
         let embed = new Discord.MessageEmbed()
@@ -17,7 +18,8 @@ module.exports.run = async (bot, message, args) => {
         message.channel.send(embed);
         return
     }
-      //If user not an admin tell them no
+    
+    //If user not an admin tell them no
     if(!message.member.hasPermission('ADMINISTRATOR')){
 
         let embed = new Discord.MessageEmbed()
@@ -31,6 +33,8 @@ module.exports.run = async (bot, message, args) => {
     }
 
     const coins = args[1]
+
+    //Make sure it is a number
     if(isNaN(coins)){
 
         let embed = new Discord.MessageEmbed()
@@ -42,6 +46,20 @@ module.exports.run = async (bot, message, args) => {
         message.channel.send(embed);
         return
     }
+
+    //Make sure they use whole numbers only
+    if(coinsToGive % 1 != 0)
+    {
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Add Balance") 
+            .setDescription('Please whole numbers only. Usage !pay <user> <amount>')
+            .setColor("#197419")
+            .setTimestamp();
+        
+        message.channel.send(embed);
+        return
+    }
+
 
     const userID = user.id
     const guildID = message.guild.id

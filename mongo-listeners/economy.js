@@ -1,5 +1,6 @@
 const mongo = require('@storage/mongo.js')
 const profileSchema = require('@schemas/profile-schema.js')
+const mongoose = require('mongoose')
 
 const coinsCache = {} // guildID-userID: coins
 
@@ -13,6 +14,8 @@ module.exports.run = async (bot, message, args) => {
 //Add number of coins based off arg
 module.exports.addCoins = async (username, guildID, userID, coins) => {
 
+    mongoose.set('useFindAndModify', false);
+    
     //Look for user coins based off guild and user ID
     const result = await profileSchema.findOneAndUpdate(
         {

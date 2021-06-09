@@ -12,6 +12,8 @@ module.exports.run = async (bot, message, args) => {
 
     const guildID = message.guild.id
     const username = user.tag
+
+    
     
     const coins = await economy.getCoins(username, guildID, userID)
 

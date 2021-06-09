@@ -3,6 +3,10 @@ const dailyStealsSchema = require('@schemas/daily-steals-schema.js')
 const economy = require('@listeners/economy.js');
 const Discord = require('discord.js'); 
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 let claimedCache = []
 
 const clearCache = () => {
@@ -76,8 +80,6 @@ module.exports.run = async (bot, message, args) => {
             }
     }
 
-    
-
     //If user is not found yell at them
     if(!user)
     {
@@ -105,8 +107,21 @@ module.exports.run = async (bot, message, args) => {
         return
     }
 
+    //Make sure they use whole numbers only
+    if(coinsToTake % 1 != 0)
+    {
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Add Balance") 
+            .setDescription('Please whole numbers only. Usage !pay <user> <amount>')
+            .setColor("#197419")
+            .setTimestamp();
+        
+        message.channel.send(embed);
+        return
+    }
+    
     //Make sure user doesnt take too much!
-    if(coinsToTake > 10)
+    if(coinsToTake > 500)
     {
         let embed = new Discord.MessageEmbed()
             .setTitle("Steal") 
@@ -137,13 +152,15 @@ module.exports.run = async (bot, message, args) => {
     let guildID = guild.id
     let userID = user.id
 
+    
+
     //Make sure they have that much dough
     const coinsOwned = await economy.getCoins(username, guildID, userID)
     if(coinsOwned < coinsToTake)
     {
         let embed = new Discord.MessageEmbed()
             .setTitle("Steal") 
-            .setDescription(`The jig is up they only have ${coinsOwned} coins!`)
+            .setDescription(`The jig is up they only have ${numberWithCommas(coinsOwned)} coins!`)
             .setColor("#197419")
             .setTimestamp();
 
@@ -177,7 +194,7 @@ module.exports.run = async (bot, message, args) => {
         
         let embed = new Discord.MessageEmbed()
             .setTitle("Steal") 
-            .setDescription(`You have stolen <@${user.id}> ${coinsToTake} coins! They now have ${newBalance} coins and you have ${remainingCoins} coins!`)
+            .setDescription(`You have stolen <@${user.id}> ${coinsToTake} coins! They now have ${numberWithCommas(newBalance)} coins and you have ${numberWithCommas(remainingCoins)} coins!`)
             .setColor("#197419")
             .setTimestamp();
 
@@ -215,7 +232,7 @@ module.exports.run = async (bot, message, args) => {
 
         let embed = new Discord.MessageEmbed()
             .setTitle("Steal") 
-            .setDescription(`You got busted! The sticky authorties have confiscated your coins! With the legal fees you now have ${newBalance} coins and they have ${remainingCoins} coins!`)
+            .setDescription(`You got busted! The sticky authorties have confiscated your coins! With the legal fees you now have ${numberWithCommas(newBalance)} coins and they have ${numberWithCommas(remainingCoins)} coins!`)
             .setColor("#197419")
             .setTimestamp();
 

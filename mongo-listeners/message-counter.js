@@ -2,6 +2,7 @@
 
 const mongo = require('@storage/mongo.js')
 const profileSchema = require('@schemas/message-count-schema.js');
+const mongoose = require('mongoose')
 
 module.exports.run = (bot) => {
 
@@ -9,6 +10,8 @@ module.exports.run = (bot) => {
 
         const { author } = message
         const { id } = author
+
+        mongoose.set('useFindAndModify', false);
 
         await messageCountSchema.findOneAndUpdate(
             {

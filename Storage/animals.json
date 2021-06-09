@@ -1,0 +1,14 @@
+[
+    {
+        "name": "dragon",
+        "price": 1000
+    },
+    {
+        "name": "dog",
+        "price": 100
+    },
+    {
+        "name": "deer",
+        "price": 10
+    }
+]

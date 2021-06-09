@@ -3,6 +3,10 @@ const dailyRewardsSchema = require('@schemas/daily-rewards-schema.js')
 const economy = require('@listeners/economy.js'); 
 const Discord = require('discord.js'); 
 
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
 let claimedCache = []
 
 const clearCache = () => {
@@ -88,7 +92,7 @@ module.exports.run = async (bot, message, args) => {
     //Let user know that they got the goods.
     let embed = new Discord.MessageEmbed()
         .setTitle("Daily") 
-        .setDescription(`You have claimed your daily rewards of 50 coins! You new balance is ${newBalance}`)
+        .setDescription(`You have claimed your daily rewards of 50 coins! You new balance is ${numberWithCommas(newBalance)}`)
         .setColor("#197419")
         .setTimestamp();
     
