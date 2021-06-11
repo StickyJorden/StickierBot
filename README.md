@@ -18,6 +18,7 @@ This is a Discord Bot made in Javascript.
 -MongoDB\
 -Per Server Settings\
 -Per User Data\
--Basic Economy System
+-Basic Economy System\
+-Pets
 
 I am looking forward to adding more to the bot over time thank you so much for stopping by!
