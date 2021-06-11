@@ -1,14 +1,14 @@
 [
     {
-        "name": "dragon",
+        "animal": "dragon",
         "price": 1000
     },
     {
-        "name": "dog",
+        "animal": "dog",
         "price": 100
     },
     {
-        "name": "deer",
+        "animal": "deer",
         "price": 10
     }
 ]

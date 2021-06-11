@@ -1,4 +1,3 @@
-const mongo = require('@storage/mongo.js')
 const dailyRewardsSchema = require('@schemas/daily-rewards-schema.js')
 const economy = require('@listeners/economy.js'); 
 const Discord = require('discord.js'); 

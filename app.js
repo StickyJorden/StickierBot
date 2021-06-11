@@ -1,3 +1,5 @@
+
+
 require('module-alias/register')
 
 const Discord = require('discord.js');
@@ -80,8 +82,6 @@ bot.on('message', message => {
 //Listner Event: Runs whenever the bot sends a ready event (when it first starts)
 bot.on("ready", async () => {
     console.log('Stickier Bot: Online');
-
-
 
     //Uncomment to enable counter the number of messages sent per user
     //messageCount.run(bot);

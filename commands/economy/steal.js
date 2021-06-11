@@ -33,18 +33,17 @@ module.exports.run = async (bot, message, args) => {
    //Get the user mentioned
    const user = message.mentions.users.first()
    
-   //Check if user already claimed daily reward
+   //Check if user already stolen from someone
    if(claimedCache.includes(id)){
-    
-    
-    let embed = new Discord.MessageEmbed()
-        .setTitle("Steal") 
-        .setDescription(alreadyClaimed)
-        .setColor("#197419")
-        .setTimestamp();
-    
-    message.channel.send(embed);
-    return
+
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Steal") 
+            .setDescription(alreadyClaimed)
+            .setColor("#197419")
+            .setTimestamp();
+        
+        message.channel.send(embed);
+        return
     }   
 
     //Obj for user daily reward schema
@@ -85,7 +84,7 @@ module.exports.run = async (bot, message, args) => {
     {
         let embed = new Discord.MessageEmbed()
             .setTitle("Steal") 
-            .setDescription("We gonna do this or what!? I need a name. Usage !user <user> <amount>")
+            .setDescription("We gonna do this or what!? I need a name. Usage !user <user>")
             .setColor("#197419")
             .setTimestamp();
     
@@ -93,70 +92,28 @@ module.exports.run = async (bot, message, args) => {
         return
     }
 
-    //Make sure we get a useable amount
-    const coinsToTake = args[1]
-    if(isNaN(coinsToTake))
-    {
-        let embed = new Discord.MessageEmbed()
-            .setTitle("Steal") 
-            .setDescription('What are you on? How much we takin?? Usage !steal <user> <amount>')
-            .setColor("#197419")
-            .setTimestamp();
-    
-        message.channel.send(embed);
-        return
-    }
-
-    //Make sure they use whole numbers only
-    if(coinsToTake % 1 != 0)
-    {
-        let embed = new Discord.MessageEmbed()
-            .setTitle("Add Balance") 
-            .setDescription('Please whole numbers only. Usage !pay <user> <amount>')
-            .setColor("#197419")
-            .setTimestamp();
-        
-        message.channel.send(embed);
-        return
-    }
-    
-    //Make sure user doesnt take too much!
-    if(coinsToTake > 500)
-    {
-        let embed = new Discord.MessageEmbed()
-            .setTitle("Steal") 
-            .setDescription('Thats too big for a two man job! (Max you can take is 10 coins)')
-            .setColor("#197419")
-            .setTimestamp();
-
-        message.channel.send(embed);
-        return
-    }
-    //Make sure user does send negative money!
-    else if(coinsToTake <= 0)
-    {
-        let embed = new Discord.MessageEmbed()
-            .setTitle("Steal") 
-            .setDescription('I think you might be looking for the charity command....')
-            .setColor("#197419")
-            .setTimestamp();
-
-        message.channel.send(embed);
-        return
-    }
-
-    const odds = getRandomInt(10)
+    //Find out the odds of success
+    let odds = getRandomInt(9)
+    odds = odds + 1
 
     //Get the user to steal from info
     let username = user.tag
     let guildID = guild.id
     let userID = user.id
 
+    /*
+    console.log("______________________")
+    console.log("USER: ", username)
+    console.log("GUILD: ", guildID)
+    console.log("USER: ", userID)
+    console.log("______________________")
+    */
+
     
 
     //Make sure they have that much dough
-    const coinsOwned = await economy.getCoins(username, guildID, userID)
-    if(coinsOwned < coinsToTake)
+    let coinsOwned = await economy.getCoins(username, guildID, userID)
+    if(coinsOwned < 50)
     {
         let embed = new Discord.MessageEmbed()
             .setTitle("Steal") 
@@ -169,8 +126,14 @@ module.exports.run = async (bot, message, args) => {
     }
 
     //RNG To see if the win or not 
-    if(odds <= 2)
+    //Small Cut
+    if(odds == 7 || odds == 8)
     {
+
+        //Take 10% of victums coins
+        let coinsToTake = Math.ceil(coinsOwned * .001)
+
+
         //Take away their money
         const remainingCoins = await economy.addCoins(
             username,
@@ -194,7 +157,7 @@ module.exports.run = async (bot, message, args) => {
         
         let embed = new Discord.MessageEmbed()
             .setTitle("Steal") 
-            .setDescription(`You have stolen <@${user.id}> ${coinsToTake} coins! They now have ${numberWithCommas(newBalance)} coins and you have ${numberWithCommas(remainingCoins)} coins!`)
+            .setDescription(`You have stolen a SMALL cut of ${numberWithCommas(coinsToTake)} coins! You now have ${numberWithCommas(newBalance)} coins and they have ${numberWithCommas(remainingCoins)} coins!`)
             .setColor("#197419")
             .setTimestamp();
 
@@ -207,8 +170,94 @@ module.exports.run = async (bot, message, args) => {
         //Update cache so they cant claim again
         //claimedCache.push(id)
     }
-    else if(odds >=3)
+    //Nice cut
+    else if(odds == 9)
     {
+        //Take 20% of victums coins
+        let coinsToTake = Math.ceil(coinsOwned * .005)
+
+        //Take away their money
+        const remainingCoins = await economy.addCoins(
+            username,
+            guildID,
+            userID,
+            coinsToTake * -1
+        )
+
+        //Get the theif user info
+        username = message.member.user.tag
+        guildID = guild.id
+        userID = member.id
+
+        //Add stolen coins to their balance
+        const newBalance = await economy.addCoins(
+            username,
+            guildID,
+            userID,
+            coinsToTake
+        )
+        
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Steal") 
+            .setDescription(`You have stolen a NICE cut of ${numberWithCommas(coinsToTake)} coins! You now have ${numberWithCommas(newBalance)} coins and they have ${numberWithCommas(remainingCoins)} coins!`)
+            .setColor("#197419")
+            .setTimestamp();
+
+        message.channel.send(embed);
+    }
+    //Motherload
+    else if(odds == 10)
+    {
+        //Take 30% of victums coins
+        let coinsToTake = Math.ceil(coinsOwned * .001)
+
+        //Take away their money
+        const remainingCoins = await economy.addCoins(
+            username,
+            guildID,
+            userID,
+            coinsToTake * -1
+        )
+
+        //Get the theif user info
+        username = message.member.user.tag
+        guildID = guild.id
+        userID = member.id
+
+        //Add stolen coins to their balance
+        const newBalance = await economy.addCoins(
+            username,
+            guildID,
+            userID,
+            coinsToTake
+        )
+        
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Steal") 
+            .setDescription(`You have stolen the MOTHERLOAD cut of ${numberWithCommas(coinsToTake)} coins! You now have ${numberWithCommas(newBalance)} coins and they have ${numberWithCommas(remainingCoins)} coins!`)
+            .setColor("#197419")
+            .setTimestamp();
+
+        message.channel.send(embed);
+    }
+    //They got caught
+    else if(odds < 7)
+    {
+
+        //Get the theif user  info
+        username = message.member.user.tag
+        userID = member.id
+
+        let coinsOwned = await economy.getCoins(username, guildID, userID)
+
+        //Take 10% of victums coins
+        let coinsToTake = Math.ceil(coinsOwned * .05)
+
+        console.log(coinsToTake)
+
+        username = user.tag
+        userID = user.id
+
         //Take away their money
         const remainingCoins = await economy.addCoins(
             username,
@@ -217,10 +266,18 @@ module.exports.run = async (bot, message, args) => {
             coinsToTake
         )
 
+
+
         //Get the theif user  info
         username = message.member.user.tag
         guildID = guild.id
         userID = member.id
+
+        console.log("______________________")
+        console.log("USER: ", username)
+        console.log("GUILD: ", guildID)
+        console.log("USER: ", userID)
+        console.log("______________________")
 
         //Take stolen coins from their balance
         const newBalance = await economy.addCoins(

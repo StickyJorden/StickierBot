@@ -48,7 +48,7 @@ module.exports.run = async (bot, message, args) => {
     }
 
     //Make sure they use whole numbers only
-    if(coinsToGive % 1 != 0)
+    if(coins % 1 != 0)
     {
         let embed = new Discord.MessageEmbed()
             .setTitle("Add Balance") 
