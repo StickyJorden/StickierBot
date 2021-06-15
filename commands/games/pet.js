@@ -128,7 +128,6 @@ module.exports.run = async (bot, message, args) => {
                     .setTimestamp();
 
                 message.channel.send(embed)
-
                 break
                             
             }

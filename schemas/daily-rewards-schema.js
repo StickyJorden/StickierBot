@@ -10,10 +10,14 @@ const dailyRewardsSchema = mongoose.Schema(
         username: reqString,
         guildID: reqString,
         userID: reqString,
+        day: {
+            type:Number,
+            default: 0 
+        }
     }, 
     {
         timestamps: true,
-    }
+    },
 )
 
 module.exports = mongoose.model('daily-rewards', dailyRewardsSchema)
