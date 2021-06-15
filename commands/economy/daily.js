@@ -33,9 +33,11 @@ module.exports.run = async (bot, message, args) => {
    const line = `**\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF**`
    const coin =  '<a:COIN:854221264343138304>'
    const bank = "<a:money_bag:854228919376543754>"
+   const dance = "<a:dance:835016357245485056>"
    let dayCount = await days.getDays(username, guildID, userID)
    let bonus = false
 
+   //If they completed the 6 day streak then reset the day counter and reward them/give them bonus
    if(dayCount > 5)
    {
        //add coins to mentioned user
@@ -50,11 +52,17 @@ module.exports.run = async (bot, message, args) => {
    {
         bonus = true
    }
+
    //Find users coin balance
    const coins = await economy.getCoins(username, guild.id, id)
+
+   //Update the counter for days left to complete
    let counter = 5 - dayCount
+
+   //Update how much they are getting from the daily rewards
    let rewards = (dayCount+1)*50
 
+   //Apply the bonus if they completed the streak
    if(bonus == true)
    {
        rewards = rewards * 100
@@ -68,13 +76,13 @@ module.exports.run = async (bot, message, args) => {
         userID: id,
     }
 
-   /*
+   //Check cache to see if the user already claimed
    if(claimedCache.includes(id)){
 
         //Let user know that they got the goods.
         let embed = new Discord.MessageEmbed()
-            .setTitle("Daily Rewards!") 
-            .setDescription(`${alreadyClaimed} ❌`)
+            .setTitle(`Daily Rewards!`) 
+            .setDescription(`${alreadyClaimed} ${dance}`)
             .addFields(
                 {name: `${line}`, value: `**Reward: \`+${numberWithCommas(rewards)} tokens\` ${coin}**`, inline: false},
                 {name: `**Balance: \`${numberWithCommas(coins)} tokens\` ${bank}**`, value: `${line}`, inline: false},
@@ -106,8 +114,8 @@ module.exports.run = async (bot, message, args) => {
 
             //Let user know that they got the goods.
             let embed = new Discord.MessageEmbed()
-                .setTitle("Daily Rewards!") 
-                .setDescription(`${alreadyClaimed} ❌`)
+                .setTitle(`Daily Rewards!`) 
+                .setDescription(`${alreadyClaimed} ${dance}`)
                 .addFields(
                     {name: `${line}`, value: `**Reward: \`+${numberWithCommas(rewards)} tokens\` ${coin}**`, inline: false},
                     {name: `**Balance: \`${numberWithCommas(coins)} tokens\` ${bank}**`, value: `${line}`, inline: false},
@@ -119,8 +127,61 @@ module.exports.run = async (bot, message, args) => {
             message.channel.send(embed);
             return
         }
+        if(diffDays >= 3)
+        {
+            //add coins to mentioned user
+            dayCount = await days.addDays(
+                username,
+                guildID,
+                userID,
+                -dayCount
+            )
+
+            rewards = (dayCount+1)*50
+            counter = 5 - dayCount
+
+            //add coins to mentioned user
+            const newDay = await days.addDays(
+                username,
+                guildID,
+                userID,
+                1
+            )
+
+            //Update the status that they got the reward
+            await dailyRewardsSchema.findOneAndUpdate(obj, obj, {upsert: true})
+
+            //Update cache so they cant claim again
+            claimedCache.push(id)
+
+            //Update their balance with daily reward
+            const newBalance = await economy.addCoins(
+                username,
+                guild.id,
+                id,
+                rewards
+            )
+
+            //Let user know that they got the goods.
+            let embed = new Discord.MessageEmbed()
+                .setTitle(`Daily Rewards!`) 
+                .setDescription(`You claimed your daily reward. ${dance}`)
+                .addFields(
+                    {name: `${line}`, value: `**Reward: \`+${numberWithCommas(rewards)} tokens\` ${coin}**`, inline: false},
+                    {name: `**Balance: \`${numberWithCommas(newBalance)} tokens\` ${bank}**`, value: `${line}`, inline: false},
+                    {name: `Daily Streak!`, value: `\`${counter}\` more claims to bonus!`, inline: false}
+                    )
+                .setImage(`${streak[dayCount].link}`)
+                .setColor("#197419")
+                .setTimestamp();
+
+            message.channel.send(embed);
+
+
+
+        }
    }
-   */
+   
    
    
 
@@ -148,8 +209,8 @@ module.exports.run = async (bot, message, args) => {
 
     //Let user know that they got the goods.
     let embed = new Discord.MessageEmbed()
-        .setTitle("Daily Rewards!") 
-        .setDescription("You claimed your daily reward. ✔️")
+        .setTitle(`Daily Rewards!`) 
+        .setDescription(`You claimed your daily reward. ${dance}`)
         .addFields(
             {name: `${line}`, value: `**Reward: \`+${numberWithCommas(rewards)} tokens\` ${coin}**`, inline: false},
             {name: `**Balance: \`${numberWithCommas(newBalance)} tokens\` ${bank}**`, value: `${line}`, inline: false},
