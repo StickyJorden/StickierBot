@@ -5,6 +5,10 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+const line = `**\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF**`
+const bank = "<a:money_bag:854228919376543754>"
+
+
 module.exports.run = async (bot, message, args) => {
    
     const user = message.mentions.users.first() || message.author
@@ -19,7 +23,10 @@ module.exports.run = async (bot, message, args) => {
 
     let embed = new Discord.MessageEmbed()
         .setTitle("Balance") 
-        .setDescription(`That user ${username} has ${numberWithCommas(coins)} coins!`)
+        .addFields(
+            {name: `${line}`, value: `**User: \`${username}\`**`, inline: false},
+            {name: `**Balance: \`${numberWithCommas(coins)} tokens\` ${bank}**`, value: `${line}`, inline: false},
+            )
         .setColor("#197419")
         .setTimestamp();
     
