@@ -4,6 +4,12 @@ const days = require('@listeners/day.js');
 const Discord = require('discord.js'); 
 const fs = require('fs');
 
+//const line = `**\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF**`
+const line = `**\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF**`
+const coin =  '<a:COIN:854221264343138304>'
+const bank = "<a:money_bag:854228919376543754>"
+const dance = "<a:dance:835016357245485056>"
+
 //We can call the JSON file for punishments
 const streak = JSON.parse(fs.readFileSync('storage/streaks.json','utf8'));
 
@@ -30,10 +36,6 @@ module.exports.run = async (bot, message, args) => {
    let username = message.member.user.tag
    let guildID = guild.id
    let userID = id
-   const line = `**\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF**`
-   const coin =  '<a:COIN:854221264343138304>'
-   const bank = "<a:money_bag:854228919376543754>"
-   const dance = "<a:dance:835016357245485056>"
    let dayCount = await days.getDays(username, guildID, userID)
    let bonus = false
 
@@ -58,10 +60,18 @@ module.exports.run = async (bot, message, args) => {
 
    //Update the counter for days left to complete
    let counter = 5 - dayCount
+   let rewards = 0
 
    //Update how much they are getting from the daily rewards
-   let rewards = (dayCount+1)*50
-
+   if(dayCount == 0)
+   {
+       rewards = 50
+   }
+   else
+   {
+       rewards = (dayCount+1) * 50
+   }
+  
    //Apply the bonus if they completed the streak
    if(bonus == true)
    {
@@ -75,9 +85,15 @@ module.exports.run = async (bot, message, args) => {
         guildID: guild.id,
         userID: id,
     }
-
+ 
+    
    //Check cache to see if the user already claimed
    if(claimedCache.includes(id)){
+
+        console.log("HERE 1")
+        dayCount--
+        rewards-=50
+        counter++
 
         //Let user know that they got the goods.
         let embed = new Discord.MessageEmbed()
@@ -89,7 +105,7 @@ module.exports.run = async (bot, message, args) => {
                 {name: `Daily Streak!`, value: `\`${counter}\` more claims to bonus!`, inline: false}
                 )
             .setColor("#197419")
-            .setImage(`${streak[dayCount].link}`)
+            .setImage(`${streak[(dayCount)].link}`)
             .setTimestamp();
 
         message.channel.send(embed);
@@ -101,17 +117,26 @@ module.exports.run = async (bot, message, args) => {
    
    //if bot restarts make sure the user cant reclaim rewards before 24 hours
    if(results){
+
+        console.log("HERE 2")
+
         const then = new Date(results.updatedAt).getTime() //last time user got reward
         const now = new Date().getTime() //time at current moment 
 
         const diffTime = Math.abs(now - then)
         const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24))
 
+        let timeHour = Math.floor(Math.abs(diffTime / (60 * 60 * 1000))) 
+        //let timeMin = Math.floor(Math.abs(diffTime / (60 * 1000))) 
+
         if (diffDays <= 1)
         {
+            dayCount--
+            rewards-=50
+            counter++
             claimedCache.push(id)
 
-
+           
             //Let user know that they got the goods.
             let embed = new Discord.MessageEmbed()
                 .setTitle(`Daily Rewards!`) 
@@ -127,8 +152,10 @@ module.exports.run = async (bot, message, args) => {
             message.channel.send(embed);
             return
         }
+        //If user hasnt keep streak then reset them
         if(diffDays >= 3)
         {
+            
             //add coins to mentioned user
             dayCount = await days.addDays(
                 username,
@@ -177,12 +204,10 @@ module.exports.run = async (bot, message, args) => {
 
             message.channel.send(embed);
 
-
+            return
 
         }
    }
-   
-   
    
 
    //add coins to mentioned user
