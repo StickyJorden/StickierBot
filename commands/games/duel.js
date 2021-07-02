@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const createBar = require('string-progressbar');
+const progressbar = require('string-progressbar');
 const economy = require('@listeners/economy.js'); 
 
 //We can call the JSON file for quotes
@@ -152,7 +152,7 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
             
             if(current > 0)
             {
-            var bar = createBar(total, current, size)
+            var bar = progressbar.filledBar(total, current, size)
             }
 
             if(current > 0 && cpuHealth > 0)
@@ -214,7 +214,7 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
             else if(current <= 0)
                 {
 
-                    bar = createBar(total, 0, size)
+                    bar = progressbar.filledBar(total, 0, size)
 
                     let embed = new Discord.MessageEmbed() 
                         .setTitle(`${message.member.user.username} has challenged ${rMember.user.username}!`)
@@ -403,13 +403,13 @@ module.exports.run = async (bot, message, args) => {
     var total = 100;
     var current = 100;
     var size = 10, line = '🟩', slider = '🔘';
-    // Call the createBar method, first two arguments are mandatory
+    // Call the progressbar.filledBar method, first two arguments are mandatory
     // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
 
     let choiceMove = "", turnCPU = "", battleResponse = "", cpuHealth = 100;
 
     let space = `\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0`;
-    var bar = createBar(total, current, size)
+    var bar = progressbar.filledBar(total, current, size)
     var moveNum = setMoves()
 
 
