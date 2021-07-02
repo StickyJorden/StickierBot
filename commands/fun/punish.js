@@ -23,11 +23,11 @@ module.exports.run = (bot, message, args) => {
   let victim = args.slice(0).join(' ');
 
   let ballembed = new Discord.MessageEmbed()
-    .setTitle('Wheel of Punishment')
-    .setColor('#FF990')
-    .addField('Victim ', victim)
-    .addField('Sentence ', punishments[number].name)
-    .setImage(punishments[number].link);
+      .setTitle('Wheel of Punishment')
+      .setColor('#FF990')
+      .addField('Victim ', victim)
+      .addField('Sentence ', punishments[number].name)
+      .setImage(punishments[number].link);
 
   message.channel.send(ballembed);
 }

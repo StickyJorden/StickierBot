@@ -1,4 +1,4 @@
-const talkedRecently = new Set();
+const cooldown = new Set();
 const Discord = require('discord.js');
 const economy = require('@listeners/economy.js'); 
 
@@ -30,7 +30,7 @@ function numberWithCommas(x) {
 
 module.exports.run = async (bot, message, args) => {
 
-    if (talkedRecently.has(message.author.id)) {
+    if (cooldown.has(message.author.id)) {
          //Let user know that they got the goods.
          let embed = new Discord.MessageEmbed()
             .setTitle(`Work`) 
@@ -74,7 +74,6 @@ module.exports.run = async (bot, message, args) => {
             report = goodReport[job]
         }
         
-
         //Let user know that they got the goods.
         let embed = new Discord.MessageEmbed()
             .setTitle(`Work`) 
@@ -88,14 +87,12 @@ module.exports.run = async (bot, message, args) => {
             .setTimestamp();
 
         message.channel.send(embed);
-
-
         
         // Adds the user to the set so that they can't talk for a minute
-        talkedRecently.add(message.author.id);
+        cooldown.add(message.author.id);
         setTimeout(() => {
         // Removes the user from the set after a minute
-        talkedRecently.delete(message.author.id);
+        cooldown.delete(message.author.id);
         }, 60000);
         
     }

@@ -86,14 +86,20 @@ module.exports.run = async (bot, message, args) => {
         userID: id,
     }
  
-    
+
    //Check cache to see if the user already claimed
    if(claimedCache.includes(id)){
 
-        console.log("HERE 1")
+        if(dayCount == 0)
+        {
+            dayCount = 0
+        }
+        else
+        {
         dayCount--
         rewards-=50
         counter++
+        }
 
         //Let user know that they got the goods.
         let embed = new Discord.MessageEmbed()
@@ -118,24 +124,43 @@ module.exports.run = async (bot, message, args) => {
    //if bot restarts make sure the user cant reclaim rewards before 24 hours
    if(results){
 
-        console.log("HERE 2")
-
         const then = new Date(results.updatedAt).getTime() //last time user got reward
         const now = new Date().getTime() //time at current moment 
 
         const diffTime = Math.abs(now - then)
         const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24))
 
-        let timeHour = Math.floor(Math.abs(diffTime / (60 * 60 * 1000))) 
-        //let timeMin = Math.floor(Math.abs(diffTime / (60 * 1000))) 
+        //Calculate time left until the next reward
+        let timeHour = Math.round(diffTime / (1000 * 60 * 60))
+        let timeMin = Math.round(diffTime / (1000 * 60))
 
+        //console.log("timeHour: ", timeHour)
+        //console.log("timeMin: ", timeMin)
+
+        let timeLeftMin = Math.abs((60 - timeMin))
+
+        //console.log("timeLeftMin: ", timeLeftMin)
+
+        //console.log("HOUR MATH: ", ((60 - timeMin)/60))
+        
+        let timeLeftHour = Math.floor(24 - Math.abs(((60 - timeMin)/60)) - timeHour)
+
+        //console.log("timeLeftHour:", timeLeftHour)
+
+        //If it has not been a full day yet do not give them the reward
         if (diffDays <= 1)
         {
+            if(dayCount == 0)
+            {
+                dayCount = 0
+            }
+            else
+            {
             dayCount--
             rewards-=50
             counter++
-            claimedCache.push(id)
-
+            }
+            //claimedCache.push(id)
            
             //Let user know that they got the goods.
             let embed = new Discord.MessageEmbed()
@@ -148,6 +173,7 @@ module.exports.run = async (bot, message, args) => {
                     )
                 .setColor("#197419")
                 .setImage(`${streak[dayCount].link}`)
+                .setFooter(`${timeLeftHour} hour(s) ${timeLeftMin} min(s) until your next reward!`,"")
                 .setTimestamp();
             message.channel.send(embed);
             return
@@ -179,7 +205,7 @@ module.exports.run = async (bot, message, args) => {
             await dailyRewardsSchema.findOneAndUpdate(obj, obj, {upsert: true})
 
             //Update cache so they cant claim again
-            claimedCache.push(id)
+            //claimedCache.push(id)
 
             //Update their balance with daily reward
             const newBalance = await economy.addCoins(
@@ -222,7 +248,7 @@ module.exports.run = async (bot, message, args) => {
    await dailyRewardsSchema.findOneAndUpdate(obj, obj, {upsert: true})
 
    //Update cache so they cant claim again
-   claimedCache.push(id)
+   //claimedCache.push(id)
 
    //Update their balance with daily reward
    const newBalance = await economy.addCoins(
