@@ -131,21 +131,20 @@ module.exports.run = async (bot, message, args) => {
         const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24))
 
         //Calculate time left until the next reward
-        let timeHour = Math.round(diffTime / (1000 * 60 * 60))
-        let timeMin = Math.round(diffTime / (1000 * 60))
+        let timeHour = Math.abs(diffTime / (1000 * 60 * 60))
+        let timeMin = Math.abs(diffTime / (1000 * 60))
 
         console.log("timeHour: ", timeHour)
         console.log("timeMin: ", timeMin)
 
-        let timeLeftMin = Math.abs((60 - timeMin))
+        let totalMin = 1440 - 60 * timeHour - timeMin
 
-        console.log("timeLeftMin: ", timeLeftMin)
-
-        console.log("HOUR MATH: ", ((60 - timeMin)/60))
-        
-        let timeLeftHour = Math.floor(24 - Math.abs(((60 - timeMin)/60)) - timeHour)
-
+        let timeLeftHour = Math.round(Math.abs(totalMin / 60))
         console.log("timeLeftHour:", timeLeftHour)
+
+        let timeLeftMin = Math.round(Math.abs(totalMin % 60))
+        console.log("timeLeftMin: ", timeLeftMin)
+        
 
         //If it has not been a full day yet do not give them the reward
         if (diffDays <= 1)
