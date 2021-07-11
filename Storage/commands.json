@@ -139,6 +139,20 @@
     "desc":"Pay another user",
     "usage":"pay [user] [amount]"
   },
+  "Work":
+  {
+    "name":"Work",
+    "group":"User",
+    "desc":"Work to increase your total amount of coins",
+    "usage":"work"
+  },
+  "Daily":
+  {
+    "name":"Daily",
+    "group":"User",
+    "desc":"receive a daily bonus",
+    "usage":"daily"
+  },
   "Play":
   {
     "name":"Play",
