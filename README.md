@@ -19,6 +19,9 @@ This is a Discord Bot made in Javascript.
 -Per Server Settings\
 -Per User Data\
 -Basic Economy System\
--Pets
+-Pets\
+-Play Music\
+-Daily Messages\
+-Daily Rewards
 
 I am looking forward to adding more to the bot over time thank you so much for stopping by!
