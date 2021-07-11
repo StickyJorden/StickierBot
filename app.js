@@ -22,6 +22,26 @@ const prefix = '!';
 //This is for holding all the command folders that hold several commands within them
 const commandFolders = fs.readdirSync('./commands');
 
+//Distube for playing music
+const DisTube = require('distube');
+
+// Create a new DisTube
+bot.distube = new DisTube(bot, { searchSongs: true, emitNewSongOnly: true });
+
+bot.distube
+    .on("playSong", (message, queue, song) => message.channel.send(
+        `Playing \`${song.name}\` - \`${song.formattedDuration}\`\nRequested by: ${song.user}`
+    ))
+    .on("addSong", (message, queue, song) => message.channel.send(
+        `Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`
+    ))
+    .on("searchResult", (message, result) => {
+      let i = 0;
+      message.channel.send(`**Choose an option from below**\n${result.map(song => `**${++i}**. ${song.name} - \`${song.formattedDuration}\``).join("\n")}\n*Enter anything else or wait 60 seconds to cancel*`);
+    })
+    // DisTubeOptions.searchSongs = true
+    .on("searchCancel", (message) => message.channel.send(`Searching canceled`))
+
 //Listner Event: Runs whenever a message is received.
 bot.on('message', message => {
 
