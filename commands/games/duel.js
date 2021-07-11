@@ -293,7 +293,6 @@ module.exports.run = async (bot, message, args) => {
         return
     }
 
-    /*
     //Make sure user is not a bot or themsevels
     if(rMember.user.bot == true || rMember == message.author.id)
     {
@@ -306,7 +305,6 @@ module.exports.run = async (bot, message, args) => {
         message.channel.send(embed);
         return
     }
-    */
 
     //Make sure we get a useable amount
     const coinsToTake = args[1]

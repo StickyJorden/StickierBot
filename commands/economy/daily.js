@@ -134,18 +134,18 @@ module.exports.run = async (bot, message, args) => {
         let timeHour = Math.round(diffTime / (1000 * 60 * 60))
         let timeMin = Math.round(diffTime / (1000 * 60))
 
-        //console.log("timeHour: ", timeHour)
-        //console.log("timeMin: ", timeMin)
+        console.log("timeHour: ", timeHour)
+        console.log("timeMin: ", timeMin)
 
         let timeLeftMin = Math.abs((60 - timeMin))
 
-        //console.log("timeLeftMin: ", timeLeftMin)
+        console.log("timeLeftMin: ", timeLeftMin)
 
-        //console.log("HOUR MATH: ", ((60 - timeMin)/60))
+        console.log("HOUR MATH: ", ((60 - timeMin)/60))
         
         let timeLeftHour = Math.floor(24 - Math.abs(((60 - timeMin)/60)) - timeHour)
 
-        //console.log("timeLeftHour:", timeLeftHour)
+        console.log("timeLeftHour:", timeLeftHour)
 
         //If it has not been a full day yet do not give them the reward
         if (diffDays <= 1)
