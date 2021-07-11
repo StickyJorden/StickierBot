@@ -138,5 +138,26 @@
     "group":"User",
     "desc":"Pay another user",
     "usage":"pay [user] [amount]"
+  },
+  "Play":
+  {
+    "name":"Play",
+    "group":"User",
+    "desc":"Play a song in a voice channel",
+    "usage":"play [song]"
+  },
+  "Stop":
+  {
+    "name":"Stop",
+    "group":"User",
+    "desc":"Stop a song being played in a voice channel",
+    "usage":"stop"
+  },
+  "Skip":
+  {
+    "name":"Skip",
+    "group":"User",
+    "desc":"Skip a song in a voice channel",
+    "usage":"skip"
   }
 }
