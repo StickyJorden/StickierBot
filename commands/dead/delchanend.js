@@ -3,6 +3,11 @@ const fs = require('fs');
 
 exports.run = (bot, message, args, func) => {
 
+  if(message.author.id != 338544317427875851)
+    {
+        return message.channel.send("You aren't sticky enough for that.");
+    }
+
   //functions
   function sleep(ms)
   {

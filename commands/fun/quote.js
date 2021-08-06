@@ -6,7 +6,7 @@ const quotes = JSON.parse(fs.readFileSync('storage/quotes.json','utf8'));
 //Function to get quote from JSON file
 function getQuote(number, message)
 {
-    message.channel.send(quotes[number].quote);
+    message.channel.send(quotes[number].quote + "-" + quotes[number].name);
 }
 
 //Function to get random number with the max being the total number of quotes in JSON file

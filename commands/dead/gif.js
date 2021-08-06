@@ -11,12 +11,10 @@ exports.run = (bot, message, args, func) => {
 	  }
 	  else if(term == "<@!423837609081700352>")
 	  {
-		console.log("HERE")
 		message.channel.send(`https://tenor.com/view/hold-on-laughing-this-guy-asimp-black-this-nigga-asimp-gif-16283123`);
 	  }
 	  else if(term == "<@423837609081700352>")
 	  {
-		console.log("HERE")
 		message.channel.send(`https://tenor.com/view/hold-on-laughing-this-guy-asimp-black-this-nigga-asimp-gif-16283123`);
 	  }
 	  else

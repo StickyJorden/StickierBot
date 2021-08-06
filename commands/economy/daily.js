@@ -137,6 +137,7 @@ module.exports.run = async (bot, message, args) => {
         console.log("timeHour: ", timeHour)
         console.log("timeMin: ", timeMin)
 
+        //Calculate time left
         let totalMin = 1440 - 60 * timeHour - timeMin
 
         let timeLeftHour = Math.round(Math.abs(totalMin / 60))
@@ -234,7 +235,6 @@ module.exports.run = async (bot, message, args) => {
         }
    }
    
-
    //add coins to mentioned user
    const newDay = await days.addDays(
         username,
