@@ -334,7 +334,7 @@ module.exports.run = async (bot, message, args) => {
     }
 
     //Make sure user doesnt take too much!
-    if(coinsToTake > 10)
+    if(coinsToTake > 1000000)
     {
         let embed = new Discord.MessageEmbed()
             .setTitle("Duel") 
