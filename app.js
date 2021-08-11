@@ -7,6 +7,8 @@ const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 const fs = require('fs');
 
+require('discord-buttons')(bot)
+
 //Get tokens
 require('dotenv').config();
 var token = process.env.TOKEN; 
