@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const disbut = require("discord-buttons");
+const { Interaction } = require('chart.js');
 
 
 module.exports.run = async (bot, message, args) => {
@@ -23,12 +24,18 @@ module.exports.run = async (bot, message, args) => {
         .setID("double")
         .setStyle("blurple");
 
-    message.channel.send(embed);
+    let row = new disbut.MessageActionRow()
+        .addComponents(hit, stand);
   
-    message.channel.send("hello", {
-        buttons: [hit, stand, double],
+    message.channel.send({
+        content: "hello",
+        components: row,
         embed: embed
     });
+
+    if(Interaction.isButton()){
+        
+    }
 
     bot.on("clickButton", async(button) =>{
         if(button.id == "hit")

@@ -134,17 +134,17 @@ module.exports.run = async (bot, message, args) => {
         let timeHour = Math.abs(diffTime / (1000 * 60 * 60))
         let timeMin = Math.abs(diffTime / (1000 * 60))
 
-        console.log("timeHour: ", timeHour)
-        console.log("timeMin: ", timeMin)
+        //console.log("timeHour: ", timeHour)
+        //console.log("timeMin: ", timeMin)
 
         //Calculate time left
         let totalMin = 1440 - 60 * timeHour - timeMin
 
         let timeLeftHour = Math.round(Math.abs(totalMin / 60))
-        console.log("timeLeftHour:", timeLeftHour)
+        //console.log("timeLeftHour:", timeLeftHour)
 
         let timeLeftMin = Math.round(Math.abs(totalMin % 60))
-        console.log("timeLeftMin: ", timeLeftMin)
+        //console.log("timeLeftMin: ", timeLeftMin)
         
 
         //If it has not been a full day yet do not give them the reward

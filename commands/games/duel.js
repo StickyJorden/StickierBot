@@ -61,14 +61,12 @@ function setMoves()
 
 function battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake)
 {
-
-
     //If everything checks out begin
     let moveCPU = getRandomInt(max);
     let choiceChart = "", choiceType = "";
     let space = `\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0`;
     var moveNum = setMoves()
-    const coinsToGive = coinsToTake
+    const coinsToGive = coinsToTake;
     
     //Send the message in chat with the ability to react to the embed
     //Add reactions to the embed
@@ -83,9 +81,11 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
         return ['1️⃣', '2️⃣','3️⃣','4️⃣'].includes(reaction.emoji.name) && user.id === message.author.id;
     };
     
+
     //Wait for the user to react
     embedMessage.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
         .then(async collected => {
+
             const reaction = collected.first();
     
             //Read in which reaction was selected
@@ -109,7 +109,8 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
                 choiceChart = moves[moveNum.fourth];
                 choicePower = moves[moveNum.fourth].power;
             }
-        
+
+           
             reaction.users.remove(message.member.user.id)
             
             //Let the user know what move their opponet used 
@@ -117,7 +118,7 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
 
             //check if player fainted probably need to remove
 
-
+            
             if(current > 0)
             {
                 //Determine who won based off typing with a number breakdown/array in moves.json
@@ -152,7 +153,9 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
             
             if(current > 0)
             {
+                
             var bar = progressbar.filledBar(total, current, size)
+           
             }
 
             if(current > 0 && cpuHealth > 0)
@@ -168,10 +171,11 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
                         {name:'Health', value:`${bar[0]} \n ${bar[1]}/${total}`, inline:false}
                     )
                     .setColor(0x800080)
-                    .setTimestamp()   
-
+                    .setTimestamp();   
+        
                 embedMessage.edit(embed)
-
+                
+    
                 battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
             }
             else if(cpuHealth <= 0)
@@ -293,6 +297,7 @@ module.exports.run = async (bot, message, args) => {
         return
     }
 
+    /*
     //Make sure user is not a bot or themsevels
     if(rMember.user.bot == true || rMember == message.author.id)
     {
@@ -305,6 +310,7 @@ module.exports.run = async (bot, message, args) => {
         message.channel.send(embed);
         return
     }
+    */
 
     //Make sure we get a useable amount
     const coinsToTake = args[1]
@@ -426,7 +432,7 @@ module.exports.run = async (bot, message, args) => {
 
 
     message.channel.send({embed: embed}).then(embedMessage => {
-
+    
         battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
 
     }); 
