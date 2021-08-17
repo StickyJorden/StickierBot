@@ -81,7 +81,6 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
         return ['1️⃣', '2️⃣','3️⃣','4️⃣'].includes(reaction.emoji.name) && user.id === message.author.id;
     };
     
-
     //Wait for the user to react
     embedMessage.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
         .then(async collected => {
@@ -164,19 +163,27 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
                 let embed = new Discord.MessageEmbed() 
                     .setTitle(`${message.member.user.username} has challenged ${rMember.user.username}!`)
                     .setDescription(`${coinsToTake} pokecoins are on the line: \n ${turnCPU} \n ${battleResponse} \n ${rMember.user.username} **Health:** ${cpuHealth}/100`)
+                    .setColor(0x800080)
                     .addFields(
                         {name: 'Move', value: `1. ${moves[moveNum.first].move} \n 2. ${moves[moveNum.second].move} \n 3. ${moves[moveNum.third].move} \n 4. ${moves[moveNum.fourth].move}`, inline:true},
                         {name: 'Type', value: `${moves[moveNum.first].type} \n ${moves[moveNum.second].type} \n ${moves[moveNum.third].type} \n ${moves[moveNum.fourth].type}`, inline:true},
                         {name: `Power \t Accuracy`, value: `${moves[moveNum.first].power}${space}${moves[moveNum.first].acc} \n ${moves[moveNum.second].power}${space}${moves[moveNum.second].acc} \n ${moves[moveNum.third].power}${space}${moves[moveNum.third].acc} \n ${moves[moveNum.fourth].power}${space}${moves[moveNum.fourth].acc}`, inline:true},
                         {name:'Health', value:`${bar[0]} \n ${bar[1]}/${total}`, inline:false}
-                    )
-                    .setColor(0x800080)
+                    ) 
                     .setTimestamp();   
-        
-                embedMessage.edit(embed)
+
                 
     
-                battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
+
+                //embedMessage.edit(embed)
+    
+                //battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
+
+                embedMessage.edit({embed: embed}).then(embedMessage => {
+    
+                    battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
+            
+                }); 
             }
             else if(cpuHealth <= 0)
                 {
@@ -192,7 +199,11 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
                     .setColor(0x800080)
                     .setTimestamp()   
 
-                    embedMessage.edit(embed)
+                    embedMessage.edit({embed: embed}).then(embedMessage => {
+    
+                        battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
+                
+                    }); 
 
                     //Take coins away from who lost (challenger)
                     if(coinsToTake > 0)
@@ -232,7 +243,11 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
                         .setColor(0x800080)
                         .setTimestamp()   
 
-                    embedMessage.edit(embed)
+                    embedMessage.edit({embed: embed}).then(embedMessage => {
+    
+                            battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
+                    
+                        }); 
 
                     //Take coins away from who lost (challenger)
                     if(coinsToTake > 0)
@@ -259,6 +274,7 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
 
         })
         .catch(collected => {
+
             let embed = new Discord.MessageEmbed() 
                 .setTitle(`${message.member.user.username} has challenged ${rMember.user.username}!`)
                 .setDescription(`${message.member.user.username} LOST! \n You paid ${coinsToTake} pokecoins. `)
@@ -271,7 +287,11 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
                 .setColor(0x800080)
                 .setTimestamp()   
 
-            embedMessage.edit(embed)
+            embedMessage.edit({embed: embed}).then(embedMessage => {
+    
+                    battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
+            
+                }); 
 
             return 0; 
         });
@@ -297,7 +317,6 @@ module.exports.run = async (bot, message, args) => {
         return
     }
 
-    /*
     //Make sure user is not a bot or themsevels
     if(rMember.user.bot == true || rMember == message.author.id)
     {
@@ -310,7 +329,7 @@ module.exports.run = async (bot, message, args) => {
         message.channel.send(embed);
         return
     }
-    */
+    
 
     //Make sure we get a useable amount
     const coinsToTake = args[1]
@@ -318,7 +337,7 @@ module.exports.run = async (bot, message, args) => {
     {
         let embed = new Discord.MessageEmbed()
             .setTitle("Duel") 
-            .setDescription('You need to pay the entrance fee to duel (0-10). Usage !duel <user> <amount>')
+            .setDescription('You need to pay the entrance fee to duel. Usage !duel <user> <amount>')
             .setColor(0x800080)
             .setTimestamp();
     

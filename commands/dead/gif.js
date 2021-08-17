@@ -42,8 +42,14 @@ exports.run = (bot, message, args, func) => {
 	        });
           */
 
-
-            message.channel.send(content.data[item].images.fixed_height.url);
+			if(content.data[item] == undefined)
+			{
+				message.channel.send("Couldn't quite find that. Search something else?");
+			}
+			else
+			{
+				message.channel.send(content.data[item].images.fixed_height.url);
+			}
 		  }
 		})
 }

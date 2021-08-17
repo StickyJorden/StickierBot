@@ -33,10 +33,6 @@ module.exports.run = async (bot, message, args) => {
         embed: embed
     });
 
-    if(Interaction.isButton()){
-        
-    }
-
     bot.on("clickButton", async(button) =>{
         if(button.id == "hit")
         {

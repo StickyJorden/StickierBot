@@ -332,7 +332,11 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`You Win!`, `Well Played`)
                         .addField(`\u200B`, results.map, false)
 
-                    embedMessage.edit(embed)
+                    embedMessage.edit({embed: embed}).then(embedMessage => {
+    
+                            makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
+                    
+                        }); 
 
                     embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
 
@@ -344,13 +348,19 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .setTitle('Sokoban')
                         .setColor('#FF0000')
                         .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Use the 🗑 to end the game early \n 4. Be careful where you move or else you'll be stuck!`)
-                        .addField(`\u200B`, results.map, false)
+                        .addField(`\u200B`, results.map, false);
 
-                    embedMessage.edit(embed)
-
+    
                     reaction.users.remove(reactor.id)
+
+                    embedMessage.edit({embed: embed}).then(embedMessage => {
+    
+                        makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                 
-                    makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
+                    }); 
+                    
+                    
+                    
                 }
             } 
             //Move Player Up
@@ -367,9 +377,14 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`You Win!`, `Well Played`)
                         .addField(`\u200B`, results.map, false)
 
-                    embedMessage.edit(embed)
-
                     embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+
+                    embedMessage.edit({embed: embed}).then(embedMessage => {
+    
+                        makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
+                    
+                    }); 
+                    
                     return
                 }
                 else
@@ -380,11 +395,14 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Use the 🗑 to end the game early \n 4. Be careful where you move or else you'll be stuck!`)
                         .addField(`\u200B`, results.map, false)
 
-                    embedMessage.edit(embed)
+                    embedMessage.edit({embed: embed}).then(embedMessage => {
+    
+                        makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
+                    
+                    }); 
 
                     reaction.users.remove(reactor.id)
                     
-                    makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                 }
             }
             //Move Player Down
@@ -401,7 +419,11 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`You Win!`, `Well Played`)
                         .addField(`\u200B`, results.map, false)
 
-                    embedMessage.edit(embed)
+                    embedMessage.edit({embed: embed}).then(embedMessage => {
+    
+                        makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
+                    
+                    }); 
 
                     embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
                     return
@@ -414,11 +436,14 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Use the 🗑 to end the game early \n 4. Be careful where you move or else you'll be stuck!`)
                         .addField(`\u200B`, results.map, false)
 
-                    embedMessage.edit(embed)
+                    embedMessage.edit({embed: embed}).then(embedMessage => {
+    
+                        makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
+                    
+                    }); 
 
                     reaction.users.remove(reactor.id)
                     
-                    makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                 }
             }
             //Move Player Right
@@ -435,7 +460,11 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`You Win!`, `Well Played`)
                         .addField(`\u200B`, results.map, false)
 
-                    embedMessage.edit(embed)
+                    embedMessage.edit({embed: embed}).then(embedMessage => {
+    
+                        makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
+                    
+                    }); 
 
                     embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
                     return
@@ -448,11 +477,15 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Use the 🗑 to end the game early. \n 4. Be careful where you move or else you'll be stuck!`)
                         .addField(`\u200B`, results.map, false)
 
-                    embedMessage.edit(embed)
-
                     reaction.users.remove(reactor.id)
+
+                    embedMessage.edit({embed: embed}).then(embedMessage => {
+    
+                        makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
+                
+                    }); 
                     
-                    makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
+                    
                 }
             }
             //Move Player Right

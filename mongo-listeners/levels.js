@@ -9,7 +9,7 @@ module.exports.run = (bot) => {
    
     bot.on('message', message => {
     const { guild, member} = message
-    const username = message.member.user.tag
+    
 
     if(!message.member || message.member == null)
     {
@@ -17,6 +17,7 @@ module.exports.run = (bot) => {
     }
     else
     {
+        const username = message.member.user.tag
         addXP(username, guild.id, member.id, 23, message)
     }
     
