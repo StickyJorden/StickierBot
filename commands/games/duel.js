@@ -3,6 +3,7 @@ const fs = require('fs');
 const progressbar = require('string-progressbar');
 const economy = require('@listeners/economy.js'); 
 
+
 //We can call the JSON file for quotes
 const moves = JSON.parse(fs.readFileSync('storage/moves.json','utf8'));
 

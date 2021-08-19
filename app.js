@@ -3,11 +3,12 @@
 require('module-alias/register')
 
 const Discord = require('discord.js');
-const bot = new Discord.Client();
+const { Client, Intents} = require("discord.js"); 
+const bot = new Client({ intents: [Intents.FLAGS.GUILDS] }); 
 bot.commands = new Discord.Collection();
 const fs = require('fs');
 
-require('discord-buttons')(bot)
+//require('discord-buttons')(bot)
 
 //Get tokens
 require('dotenv').config();
@@ -45,9 +46,10 @@ bot.distube
     .on("searchCancel", (message) => message.channel.send(`Searching canceled`))
 
 //Listner Event: Runs whenever a message is received.
-bot.on('message', message => {
+bot.on("messageCreate", message => {
 
   //evaluateMessage(message);
+  console.log(message)
 
   //Variables
   let msg = message.content.toUpperCase(); //Variable takes message and turns it into upper case.

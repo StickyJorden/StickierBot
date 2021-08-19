@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const disbut = require("discord-buttons");
+//const disbut = require("discord-buttons");
 const { Interaction } = require('chart.js');
 
 
@@ -32,6 +32,8 @@ module.exports.run = async (bot, message, args) => {
         components: row,
         embed: embed
     });
+
+   
 
     bot.on("clickButton", async(button) =>{
         if(button.id == "hit")
