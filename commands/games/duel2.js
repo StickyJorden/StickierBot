@@ -4,6 +4,7 @@ const progressbar = require('string-progressbar');
 const economy = require('@listeners/economy.js'); 
 //const disbut = require("discord-buttons");
 const { waitForDebugger } = require('inspector');
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 //We can call the JSON file for quotes
 const moves = JSON.parse(fs.readFileSync('storage/moves.json','utf8'));
@@ -274,11 +275,12 @@ function battleBuildPlay(message,   embedMessage, total, current, size, round, c
         })
 }
 
-module.exports.run = async (bot, message, args) => {
-
-
-
-    /*
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('duel2')
+		.setDescription('have a pokemon duel'),
+	async execute(interaction, message, args) {
+	/*
     //Make sure user is not a bot or themsevels
     if(rMember.user.bot == true || rMember == message.author.id)
     {
@@ -288,7 +290,7 @@ module.exports.run = async (bot, message, args) => {
             .setColor(0x800080)
             .setTimestamp();
     
-        message.channel.send(embed);
+        message.channel.send({embed: embed});
         return
     }
     */
@@ -304,7 +306,7 @@ module.exports.run = async (bot, message, args) => {
             .setColor(0x800080)
             .setTimestamp();
     
-        message.channel.send(embed);
+        message.channel.send({embed: embed});
         return
     }
 
@@ -317,7 +319,7 @@ module.exports.run = async (bot, message, args) => {
             .setColor(0x800080)
             .setTimestamp();
         
-        message.channel.send(embed);
+        message.channel.send({embed: embed});
         return
     }
 
@@ -330,7 +332,7 @@ module.exports.run = async (bot, message, args) => {
             .setColor(0x800080)
             .setTimestamp();
 
-        message.channel.send(embed);
+        message.channel.send({embed: embed});
         return
     }
     //Make sure user does send negative money!
@@ -342,7 +344,7 @@ module.exports.run = async (bot, message, args) => {
             .setColor(0x800080)
             .setTimestamp();
 
-        message.channel.send(embed);
+        message.channel.send({embed: embed});
         return
     }
 
@@ -360,7 +362,7 @@ module.exports.run = async (bot, message, args) => {
             .setColor(0x800080)
             .setTimestamp();
     
-        message.channel.send(embed);
+        message.channel.send({embed: embed});
         return
     }
 
@@ -375,7 +377,7 @@ module.exports.run = async (bot, message, args) => {
             .setColor(0x800080)
             .setTimestamp();
     
-        message.channel.send(embed);
+        message.channel.send({embed: embed});
         return
     }
 */
@@ -413,4 +415,6 @@ module.exports.run = async (bot, message, args) => {
         battleBuildPlay(message, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake, bot, moveNum);
 
     }); 
-}
+    },
+};
+

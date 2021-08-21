@@ -28,75 +28,79 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-module.exports.run = async (bot, message, args) => {
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
-    if (cooldown.has(message.author.id)) {
-         //Let user know that they got the goods.
-         let embed = new Discord.MessageEmbed()
-            .setTitle(`Work`) 
-            .setDescription(`We'll call you when we need you. (Wait a minute before working again)`)
-            .setColor("#7DF9FF")
-            .setTimestamp();
-
-        message.channel.send(embed);
-    } else {
-
-        // the user can type the command ... your command code goes here :)
-        const {guild, member} = message
-        const { id } = member
-        let username = message.member.user.tag
-
-        let report = "";
-
-        const job = Math.floor(Math.random() * jobs.length)
-        const payment = Math.floor(Math.random() * 209) + 1; 
-
-
-        //Update their balance with daily reward
-        const newBalance = await economy.addCoins(
-            username,
-            guild.id,
-            id,
-            payment
-        )
-
-        //Depending on how much they did their report of the day
-        if(payment <= 70)
-        {
-            report = badReport[job]
-        }
-        else if(70 < payment && payment <= 140)
-        {
-            report = normReport[job]
-        }
-        else if(140 < payment && payment <= 211)
-        {
-            report = goodReport[job]
-        }
-        
-        //Let user know that they got the goods.
-        let embed = new Discord.MessageEmbed()
-            .setTitle(`Work`) 
-            .setDescription(`You worked as a **${jobs[job]}**!`)
-            .addFields(
-                {name: `${line}`, value: `**Payment: \`+${numberWithCommas(payment)} tokens\` ${coin}**`, inline: false},
-                {name: `**Balance: \`${numberWithCommas(newBalance)} tokens\` ${bank}**`, value: `${line}`, inline: false},
-                {name: `Progress Report`, value: `${report}`, inline: false}
-                )
-            .setColor("#7DF9FF")
-            .setTimestamp();
-
-        message.channel.send(embed);
-        
-        // Adds the user to the set so that they can't talk for a minute
-        cooldown.add(message.author.id);
-        setTimeout(() => {
-        // Removes the user from the set after a minute
-        cooldown.delete(message.author.id);
-        }, 60000);
-        
-    }
-
-
-
-}
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName('work')
+		.setDescription('work for some tokens'),
+	async execute(interaction, message, args) {
+		if (cooldown.has(message.author.id)) {
+            //Let user know that they got the goods.
+            let embed = new Discord.MessageEmbed()
+               .setTitle(`Work`) 
+               .setDescription(`We'll call you when we need you. (Wait a minute before working again)`)
+               .setColor("#7DF9FF")
+               .setTimestamp();
+   
+           message.channel.send({embed: embed});
+       } else {
+   
+           // the user can type the command ... your command code goes here :)
+           const {guild, member} = message
+           const { id } = member
+           let username = message.member.user.tag
+   
+           let report = "";
+   
+           const job = Math.floor(Math.random() * jobs.length)
+           const payment = Math.floor(Math.random() * 209) + 1; 
+   
+   
+           //Update their balance with daily reward
+           const newBalance = await economy.addCoins(
+               username,
+               guild.id,
+               id,
+               payment
+           )
+   
+           //Depending on how much they did their report of the day
+           if(payment <= 70)
+           {
+               report = badReport[job]
+           }
+           else if(70 < payment && payment <= 140)
+           {
+               report = normReport[job]
+           }
+           else if(140 < payment && payment <= 211)
+           {
+               report = goodReport[job]
+           }
+           
+           //Let user know that they got the goods.
+           let embed = new Discord.MessageEmbed()
+               .setTitle(`Work`) 
+               .setDescription(`You worked as a **${jobs[job]}**!`)
+               .addFields(
+                   {name: `${line}`, value: `**Payment: \`+${numberWithCommas(payment)} tokens\` ${coin}**`, inline: false},
+                   {name: `**Balance: \`${numberWithCommas(newBalance)} tokens\` ${bank}**`, value: `${line}`, inline: false},
+                   {name: `Progress Report`, value: `${report}`, inline: false}
+                   )
+               .setColor("#7DF9FF")
+               .setTimestamp();
+   
+           message.channel.send({embed: embed});
+           
+           // Adds the user to the set so that they can't talk for a minute
+           cooldown.add(message.author.id);
+           setTimeout(() => {
+           // Removes the user from the set after a minute
+           cooldown.delete(message.author.id);
+           }, 60000);
+           
+       }
+	},
+};
+   
