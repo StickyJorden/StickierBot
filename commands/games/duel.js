@@ -3,10 +3,7 @@ const fs = require('fs');
 const progressbar = require('string-progressbar');
 const economy = require('@listeners/economy.js'); 
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
-
-
-//We can call the JSON file for moves
+//We can call the JSON file for quotes
 const moves = JSON.parse(fs.readFileSync('storage/moves.json','utf8'));
 
 //If everything checks out begin
@@ -182,7 +179,7 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
     
                 //battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
 
-                embedMessage.edit({embed: embed}).then(embedMessage => {
+                embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                     battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
             
@@ -202,7 +199,7 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
                     .setColor(0x800080)
                     .setTimestamp()   
 
-                    embedMessage.edit({embed: embed}).then(embedMessage => {
+                    embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                         battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
                 
@@ -246,7 +243,7 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
                         .setColor(0x800080)
                         .setTimestamp()   
 
-                    embedMessage.edit({embed: embed}).then(embedMessage => {
+                    embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                             battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
                     
@@ -290,7 +287,7 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
                 .setColor(0x800080)
                 .setTimestamp()   
 
-            embedMessage.edit({embed: embed}).then(embedMessage => {
+            embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                     battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
             
@@ -302,163 +299,164 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('duel')
-		.setDescription('have a pokemon duel'),
-	async execute(interaction, message, args) {
-		//If a user was found then make sure it is a user in chat. 
-        let rMember = message.mentions.members.first();
+    name: "duel",
+    alias: ["pokemon"],
+    run: async (client, message, args) => { 
 
-        //If user is not found yell at them
-        if(!rMember)
-        {
-            let embed = new Discord.MessageEmbed()
-                .setTitle("Duel") 
-                .setDescription("That challanger could not be found.")
-                .setColor(0x800080)
-                .setTimestamp();
-        
-            message.channel.send({embed: embed});
-            return
-        }
-    
-        //Make sure user is not a bot or themsevels
-        if(rMember.user.bot == true || rMember == message.author.id)
-        {
-            let embed = new Discord.MessageEmbed()
-                .setTitle("Duel") 
-                .setDescription("You cannot duel yourself or a bot!")
-                .setColor(0x800080)
-                .setTimestamp();
-        
-            message.channel.send({embed: embed});
-            return
-        }
-        
-    
-        //Make sure we get a useable amount
-        const coinsToTake = args[1]
-        if(isNaN(coinsToTake))
-        {
-            let embed = new Discord.MessageEmbed()
-                .setTitle("Duel") 
-                .setDescription('You need to pay the entrance fee to duel. Usage !duel <user> <amount>')
-                .setColor(0x800080)
-                .setTimestamp();
-        
-            message.channel.send({embed: embed});
-            return
-        }
-    
-        //Make sure they use whole numbers only
-        if(coinsToTake % 1 != 0)
-        {
-            let embed = new Discord.MessageEmbed()
-                .setTitle("Duel") 
-                .setDescription('Please whole numbers only. Usage !pay <user> <amount>')
-                .setColor(0x800080)
-                .setTimestamp();
-            
-            message.channel.send({embed: embed});
-            return
-        }
-    
-        //Make sure user doesnt take too much!
-        if(coinsToTake > 1000000)
-        {
-            let embed = new Discord.MessageEmbed()
-                .setTitle("Duel") 
-                .setDescription('Thats too much! (Max you can pay is 10 coins)')
-                .setColor(0x800080)
-                .setTimestamp();
-    
-            message.channel.send({embed: embed});
-            return
-        }
-        //Make sure user does send negative money!
-        else if(coinsToTake < 0)
-        {
-            let embed = new Discord.MessageEmbed()
-                .setTitle("Duel") 
-                .setDescription('You can enter for free just use 0 coins')
-                .setColor(0x800080)
-                .setTimestamp();
-    
-            message.channel.send({embed: embed});
-            return
-        }
-    
-        const {guild, member} = message
-        let username = message.member.user.tag
-        let guildID = guild.id
-        let userID = member.id
-    
-        const coinsOwned = await economy.getCoins(username, guildID, userID)
-        if(coinsOwned < coinsToTake && coinsToTake > 0)
-        {
-            let embed = new Discord.MessageEmbed()
-                .setTitle("Duel") 
-                .setDescription(`You do not have ${coinsToGive} coins!`)
-                .setColor(0x800080)
-                .setTimestamp();
-        
-            message.channel.send({embed: embed});
-            return
-        }
-    
-    
-        user = message.mentions.users.first()
-        userID = user.id
-        username = user.tag
-    
-        
-        const coins = await economy.getCoins(username, guildID, userID)
-        /*
-        if(coins < coinsToTake && coinsToTake > 0)
-        {
-            let embed = new Discord.MessageEmbed()
-                .setTitle("Duel") 
-                .setDescription(`That user ${username} has ${coins} coins! Wager less coins. (Max is 10)`)
-                .setColor(0x800080)
-                .setTimestamp();
-        
-            message.channel.send({embed: embed});
-            return
-        }
-    */
-    
-        var round = 0;
-        var total = 100;
-        var current = 100;
-        var size = 10, line = '🟩', slider = '🔘';
-        // Call the progressbar.filledBar method, first two arguments are mandatory
-        // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
-    
-        let choiceMove = "", turnCPU = "", battleResponse = "", cpuHealth = 100;
-    
-        let space = `\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0`;
-        var bar = progressbar.filledBar(total, current, size)
-        var moveNum = setMoves()
-    
-    
-        //Build the embed for the user who started the duel
+
+    //If a user was found then make sure it is a user in chat. 
+    let rMember = message.mentions.members.first();
+
+    //If user is not found yell at them
+    if(!rMember)
+    {
         let embed = new Discord.MessageEmbed()
-            .setTitle(`${message.member.user.username} has challenged ${rMember.user.username}!`)
-            .setDescription(`${coinsToTake} pokecoins are on the line: \n Select the move you would like to use!`)
-            .addFields(
-                {name: 'Move', value: `1. ${moves[moveNum.first].move} \n 2. ${moves[moveNum.second].move} \n 3. ${moves[moveNum.third].move} \n 4. ${moves[moveNum.fourth].move}`, inline:true},
-                {name: 'Type', value: `${moves[moveNum.first].type} \n ${moves[moveNum.second].type} \n ${moves[moveNum.third].type} \n ${moves[moveNum.fourth].type}`, inline:true},
-                {name: `Power \t Accuracy`, value: `${moves[moveNum.first].power}${space}${moves[moveNum.first].acc} \n ${moves[moveNum.second].power}${space}${moves[moveNum.second].acc} \n ${moves[moveNum.third].power}${space}${moves[moveNum.third].acc} \n ${moves[moveNum.fourth].power}${space}${moves[moveNum.fourth].acc}`, inline:true},
-                {name:'Health', value:`${bar[0]} \n ${bar[1]}/${total}`, inline:false}
-            )
+            .setTitle("Duel") 
+            .setDescription("That challanger could not be found.")
             .setColor(0x800080)
             .setTimestamp();
     
+        message.channel.send({embeds: [embed]});
+        return
+    }
+
+    //Make sure user is not a client or themsevels
+    if(rMember.user.client == true || rMember == message.author.id)
+    {
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Duel") 
+            .setDescription("You cannot duel yourself or a client!")
+            .setColor(0x800080)
+            .setTimestamp();
     
-        message.channel.send({embed: embed}).then(embedMessage => {
+        message.channel.send({embeds: [embed]});
+        return
+    }
+    
+
+    //Make sure we get a useable amount
+    const coinsToTake = args[1]
+    if(isNaN(coinsToTake))
+    {
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Duel") 
+            .setDescription('You need to pay the entrance fee to duel. Usage !duel <user> <amount>')
+            .setColor(0x800080)
+            .setTimestamp();
+    
+        message.channel.send({embeds: [embed]});
+        return
+    }
+
+    //Make sure they use whole numbers only
+    if(coinsToTake % 1 != 0)
+    {
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Duel") 
+            .setDescription('Please whole numbers only. Usage !pay <user> <amount>')
+            .setColor(0x800080)
+            .setTimestamp();
         
-            battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
+        message.channel.send({embeds: [embed]});
+        return
+    }
+
+    //Make sure user doesnt take too much!
+    if(coinsToTake > 1000000)
+    {
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Duel") 
+            .setDescription('Thats too much! (Max you can pay is 10 coins)')
+            .setColor(0x800080)
+            .setTimestamp();
+
+        message.channel.send({embeds: [embed]});
+        return
+    }
+    //Make sure user does send negative money!
+    else if(coinsToTake < 0)
+    {
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Duel") 
+            .setDescription('You can enter for free just use 0 coins')
+            .setColor(0x800080)
+            .setTimestamp();
+
+        message.channel.send({embeds: [embed]});
+        return
+    }
+
+    const {guild, member} = message
+    let username = message.member.user.tag
+    let guildID = guild.id
+    let userID = member.id
+
+    const coinsOwned = await economy.getCoins(username, guildID, userID)
+    if(coinsOwned < coinsToTake && coinsToTake > 0)
+    {
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Duel") 
+            .setDescription(`You do not have ${coinsToGive} coins!`)
+            .setColor(0x800080)
+            .setTimestamp();
     
-        }); 
-	},
-};
+        message.channel.send({embeds: [embed]});
+        return
+    }
+
+
+    user = message.mentions.users.first()
+    userID = user.id
+    username = user.tag
+
+    
+    const coins = await economy.getCoins(username, guildID, userID)
+    /*
+    if(coins < coinsToTake && coinsToTake > 0)
+    {
+        let embed = new Discord.MessageEmbed()
+            .setTitle("Duel") 
+            .setDescription(`That user ${username} has ${coins} coins! Wager less coins. (Max is 10)`)
+            .setColor(0x800080)
+            .setTimestamp();
+    
+        message.channel.send({embeds: [embed]});
+        return
+    }
+*/
+
+    var round = 0;
+    var total = 100;
+    var current = 100;
+    var size = 10, line = '🟩', slider = '🔘';
+    // Call the progressbar.filledBar method, first two arguments are mandatory
+    // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
+
+    let choiceMove = "", turnCPU = "", battleResponse = "", cpuHealth = 100;
+
+    let space = `\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0`;
+    var bar = progressbar.filledBar(total, current, size)
+    var moveNum = setMoves()
+
+
+    //Build the embed for the user who started the duel
+    let embed = new Discord.MessageEmbed()
+        .setTitle(`${message.member.user.username} has challenged ${rMember.user.username}!`)
+        .setDescription(`${coinsToTake} pokecoins are on the line: \n Select the move you would like to use!`)
+        .addFields(
+            {name: 'Move', value: `1. ${moves[moveNum.first].move} \n 2. ${moves[moveNum.second].move} \n 3. ${moves[moveNum.third].move} \n 4. ${moves[moveNum.fourth].move}`, inline:true},
+            {name: 'Type', value: `${moves[moveNum.first].type} \n ${moves[moveNum.second].type} \n ${moves[moveNum.third].type} \n ${moves[moveNum.fourth].type}`, inline:true},
+            {name: `Power \t Accuracy`, value: `${moves[moveNum.first].power}${space}${moves[moveNum.first].acc} \n ${moves[moveNum.second].power}${space}${moves[moveNum.second].acc} \n ${moves[moveNum.third].power}${space}${moves[moveNum.third].acc} \n ${moves[moveNum.fourth].power}${space}${moves[moveNum.fourth].acc}`, inline:true},
+            {name:'Health', value:`${bar[0]} \n ${bar[1]}/${total}`, inline:false}
+        )
+        .setColor(0x800080)
+        .setTimestamp();
+
+
+    message.channel.send({embeds: [embed]}).then(embedMessage => {
+    
+        battleBuildPlay(message, rMember, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake);
+
+    }); 
+}
+}

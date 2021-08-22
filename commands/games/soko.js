@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const { SlashCommandBuilder } = require('@discordjs/builders');
 
 //Set Emoji Char
 const player = '😊'
@@ -333,7 +332,7 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`You Win!`, `Well Played`)
                         .addField(`\u200B`, results.map, false)
 
-                    embedMessage.edit({embed: embed}).then(embedMessage => {
+                    embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                             makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                     
@@ -354,7 +353,7 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
     
                     reaction.users.remove(reactor.id)
 
-                    embedMessage.edit({embed: embed}).then(embedMessage => {
+                    embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                         makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                 
@@ -380,7 +379,7 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
 
                     embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
 
-                    embedMessage.edit({embed: embed}).then(embedMessage => {
+                    embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                         makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                     
@@ -396,7 +395,7 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Use the 🗑 to end the game early \n 4. Be careful where you move or else you'll be stuck!`)
                         .addField(`\u200B`, results.map, false)
 
-                    embedMessage.edit({embed: embed}).then(embedMessage => {
+                    embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                         makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                     
@@ -420,7 +419,7 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`You Win!`, `Well Played`)
                         .addField(`\u200B`, results.map, false)
 
-                    embedMessage.edit({embed: embed}).then(embedMessage => {
+                    embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                         makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                     
@@ -437,7 +436,7 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Use the 🗑 to end the game early \n 4. Be careful where you move or else you'll be stuck!`)
                         .addField(`\u200B`, results.map, false)
 
-                    embedMessage.edit({embed: embed}).then(embedMessage => {
+                    embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                         makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                     
@@ -461,7 +460,7 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`You Win!`, `Well Played`)
                         .addField(`\u200B`, results.map, false)
 
-                    embedMessage.edit({embed: embed}).then(embedMessage => {
+                    embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                         makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                     
@@ -480,7 +479,7 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
 
                     reaction.users.remove(reactor.id)
 
-                    embedMessage.edit({embed: embed}).then(embedMessage => {
+                    embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                         makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                 
@@ -529,78 +528,76 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('soko')
-		.setDescription('play a simple game of sokoban'),
-	async execute(interaction, message, args) {
-		//Create mapObj To On
-        var mapObj = [ 
-            '🟥','🟥','🟥','🟥','🟥','🟥','🟥','🟥',
-            '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
-            '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
-            '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
-            '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
-            '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
-            '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
-            '🟥','🟥','🟥','🟥','🟥','🟥','🟥','🟥',
-        ]
+    name: "soko",
+    alias: ["sokoban"],
+    run: async (client, message, args) => { 
+
+    //Create mapObj To On
+    var mapObj = [ 
+        '🟥','🟥','🟥','🟥','🟥','🟥','🟥','🟥',
+        '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
+        '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
+        '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
+        '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
+        '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
+        '🟥','🟫','🟫','🟫','🟫','🟫','🟫','🟥',
+        '🟥','🟥','🟥','🟥','🟥','🟥','🟥','🟥',
+    ]
+
+    var outerWall = buildPerimeter(root, max)
+    var innerWall = buildInnerPerimeter(root, max)
     
-        var outerWall = buildPerimeter(root, max)
-        var innerWall = buildInnerPerimeter(root, max)
-        
-        let reactor = message.member.user
-    
-        //Make Random Positons For mapObj 
-        //Generate new array without sides and get random number from that array
-        //Find a way to undo the hardcode
-        var boxPosition = generateRandom(1, innerWall, 36)
-        var playerPosition = generateRandom(1, outerWall, max)
-        var targetPosition = generateRandom(1, outerWall, max)
-    
-    
-        //Make sure each of the selected moves are of a different type
-        while(playerPosition == targetPosition || targetPosition == boxPosition || boxPosition == playerPosition)
+    let reactor = message.member.user
+
+    //Make Random Positons For mapObj 
+    //Generate new array without sides and get random number from that array
+    //Find a way to undo the hardcode
+    var boxPosition = generateRandom(1, innerWall, 36)
+    var playerPosition = generateRandom(1, outerWall, max)
+    var targetPosition = generateRandom(1, outerWall, max)
+
+
+    //Make sure each of the selected moves are of a different type
+    while(playerPosition == targetPosition || targetPosition == boxPosition || boxPosition == playerPosition)
+    {
+        if(playerPosition == targetPosition)
         {
-            if(playerPosition == targetPosition)
-            {
-                targetPosition = generateRandom(1, outerWall, max)
-            }
-            if(targetPosition == boxPosition)
-            {
-                boxPosition = generateRandom(1, innerWall, 36)
-            }
-            if(boxPosition == playerPosition)
-            {
-                playerPosition = generateRandom(1, outerWall, max)
-            }
+            targetPosition = generateRandom(1, outerWall, max)
         }
-    
-        //Add Character To The mapObj
-        mapObj[playerPosition] = player
-        mapObj[targetPosition] = target
-        mapObj[boxPosition] = box
-    
-        //Remove new lines to get correct values for mapping
-        mapObj = removeItemAll(mapObj, '\n')
-    
-        //Build String looking box
-        let mapString = makeEmbedMap(mapObj)
-    
-        //Ship the mapObj and characters
-        let embed = new Discord.MessageEmbed()
-            .setTitle('Sokoban')
-            .setColor('#FF0000')
-            .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Use the 🗑 to end the game early \n 4. Be careful where you move or else you'll be stuck!`)
-            .addField(`\u200B`,mapString, false)
-    
-         //Send the message in chat with the ability to react to the embed
-        //Add reactions to the embed
-        message.channel.send({embed: embed}).then(embedMessage => {
-    
-            makeNextMessage(message, embedMessage, mapObj, mapString, playerPosition, boxPosition, targetPosition, outerWall, innerWall)
-        
-        });
-	},
-};
+        if(targetPosition == boxPosition)
+        {
+            boxPosition = generateRandom(1, innerWall, 36)
+        }
+        if(boxPosition == playerPosition)
+        {
+            playerPosition = generateRandom(1, outerWall, max)
+        }
+    }
 
+    //Add Character To The mapObj
+    mapObj[playerPosition] = player
+    mapObj[targetPosition] = target
+    mapObj[boxPosition] = box
 
+    //Remove new lines to get correct values for mapping
+    mapObj = removeItemAll(mapObj, '\n')
+
+    //Build String looking box
+    let mapString = makeEmbedMap(mapObj)
+
+    //Ship the mapObj and characters
+    let embed = new Discord.MessageEmbed()
+        .setTitle('Sokoban')
+        .setColor('#FF0000')
+        .addField(`How To Play`, `1. Use the arrow keys to move the player 😊 \n 2. Push the box 🟧 to the target ❎ \n 3. Use the 🗑 to end the game early \n 4. Be careful where you move or else you'll be stuck!`)
+        .addField(`\u200B`,mapString, false)
+
+     //Send the message in chat with the ability to react to the embed
+    //Add reactions to the embed
+    message.channel.send({embeds: [embed]}).then(embedMessage => {
+
+        makeNextMessage(message, embedMessage, mapObj, mapString, playerPosition, boxPosition, targetPosition, outerWall, innerWall)
+    
+    });
+    }
+}

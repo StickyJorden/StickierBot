@@ -1,15 +1,16 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const Discord = require('discord.js');
+const { Permissions } = require('discord.js');
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('nuke')
-		.setDescription('place everyone in chat in timeout'),
-	async execute(interaction, message, args) {
-		 //Make sure someone has been selected to be put in timeout
+    name: "nuke",
+    alias: [],
+    run: async (client, message, args) => { 
+
+    	 //Make sure someone has been selected to be put in timeout
     //if(!getUserFromMention(args[0])) return message.reply("Please select someone to be put in timeout.");
 
     //Make sure the user has permissions to put someone else in timeout
-    if(!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send({content: "You aren't sticky enough for that."});
+    if(!message.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return message.channel.send({content: "You aren't sticky enough for that."});
 
     //Find the user to be put in timeout
     var aMember = [ '213176827676590080',
@@ -48,6 +49,6 @@ module.exports = {
     }
 
     //message.channel.send(`Congrats, you have been given the role ${gRole.name}!`)
-	},
-};
 
+    }
+}

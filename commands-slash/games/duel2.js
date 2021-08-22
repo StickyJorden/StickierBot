@@ -184,7 +184,7 @@ function battleBuildPlay(message,   embedMessage, total, current, size, round, c
                     ) 
                     .setTimestamp();   
 
-                embedMessage.edit({embed: embed, components: moveNum.row}).then(embedMessage => {
+                embedMessage.edit({embeds: [embed], components: moveNum.row}).then(embedMessage => {
     
                     battleBuildPlay(message, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake, bot, moveNum);
             
@@ -204,7 +204,7 @@ function battleBuildPlay(message,   embedMessage, total, current, size, round, c
                     .setColor(0x800080)
                     .setTimestamp()   
 
-                    embedMessage.edit({embed: embed, components: moveNum.row}).then(embedMessage => {
+                    embedMessage.edit({embeds: [embed], components: moveNum.row}).then(embedMessage => {
     
                         battleBuildPlay(message, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake, bot, moveNum);
                 
@@ -250,7 +250,7 @@ function battleBuildPlay(message,   embedMessage, total, current, size, round, c
                         .setColor(0x800080)
                         .setTimestamp()   
 
-                        embedMessage.edit({embed: embed, components: moveNum.row}).then(embedMessage => {
+                        embedMessage.edit({embeds: [embed], components: moveNum.row}).then(embedMessage => {
     
                             battleBuildPlay(message, embedMessage, total, current, size, round, choiceMove, turnCPU, battleResponse, cpuHealth, coinsToTake, bot, moveNum);
                     
@@ -290,7 +290,7 @@ module.exports = {
             .setColor(0x800080)
             .setTimestamp();
     
-        message.channel.send({embed: embed});
+        message.channel.send({embeds: [embed]});
         return
     }
     */
@@ -306,7 +306,7 @@ module.exports = {
             .setColor(0x800080)
             .setTimestamp();
     
-        message.channel.send({embed: embed});
+        message.channel.send({embeds: [embed]});
         return
     }
 
@@ -319,7 +319,7 @@ module.exports = {
             .setColor(0x800080)
             .setTimestamp();
         
-        message.channel.send({embed: embed});
+        message.channel.send({embeds: [embed]});
         return
     }
 
@@ -332,7 +332,7 @@ module.exports = {
             .setColor(0x800080)
             .setTimestamp();
 
-        message.channel.send({embed: embed});
+        message.channel.send({embeds: [embed]});
         return
     }
     //Make sure user does send negative money!
@@ -344,7 +344,7 @@ module.exports = {
             .setColor(0x800080)
             .setTimestamp();
 
-        message.channel.send({embed: embed});
+        message.channel.send({embeds: [embed]});
         return
     }
 
@@ -362,7 +362,7 @@ module.exports = {
             .setColor(0x800080)
             .setTimestamp();
     
-        message.channel.send({embed: embed});
+        message.channel.send({embeds: [embed]});
         return
     }
 
@@ -377,7 +377,7 @@ module.exports = {
             .setColor(0x800080)
             .setTimestamp();
     
-        message.channel.send({embed: embed});
+        message.channel.send({embeds: [embed]});
         return
     }
 */

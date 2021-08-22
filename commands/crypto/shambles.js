@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const Pagination = require('discord-paginationembed');
-const { SlashCommandBuilder } = require('@discordjs/builders');
 
 //Get tokens
 require('dotenv').config();
@@ -10,14 +9,14 @@ function numberWithCommas(x) {
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('shambles')
-		.setDescription('look at the market for select cryptos'),
-	async execute(interaction, message, args) {
-		//if user does not specific what they need then yell at them
+  name: "shambles",
+  alias: ["crypto"],
+  run: async (client, message, args) => { 
+
+    //if user does not specific what they need then yell at them
     if(args[0] == undefined)
     {
-        message.channel.send({content: `I need a currency to check. usage: !shambles [currency]`});
+        message.channel.send(`I need a currency to check. usage: !shambles [currency]`);
         return;
     }
 
@@ -38,7 +37,7 @@ module.exports = {
         }
         else if(i == 9)
         {
-        message.channel.send({content: `That crypto is currently not on the watchlist sorry.`});
+        message.channel.send(`That crypto is currently not on the watchlist sorry.`);
         return;
         }
     }
@@ -202,12 +201,6 @@ module.exports = {
         console.log('API call error:', err.message);
   
       });
-	},
-};
-
-exports.run = (bot, message, args, func) => {
-
-    
-
+    }
 }
 

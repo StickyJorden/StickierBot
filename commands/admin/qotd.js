@@ -1,6 +1,5 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const { SlashCommandBuilder } = require('@discordjs/builders');
 
 //We can call the JSON file for quotes
 const quotes = JSON.parse(fs.readFileSync('storage/quotes.json','utf8'));
@@ -14,11 +13,12 @@ function getRandomInt(max)
     return Math.floor(Math.random() * Math.floor(max));
 }
 
+
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('qotd')
-		.setDescription('send a quote of the day at this time everyday. '),
-	async execute(interaction, bot, message, args) {
+    name: "qotd",
+    alias: [],
+    run: async (client, message, args) => { 
+
         if(message.author.id != 338544317427875851)
         {
             return  message.channel.send({content: "You aren't sticky enough for that."});
@@ -30,7 +30,7 @@ module.exports = {
             .setDescription("Now enabled enjoy!")
             .setColor("#32CD32");
         
-        message.channel.send({embed: embed});
+        message.channel.send({embeds: [embed]});
     
       setInterval(() => {
     
@@ -47,8 +47,8 @@ module.exports = {
             .setColor("#32CD32")
             .setFooter(`Quote Provided By: ${quotes[number].name}`);
         
-        channelSend.send({embed: embed});
+        channelSend.send({embeds: [embed] });
     
         }, 86400000);
-	},
-};
+    }
+}

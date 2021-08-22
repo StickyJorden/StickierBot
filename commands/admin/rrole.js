@@ -1,4 +1,5 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const Discord = require('discord.js');
+const { Permissions } = require('discord.js');
 
 //Array to get user ID only
 function getUserFromMention(mention) {
@@ -16,15 +17,15 @@ function getUserFromMention(mention) {
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('rrole')
-		.setDescription('remove a role from another user'),
-	async execute(interaction, message, args) {
-		//Make sure someone has been selected to be put in timeout
+    name: "rrole",
+    alias: ["remove"],
+    run: async (client, message, args) => { 
+
+    //Make sure someone has been selected to be put in timeout
         //if(!getUserFromMention(args[0])) return message.reply("Please select someone to be put in timeout.");
 
         //Make sure the user has permissions to put someone else in timeout
-        if(!message.member.permission.has('MANAGE_ROLES')) return message.channel.send({content: "You aren't sticky enough for that."});
+        if(!message.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return message.channel.send({content: "You aren't sticky enough for that."});
 
         //Variable to whole role
         var wholeRole = "";
@@ -58,9 +59,6 @@ module.exports = {
         //Make sure someone has been selected to be put in timeout
         if(!getUserFromMention(args[0])) return message.reply({content: "Please select someone to be given a new role."});
 
-        //Make sure the user has permissions to put someone else in timeout
-        if(!message.member.hasPermission('MANAGE_ROLES')) return message.channel.send({content: "You aren't sticky enough for that."});
-
         //Find the user to be put in timeout
         let rMember = message.mentions.members.first() || message.guild.members.fetch((args[0]));
 
@@ -83,5 +81,6 @@ module.exports = {
         rMember.roles.remove(gRole.id); 
         
         message.channel.send({content: `Congrats, you have lost the role ${gRole.name}!`})
-	},
-};
+
+    }
+}

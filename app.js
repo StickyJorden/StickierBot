@@ -103,7 +103,7 @@ bot.on("messageCreate", message => {
             if (cmd2 == file) {
 
               //run the command
-              command.run(bot, message, args);
+              command.execute(bot, message, args);
               break;
             }
           }

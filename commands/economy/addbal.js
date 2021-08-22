@@ -1,13 +1,12 @@
 const economy = require('@listeners/economy.js'); 
 const Discord = require('discord.js');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { Permissions } = require('discord.js');
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('addbal')
-		.setDescription('add tokens to another user'),
-	async execute(interaction, message, args) {
-		
+    name: "addbal",
+    alias: [],
+    run: async (client, message, args) => { 
+
         if(message.author.id != 338544317427875851)
         {
             return message.channel.send({content: "You aren't sticky enough for that."})
@@ -24,12 +23,12 @@ module.exports = {
                 .setColor("#197419")
                 .setTimestamp();
         
-            message.channel.send({embed: embed});
+            message.channel.send({embeds: [embed]});
             return
         }
         
         //If user not an admin tell them no
-        if(!message.member.hasPermission('ADMINISTRATOR')){
+        if(!message.member.permissions.has(Permissions.FLAGS.ADMINISTRATOR)){
     
             let embed = new Discord.MessageEmbed()
                 .setTitle("Add Balance") 
@@ -37,7 +36,7 @@ module.exports = {
                 .setColor("#197419")
                 .setTimestamp();
             
-            message.channel.send({embed: embed});
+            message.channel.send({embeds: [embed]});
             return
         }
     
@@ -52,7 +51,7 @@ module.exports = {
                 .setColor("#197419")
                 .setTimestamp();
             
-            message.channel.send({embed: embed});
+            message.channel.send({embeds: [embed]});
             return
         }
     
@@ -65,7 +64,7 @@ module.exports = {
                 .setColor("#197419")
                 .setTimestamp();
             
-            message.channel.send({embed: embed});
+            message.channel.send({embeds: [embed]});
             return
         }
     
@@ -82,6 +81,6 @@ module.exports = {
             .setColor("#197419")
             .setTimestamp();
         
-        message.channel.send({embed: embed});
-	},
-};
+        message.channel.send({embeds: [embed]});
+    }
+}

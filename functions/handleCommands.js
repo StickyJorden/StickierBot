@@ -6,12 +6,12 @@ const fs = require('fs');
 // Place your client and guild ids here
 const clientId = '654595068170076161';
 const guildId = '451945274487865344';
-
+const commands = [];
 
 module.exports = (bot) => {
 
     bot.handleCommands = async (commandFolders, path) => {
-        const commands = [];
+        
         for (const folder of commandFolders) {
 
             //Find each file when going through the folder
@@ -20,9 +20,9 @@ module.exports = (bot) => {
             //loop through each file in the folders
             for (const file of commandFiles) {
 
-                
                 //require the folder and file to run the command
                 const command = require(`@root/commands/${folder}/${file}`);
+                bot.handleCommands.set(file.name, file)
                 commands.push(command.data.toJSON());
             }
 
@@ -34,6 +34,7 @@ module.exports = (bot) => {
             try {
                 console.log('Started refreshing application (/) commands.');
 
+                
                 await rest.put(
                     Routes.applicationGuildCommands(clientId, guildId),
                     { body: commands },
@@ -41,7 +42,7 @@ module.exports = (bot) => {
 
                 console.log('Successfully reloaded application (/) commands.');
             } catch (error) {
-                console.error(error);
+                console.error(error.message);
             }
         })();
     }

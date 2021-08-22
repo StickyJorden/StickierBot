@@ -67,7 +67,7 @@ const addXP = async (username, guildID, userID, xpToAdd, message) => {
             .setColor("#197419")
             .setTimestamp();
     
-        message.channel.send(embed);
+        message.channel.send({embeds: [embed]});
 
         await profileSchema.updateOne(
             {

@@ -30,7 +30,7 @@ module.exports.run = async (bot, message, args) => {
         .setColor(000000)
         .setDescription(`**ICON** - **MULTIPLIER** \n\n 🍎🍎  - 1x \n 🍏🍏  - 1x \n 🍊🍊  - 1x \n 🎃🎃🎃 - 2x \n ⚡️⚡️⚡️ - 3x \n ⭐️⭐️⭐️ - 4x \n 💥💥💥 - 5x \n 🌈🌈🌈 - 10x \n 🎉🎉🎉 - 15x \n 💎💎💎 - 25x \n 🎇🎇🎇 - 50x \n 💍💍💍 - 75x \n ${"<a:dance:835016357245485056>"}${"<a:dance:835016357245485056>"}${"<a:dance:835016357245485056>"} - 250x`);
 
-      message.channel.send(embed)
+      message.channel.send({embeds: [embed]})
   }
   //If the user submits a whole number play the game
   else if(!isNaN(args[0]) && args[0] % 1 == 0 && args[0] > 0)

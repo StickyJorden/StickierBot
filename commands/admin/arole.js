@@ -1,6 +1,7 @@
 //FIX SPACE ISSUE MAYBE ARG 2 TO 3 ISSUE RUN !AROLE @USER TIMEOUT WITH NO SPACE BETWEEN USER AND TIMEOUT SEE ERROR  
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const Discord = require('discord.js');
+const { Permissions } = require('discord.js');
 
 //Array to get user ID only
 function getUserFromMention(mention) {
@@ -18,11 +19,10 @@ function getUserFromMention(mention) {
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('arole')
-		.setDescription('give someone a role'),
-	async execute(interaction, message, args) {
-		//Variable to whole role
+    name: "arole",
+    alias: ["add"],
+    run: async (client, message, args) => { 
+        //Variable to whole role
         var wholeRole = "";
 
         //See if role is more that one word
@@ -52,10 +52,10 @@ module.exports = {
         }
     
         //Make sure someone has been selected to be put in timeout
-        if(!getUserFromMention(args[0])) return message.reply("Please select someone to be given a new role.");
+        if(!getUserFromMention(args[0])) return message.reply({content: "Please select someone to be given a new role."});
     
         //Make sure the user has permissions to put someone else in timeout
-        if(!message.member.permissions.has('MANAGE_ROLES')) return message.channel.send("You aren't sticky enough for that.");
+        if(!message.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return message.channel.send({content: "You aren't sticky enough for that."});
     
         //Find the user to be put in timeout
         let rMember = message.mentions.members.first() || message.guild.members.fetch((args[0]));
@@ -79,5 +79,5 @@ module.exports = {
         rMember.roles.add(gRole.id);
     
         message.channel.send({content: `Congrats, you have been given the role ${gRole.name}!`})
-	},
-};
+        }
+}

@@ -11,7 +11,7 @@ module.exports = {
       .setTitle('Twitch Stream')
       .setThumbnail('https://9to5mac.com/wp-content/uploads/sites/6/2019/09/03-glitch.jpg?quality=82&strip=all')
       .addField('Check out the stream here!', 'https://www.twitch.tv/sosojay', false)
-      message.channel.send({embed: embed});
+      message.channel.send({embeds: [embed]});
 	},
 };
 

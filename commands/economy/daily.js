@@ -3,7 +3,6 @@ const economy = require('@listeners/economy.js');
 const days = require('@listeners/day.js'); 
 const Discord = require('discord.js'); 
 const fs = require('fs');
-const { SlashCommandBuilder } = require('@discordjs/builders');
 
 //const line = `**\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF**`
 const line = `**\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF**`
@@ -29,11 +28,12 @@ clearCache()
 
 const alreadyClaimed = "You have already claimed your daily rewards."
 
+
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('daily')
-		.setDescription('claim your daily reward!'),
-	async execute(interaction, message, args) {
+    name: "daily",
+    alias: ["d"],
+    run: async (client, message, args) => { 
+   
         const {guild, member} = message
         const { id } = member
         let username = message.member.user.tag
@@ -117,7 +117,7 @@ module.exports = {
                  .setImage(`${streak[(dayCount)].link}`)
                  .setTimestamp();
      
-             message.channel.send({embed: embed});
+             message.channel.send({embeds: [embed]});
              return
         }
         
@@ -178,7 +178,7 @@ module.exports = {
                      .setImage(`${streak[dayCount].link}`)
                      .setFooter(`${timeLeftHour} hour(s) ${timeLeftMin} min(s) until your next reward!`,"")
                      .setTimestamp();
-                 message.channel.send({embed: embed});
+                 message.channel.send({embeds: [embed]});
                  return
              }
              //If user hasnt keep streak then reset them
@@ -231,7 +231,7 @@ module.exports = {
                      .setColor("#197419")
                      .setTimestamp();
      
-                 message.channel.send({embed: embed});
+                 message.channel.send({embeds: [embed]});
      
                  return
      
@@ -273,6 +273,6 @@ module.exports = {
              .setColor("#197419")
              .setTimestamp();
          
-         message.channel.send({embed: embed});
-	},
-};
+         message.channel.send({embeds: [embed]});
+    }
+}
