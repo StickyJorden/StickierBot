@@ -10,6 +10,9 @@ module.exports = {
 		//Make sure someone has been selected to be put in timeout
         //if(!getUserFromMention(args[0])) return message.reply("Please select someone to be put in timeout.");
 
+        //Make sure it is only used in the correct server
+        if(message.guild.id != 416809623132176386) return message.channel.send({content: "This option is not available for this server."});
+
 
         //Make sure the user has permissions to put someone else in timeout
         if(!message.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return message.channel.send({content: "You aren't sticky enough for that."});
