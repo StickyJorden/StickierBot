@@ -14,6 +14,7 @@ module.exports = {
       .addField('Wolf','Score: 103', false )
       .addField('David','Score: 102', false )
       .addField('Azad','Score: -950', false )
-      message.channel.send({embed});
+      
+      message.channel.send({embeds: [embed]});
   }
 }

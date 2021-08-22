@@ -3,7 +3,7 @@ const fs = require('fs');
 
 module.exports = {
         name: "stop",
-        alias: [],
+        alias: ["disconnect", "leave"],
         run: async (client, message, args) => { 
 
                 if(!message.member.voice.channel) return message.channel.send("You must be in a voice channel to use this commmand.")

@@ -332,13 +332,13 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`You Win!`, `Well Played`)
                         .addField(`\u200B`, results.map, false)
 
+                    embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+                    
                     embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                             makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                     
                         }); 
-
-                    embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
 
                     return
                 }
@@ -358,8 +358,6 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                 
                     }); 
-                    
-                    
                     
                 }
             } 
@@ -419,13 +417,14 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
                         .addField(`You Win!`, `Well Played`)
                         .addField(`\u200B`, results.map, false)
 
+                    embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
+
                     embedMessage.edit({embeds: [embed]}).then(embedMessage => {
     
                         makeNextMessage(message, embedMessage, mapObj, mapString, results.playerPos, results.boxPos, targetPosition, outerWall, innerWall)
                     
                     }); 
 
-                    embedMessage.reactions.removeAll().catch(error => console.error('Failed to clear reactions: ', error))
                     return
                 }
                 else
