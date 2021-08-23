@@ -1,12 +1,11 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('skip')
-		.setDescription('skip the current song being played'),
-	async execute(interaction, message, args) {
+	name: 'skip', 
+    description: 'skip the current song being played',
+	async execute(client, interaction, args) {
 		if(!message.member.voice.channel) return message.channel.send({content: "You must be in a voice channel to use this commmand."});
 
                 let queue = await bot.distube.getQueue(message); 

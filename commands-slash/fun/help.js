@@ -2,16 +2,15 @@ const Discord = require('discord.js');
 const Pagination = require('discord-paginationembed');
 const fs = require('fs');
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //We can call the JSON file whereconst Commnand
 const commands = JSON.parse(fs.readFileSync('storage/commands.json','utf8'));
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('help')
-		.setDescription('learn more about what I can do'),
-	async execute(interaction, message, args) {
+	name: 'help', 
+    description: 'learn more about what I can do',
+	async execute(client, interaction, args) {
 		//Variables
  let msg = message.content.toUpperCase(); //Variable takes message and turns it into upper case.
  var prefix = "!";

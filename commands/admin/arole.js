@@ -21,6 +21,7 @@ function getUserFromMention(mention) {
 module.exports = {
     name: "arole",
     alias: ["add"],
+    description: 'give someone a role',
     run: async (client, message, args) => { 
         //Variable to whole role
         var wholeRole = "";

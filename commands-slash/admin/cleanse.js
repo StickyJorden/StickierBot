@@ -1,12 +1,10 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 const { Permissions } = require('discord.js');
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('cleanse')
-		.setDescription('remove timeout role from all users'),
-
-	async execute(interaction, message, args) {
+	name: 'cleanse',
+    description: 'remove timeout role from all users',
+	async execute(client, interaction, args) {
 		//Make sure someone has been selected to be put in timeout
         //if(!getUserFromMention(args[0])) return message.reply("Please select someone to be put in timeout.");
 

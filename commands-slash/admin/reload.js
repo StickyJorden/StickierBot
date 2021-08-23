@@ -4,12 +4,11 @@ require('module-alias/register')
 //This is for holding all the command folders that hold several commands within them
 const commandFolders = fs.readdirSync('./commands');
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('reload')
-		.setDescription('reload a command'),
+	name: 'reload', 
+    description: 'reload a command',
 	async execute(interaction, bot, message, args) {
 		//If the user is not the bot owner reject the reload
         if(message.author.id != 338544317427875851)

@@ -1,12 +1,11 @@
 const economy = require('@listeners/levels.js');
 const Discord = require('discord.js');  
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('level')
-		.setDescription('check your level'),
-	async execute(interaction, message, args) {
+	name: 'level', 
+    description: 'check your level',
+	async execute(client, interaction, args) {
 		const user = message.mentions.users.first() || message.author
         const userID = user.id
 

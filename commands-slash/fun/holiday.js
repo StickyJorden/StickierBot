@@ -1,12 +1,11 @@
 const Discord = require('discord.js');
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('holiday')
-		.setDescription('celebrate a holiday'),
-	async execute(interaction, message, args) {
+	name: 'holiday', 
+    description: 'celebrate a holiday',
+	async execute(client, interaction, args) {
 		if(!args[0]) return message.reply("We need something to celebrate!");
 
     let holiday = message.toString().slice(9);

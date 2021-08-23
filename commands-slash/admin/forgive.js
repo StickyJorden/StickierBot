@@ -1,5 +1,5 @@
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 const { Permissions } = require('discord.js');
 
 //Array to get user ID only
@@ -18,10 +18,9 @@ function getUserFromMention(mention) {
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('forgive')
-		.setDescription('remove timeout role from selected user'),
-	async execute(interaction, message, args) {
+	name: 'forgive', 
+    description: 'remove timeout role from selected user',
+	async execute(client, interaction, args) {
 		//Make sure someone has been selected to be put in timeout
         if(!getUserFromMention(args[0])) return message.reply({content: "Please select someone to be put in timeout."});
 

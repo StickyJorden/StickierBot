@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //Set Emoji Char
 const player = '😊'
@@ -529,10 +529,9 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('soko')
-		.setDescription('play a simple game of sokoban'),
-	async execute(interaction, message, args) {
+	name: 'soko', 
+    description: 'play a simple game of sokoban',
+	async execute(client, interaction, args) {
 		//Create mapObj To On
         var mapObj = [ 
             '🟥','🟥','🟥','🟥','🟥','🟥','🟥','🟥',

@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const economy = require('@listeners/economy.js'); 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //Function to get random number with the max being the total number of quotes in JSON file
 function getRandomInt(max) 
@@ -19,10 +19,9 @@ function minimum3(num1, num2, num3) {
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('slots')
-		.setDescription('play the slot machine'),
-	async execute(interaction, message, args) {
+	name: 'slots', 
+    description: 'play the slot machine',
+	async execute(client, interaction, args) {
 		 //Make sure the user gives us either the table or money to gamble with
      if(!args[0]) return message.reply({content: 'You need to bet something or use `!slots table` to see the odds of winning.'});
 

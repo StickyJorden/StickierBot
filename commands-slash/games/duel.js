@@ -3,7 +3,7 @@ const fs = require('fs');
 const progressbar = require('string-progressbar');
 const economy = require('@listeners/economy.js'); 
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 
 //We can call the JSON file for moves
@@ -302,10 +302,9 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('duel')
-		.setDescription('have a pokemon duel'),
-	async execute(interaction, message, args) {
+	name: 'duel', 
+    description: 'have a pokemon duel',
+	async execute(client, interaction, args) {
 		//If a user was found then make sure it is a user in chat. 
         let rMember = message.mentions.members.first();
 

@@ -1,11 +1,10 @@
 const Discord = require('discord.js');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('action')
-		.setDescription('monopoly scoreboard: action cards ruleset'),
-	async execute(interaction, message, args) {
+	name: 'action', 
+    description: 'monopoly scoreboard: action cards ruleset',
+	async execute(client, interaction, args) {
 		const embed = new Discord.MessageEmbed()
       .setTitle('Monopoly Leaderboard')
       .setDescription('Action Cards')

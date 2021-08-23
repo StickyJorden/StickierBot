@@ -2,7 +2,7 @@ const cooldown = new Set();
 const dailyStealsSchema = require('@schemas/daily-steals-schema.js')
 const economy = require('@listeners/economy.js');
 const Discord = require('discord.js'); 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 let claimedCache = []
 const alreadyClaimed = "Hey hey hey we gotta lay low. (You can only steal once every 15 miuntes.)"
@@ -25,10 +25,9 @@ function getRandomInt(max)
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('steal')
-		.setDescription('steal tokens from another user'),
-	async execute(interaction, message, args) {
+	name: 'steal', 
+    description: 'steal tokens from another user',
+	async execute(client, interaction, args) {
         if (cooldown.has(message.author.id)) {
 
             let embed = new Discord.MessageEmbed()

@@ -1,11 +1,10 @@
 const Discord = require('discord.js');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('stream')
-		.setDescription('link to the stream'),
-	async execute(interaction, message, args) {
+	name: 'stream', 
+    description: 'link to the stream',
+	async execute(client, interaction, args) {
 		const embed = new Discord.MessageEmbed()
       .setColor('#FF0000')
       .setTitle('Twitch Stream')

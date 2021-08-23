@@ -5,13 +5,12 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('pay')
-		.setDescription('pay another user some tokens'),
-	async execute(interaction, message, args) {
+	name: 'pay', 
+    description: 'pay another user some tokens',
+	async execute(client, interaction, args) {
 		const {guild, member} = message
 
         const user = message.mentions.users.first() 

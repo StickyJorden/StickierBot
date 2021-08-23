@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //We can call the JSON file for quotes
 const quotes = JSON.parse(fs.readFileSync('storage/quotes.json','utf8'));
@@ -15,9 +15,8 @@ function getRandomInt(max)
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('qotd')
-		.setDescription('send a quote of the day at this time everyday. '),
+    name: 'qotd', 
+	description: 'send a quote of the day at this time everyday.',
 	async execute(interaction, bot, message, args) {
         if(message.author.id != 338544317427875851)
         {

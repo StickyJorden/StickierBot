@@ -3,7 +3,7 @@ const economy = require('@listeners/economy.js');
 const days = require('@listeners/day.js'); 
 const Discord = require('discord.js'); 
 const fs = require('fs');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //const line = `**\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF**`
 const line = `**\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF**`
@@ -30,10 +30,9 @@ clearCache()
 const alreadyClaimed = "You have already claimed your daily rewards."
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('daily')
-		.setDescription('claim your daily reward!'),
-	async execute(interaction, message, args) {
+	name: 'daily', 
+    description: 'claim your daily reward!',
+	async execute(client, interaction, args) {
         const {guild, member} = message
         const { id } = member
         let username = message.member.user.tag

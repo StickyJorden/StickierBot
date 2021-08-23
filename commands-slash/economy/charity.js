@@ -1,13 +1,12 @@
 const economy = require('@listeners/economy.js');
 const Discord = require('discord.js');
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('charity')
-		.setDescription('give money to another user'),
-	async execute(interaction, message, args) {
+	name: 'charity', 
+    description: 'give money to another user',
+	async execute(client, interaction, args) {
 		
         const {guild, member} = message
         const user = message.mentions.users.first() 

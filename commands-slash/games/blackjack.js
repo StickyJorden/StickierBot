@@ -1,7 +1,7 @@
 const blackjack = require("discord-blackjack");
 const Discord = require('discord.js'); 
 const economy = require('@listeners/economy.js');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //Add commas to numbers(we use this for the balance of users)
 function numberWithCommas(x) {
@@ -9,10 +9,9 @@ function numberWithCommas(x) {
   }
 
 module.exports = {
-      data: new SlashCommandBuilder()
-          .setName('blackjack')
-          .setDescription('play blackjack for tokens'),
-      async execute(interaction, message, args) {
+        name: 'blackjack', 
+        description: 'play blackjack for tokens',
+        async execute(client, interaction, args) {
             //Make sure the user gives us either the table or money to gamble with
             if(!args[0]) return message.reply({content: `You need to bet something. Use \`!blackjack <tokens>\``});
 

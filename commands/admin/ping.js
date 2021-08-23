@@ -5,7 +5,6 @@ module.exports = {
   name: "ping",
   alias: [],
   run: async (client, message, args) => { 
-
-  message.channel.send({content: "Pong!"})
+    message.channel.send({content: "Pong!"})
   }
 }

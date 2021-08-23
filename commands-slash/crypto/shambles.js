@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const Pagination = require('discord-paginationembed');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //Get tokens
 require('dotenv').config();
@@ -10,10 +10,9 @@ function numberWithCommas(x) {
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('shambles')
-		.setDescription('look at the market for select cryptos'),
-	async execute(interaction, message, args) {
+	name: 'shambles', 
+  description: 'look at the market for select cryptos',
+	async execute(client, interaction, args) {
 		//if user does not specific what they need then yell at them
     if(args[0] == undefined)
     {

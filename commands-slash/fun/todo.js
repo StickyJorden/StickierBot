@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const disbut = require("discord-buttons");
 const fs = require('fs');
 const users = new Set();
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //We can call the JSON file for punishments
 const todoList = JSON.parse(fs.readFileSync('storage/counters.json','utf8'));
@@ -45,10 +45,9 @@ function makeEmbed(message)
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('todo')
-		.setDescription('jordans to-do list'),
-	async execute(interaction, message, args) {
+	name: 'todo', 
+    description: 'jordans to-do list',
+	async execute(client, interaction, args) {
         if(message.author.id == 338544317427875851)
         {
             //Clear storage

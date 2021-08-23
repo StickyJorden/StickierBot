@@ -1,12 +1,11 @@
 const Discord = require('discord.js');
 const request = require('request');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('gif')
-		.setDescription('send a gif in chat'),
-	async execute(interaction, message, args) {
+	name: 'gif', 
+    description: 'send a gif in chat',
+	async execute(client, interaction, args) {
 		var term = args[0];
 	  console.log(term);
 

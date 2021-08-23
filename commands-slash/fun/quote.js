@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //We can call the JSON file for quotes
 const quotes = JSON.parse(fs.readFileSync('storage/quotes.json','utf8'));
@@ -17,10 +17,9 @@ function getRandomInt(max)
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('quote')
-		.setDescription('send a quote in chat'),
-	async execute(interaction, message, args) {
+	name: 'quote', 
+    description: 'send a quote in chat',
+	async execute(client, interaction, args) {
 		//number of quotes in JSON file quotes
         var count = Object.keys(quotes).length; 
 

@@ -1,6 +1,6 @@
 //FIX SPACE ISSUE MAYBE ARG 2 TO 3 ISSUE RUN !AROLE @USER TIMEOUT WITH NO SPACE BETWEEN USER AND TIMEOUT SEE ERROR  
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 const { Permissions } = require('discord.js');
 
 //Array to get user ID only
@@ -19,10 +19,9 @@ function getUserFromMention(mention) {
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('arole')
-		.setDescription('give someone a role'),
-	async execute(interaction, message, args) {
+	name: 'arole', 
+    description: 'give someone a role',
+	async execute(client, interaction, args) {
 		//Variable to whole role
         var wholeRole = "";
 

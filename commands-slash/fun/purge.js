@@ -1,10 +1,9 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('purge')
-		.setDescription('purge messages from chat'),
-	async execute(interaction, message, args) {
+	name: 'purge', 
+    description: 'purge messages from chat',
+	async execute(client, interaction, args) {
 		//functions
     function sleep(ms)
     {

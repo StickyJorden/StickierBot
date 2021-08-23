@@ -1,13 +1,12 @@
 const weather = require('weather-js');
 const Discord = require('discord.js');
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('weather')
-		.setDescription('give the weather of a location'),
-	async execute(interaction, message, args) {
+	name: 'weather', 
+    description: 'give the weather of a location',
+	async execute(client, interaction, args) {
     weather.find({search: args.join(" "), degreeType: 'F'}, function(err, result)
     {
       if(err) message.channel.send(err);

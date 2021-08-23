@@ -4,7 +4,7 @@ const progressbar = require('string-progressbar');
 const economy = require('@listeners/economy.js'); 
 //const disbut = require("discord-buttons");
 const { waitForDebugger } = require('inspector');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //We can call the JSON file for quotes
 const moves = JSON.parse(fs.readFileSync('storage/moves.json','utf8'));
@@ -276,10 +276,9 @@ function battleBuildPlay(message,   embedMessage, total, current, size, round, c
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('duel2')
-		.setDescription('have a pokemon duel'),
-	async execute(interaction, message, args) {
+	name: 'duel2', 
+    description: 'have a pokemon duel',
+	async execute(client, interaction, args) {
 	/*
     //Make sure user is not a bot or themsevels
     if(rMember.user.bot == true || rMember == message.author.id)

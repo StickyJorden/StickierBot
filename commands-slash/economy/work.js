@@ -28,13 +28,12 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('work')
-		.setDescription('work for some tokens'),
-	async execute(interaction, message, args) {
+	name: 'work', 
+    description: 'work for some tokens',
+	async execute(client, interaction, args) {
 		if (cooldown.has(message.author.id)) {
             //Let user know that they got the goods.
             let embed = new Discord.MessageEmbed()

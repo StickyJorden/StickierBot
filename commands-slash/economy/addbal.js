@@ -1,12 +1,11 @@
 const economy = require('@listeners/economy.js'); 
 const Discord = require('discord.js');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('addbal')
-		.setDescription('add tokens to another user'),
-	async execute(interaction, message, args) {
+	name: 'addbal', 
+    description: 'add tokens to another user',
+	async execute(client, interaction, args) {
 		
         if(message.author.id != 338544317427875851)
         {

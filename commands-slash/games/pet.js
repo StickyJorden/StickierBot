@@ -2,7 +2,7 @@ const animalSchema = require('@schemas/animal-schema.js')
 const economy = require('@listeners/economy.js'); 
 const animalStore = require('@listeners/animal.js'); 
 const Discord = require('discord.js'); 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //We can call the JSON file for animals
 const fs = require('fs');
@@ -18,10 +18,9 @@ function getRandomInt(max)
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('ping')
-		.setDescription('replies with pong'),
-	async execute(interaction, message, args) {
+	name: 'pet', 
+    description: 'buy a pet',
+	async execute(client, interaction, args) {
 		//number of quotes in JSON file quotes
         var count = Object.keys(animals).length; 
 

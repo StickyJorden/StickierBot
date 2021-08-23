@@ -1,13 +1,12 @@
 const Discord = require('discord.js')
 const fetch = require('node-fetch')
 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('video')
-		.setDescription('watch videos together'),
-	async execute(interaction, message, args) {
+	name: 'video', 
+    description: 'watch videos together',
+	async execute(client, interaction, args) {
 		if(!message.member.voice.channel) return message.channel.send({content: "You must be in a voice channel to use this commmand."})
         
         let channel = message.member.voice.channel;

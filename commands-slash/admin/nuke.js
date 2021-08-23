@@ -1,10 +1,9 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('nuke')
-		.setDescription('place everyone in chat in timeout'),
-	async execute(interaction, message, args) {
+	name: 'nuke', 
+    description: 'place everyone in chat in timeout',
+	async execute(client, interaction, args) {
 		 //Make sure someone has been selected to be put in timeout
     //if(!getUserFromMention(args[0])) return message.reply("Please select someone to be put in timeout.");
 

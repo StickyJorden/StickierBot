@@ -1,15 +1,14 @@
 const Discord = require('discord.js');
 const request = require('request');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //Get tokens
 require('dotenv').config();
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('stonks')
-		.setDescription('check the stock market'),
-	async execute(interaction, message, args) {
+	name: 'stonks', 
+  description: 'check the stock market',
+	async execute(client, interaction, args) {
 		 //if user does not specific what they need then yell at them
      if(args[0] == undefined)
      {

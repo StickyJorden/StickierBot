@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //We can call the JSON file for punishments
 const punishments = JSON.parse(fs.readFileSync('storage/links.json','utf8'));
@@ -12,10 +12,9 @@ function getRandomInt(max)
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('punish')
-		.setDescription('spin the wheel of punishment'),
-	async execute(interaction, message, args) {
+	name: 'punish', 
+    description: 'spin the wheel of punishment',
+	async execute(client, interaction, args) {
     if(!args[0]) return message.reply({content: 'Please select someone to face the wheel of punishment.'});
 
     //number of quotes in JSON file quotes

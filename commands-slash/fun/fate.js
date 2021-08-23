@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 //Function to get random number with the max being the total number of quotes in JSON file
 function getRandomInt(max) 
@@ -7,10 +7,9 @@ function getRandomInt(max)
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('fate')
-		.setDescription('ask me a question'),
-	async execute(interaction, message, args) {
+	name: 'fate', 
+    description: 'ask me a question',
+	async execute(client, interaction, args) {
 		if(!args[0]) return message.reply({content: "I have no fate to determine."});
 
         const answers = [

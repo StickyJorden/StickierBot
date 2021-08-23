@@ -1,6 +1,6 @@
 const economy = require('@listeners/economy.js'); 
 const Discord = require('discord.js'); 
-const { SlashCommandBuilder } = require('@discordjs/builders');
+
 
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -10,10 +10,9 @@ const line = `**\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23AF\u23
 const bank = "<a:money_bag:854228919376543754>"
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('bal')
-		.setDescription('show users balance'),
-	async execute(interaction, message, args) {
+	name: 'bal', 
+    description: 'show users balance',
+	async execute(client, interaction, args) {
 		const user = message.mentions.users.first() || message.author
         const userID = user.id
 
