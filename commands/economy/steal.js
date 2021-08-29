@@ -27,7 +27,7 @@ function getRandomInt(max)
 
 module.exports = {
     name: "steal",
-    alias: [],
+    alias: ["take"],
     run: async (client, message, args) => { 
    
     if (cooldown.has(message.author.id)) {
@@ -290,11 +290,11 @@ module.exports = {
                 guildID = guild.id
                 userID = member.id
 
-                console.log("______________________")
-                console.log("USER: ", username)
-                console.log("GUILD: ", guildID)
-                console.log("USER: ", userID)
-                console.log("______________________")
+                //console.log("______________________")
+                //console.log("USER: ", username)
+                //console.log("GUILD: ", guildID)
+                //console.log("USER: ", userID)
+                //console.log("______________________")
 
                 //Take stolen coins from their balance
                 const newBalance = await economy.addCoins(

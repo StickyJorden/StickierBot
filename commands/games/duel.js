@@ -80,7 +80,7 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
     const filter = (reaction, user) => {
         return ['1️⃣', '2️⃣','3️⃣','4️⃣'].includes(reaction.emoji.name) && user.id === message.author.id;
     };
-    
+
     //Wait for the user to react
     embedMessage.awaitReactions(filter, { max: 1, time: 60000, errors: ['time'] })
         .then(async collected => {
@@ -108,7 +108,6 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
                 choiceChart = moves[moveNum.fourth];
                 choicePower = moves[moveNum.fourth].power;
             }
-
            
             reaction.users.remove(message.member.user.id)
             
@@ -171,9 +170,6 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
                         {name:'Health', value:`${bar[0]} \n ${bar[1]}/${total}`, inline:false}
                     ) 
                     .setTimestamp();   
-
-                
-    
 
                 //embedMessage.edit(embed)
     

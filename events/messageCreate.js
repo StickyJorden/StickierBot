@@ -18,7 +18,7 @@ client.distube = new DisTube.default(client, {
 	//plugins: [new SoundCloudPlugin(), new SpotifyPlugin()],
 })
 
-client.on("messageCreate", async (message) => {
+client.on('messageCreate', async (message) => {
 
     if (
         message.author.bot ||
@@ -91,7 +91,8 @@ client.distube
 	.on('searchCancel', message => message.channel.send(`Searching canceled`))
 	.on('searchInvalidAnswer', message =>
 		message.channel.send(`searchInvalidAnswer`))
-	.on('searchNoResult', message => message.channel.send(`No result found!`))
+	.on('searchNoResult', message => message
+	.channel.send(`No result found!`))
     .on('searchDone', message => console.log(`Done searching!`))
 	.on('error', (textChannel, error) => {
 		console.error(error)

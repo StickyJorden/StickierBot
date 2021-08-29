@@ -7,7 +7,7 @@ function numberWithCommas(x) {
 
 module.exports = {
     name: "pay",
-    alias: [],
+    alias: ["donate", "give"],
     run: async (client, message, args) => { 
    
    const {guild, member} = message

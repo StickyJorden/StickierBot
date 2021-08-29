@@ -27,7 +27,7 @@ module.exports = {
           .addField('Radius','432,690 miles', true)
           .addField('Mass', `1.989 × 10^30 kg`, true)
     
-          message.channel.send({embed});  
+          message.channel.send({embeds: [embed]});  
 
     }
     else
