@@ -59,17 +59,17 @@ client.distube
 		queue.textChannel.send(
 			`Playing \`${song.name}\` - \`${
 				song.formattedDuration
-			}\`\nRequested by: ${song.user}\n${status(queue)}`,
+			}\`\nRequested by: ${song.user.username}`,
 		))
 	.on('addSong', (queue, song) =>
 		queue.textChannel.send(
-			`Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user}`,
+			`Added ${song.name} - \`${song.formattedDuration}\` to the queue by ${song.user.username}`,
 		))
 	.on('addList', (queue, playlist) =>
 		queue.textChannel.send(
 			`Added \`${playlist.name}\` playlist (${
 				playlist.songs.length
-			} songs) to queue\n${status(queue)}`,
+			} songs) to queue}`,
 		))
 	// DisTubeOptions.searchSongs = true
 	.on('searchResult', (message, result) => {

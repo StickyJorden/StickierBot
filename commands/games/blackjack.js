@@ -50,7 +50,8 @@ function numberWithCommas(x) {
     let game = await blackjack(message, client, {resultEmbed: true})
 
     switch (game.result) {
-            
+        
+        
         case "Win":
 
             //Add users coin balance
@@ -60,7 +61,7 @@ function numberWithCommas(x) {
         case "Tie":
 
             //Add users coin balance
-            await economy.addCoins(username, guild.id, id, (Math.floor(args[0])))
+            await economy.addCoins(username, guild.id, id, (Math.floor(-1 * args[0])))
             break;
 
         case "Lose":
@@ -81,6 +82,23 @@ function numberWithCommas(x) {
             await economy.addCoins(username, guild.id, id, (Math.floor(-2 * args[0])))
             break;        
             
+        case "Timeout":
+
+            //Add users coin balance
+            await economy.addCoins(username, guild.id, id, (Math.floor(-1 * args[0])))
+            break; 
+        
+        case "Unknown":
+
+            //Add users coin balance
+            await economy.addCoins(username, guild.id, id, (Math.floor(-1 * args[0])))
+            break; 
+        
+        case "Cancel":
+
+            //Add users coin balance
+            await economy.addCoins(username, guild.id, id, (Math.floor(-1 * args[0])))
+            break; 
         }
 
     }

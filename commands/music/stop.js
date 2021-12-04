@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const fs = require('fs');
 
 module.exports = {
-        name: "stop",
+        name: "!stop",
         alias: ["disconnect", "leave"],
         run: async (client, message, args) => { 
 

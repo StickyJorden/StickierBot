@@ -10,4 +10,7 @@ client.on("ready", async () => {
     //messageCount.run(bot);
     await mongo();
     levels.run(client);
+
+    const command = client.commands.get("schedule");
+    await command.run(client);
 });

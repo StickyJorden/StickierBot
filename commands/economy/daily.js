@@ -68,11 +68,11 @@ module.exports = {
         //Update how much they are getting from the daily rewards
         if(dayCount == 0)
         {
-            rewards = 50
+            rewards = 500
         }
         else
         {
-            rewards = (dayCount+1) * 50
+            rewards = (dayCount+1) * 500
         }
        
         //Apply the bonus if they completed the streak
@@ -100,7 +100,7 @@ module.exports = {
              else
              {
              dayCount--
-             rewards-=50
+             rewards-=500
              counter++
              }
      
@@ -160,7 +160,7 @@ module.exports = {
                  else
                  {
                  dayCount--
-                 rewards-=50
+                 rewards-=500
                  counter++
                  }
                  //claimedCache.push(id)
@@ -181,6 +181,7 @@ module.exports = {
                  message.channel.send({embeds: [embed]});
                  return
              }
+             /*
              //If user hasnt keep streak then reset them
              if(diffDays >= 3)
              {
@@ -193,7 +194,7 @@ module.exports = {
                      -dayCount
                  )
      
-                 rewards = (dayCount+1)*50
+                 rewards = (dayCount+1)*500
                  counter = 5 - dayCount
      
                  //add coins to mentioned user
@@ -236,6 +237,7 @@ module.exports = {
                  return
      
              }
+             */
         }
         
         //add coins to mentioned user

@@ -1,5 +1,5 @@
 module.exports = {
-    name: "pause",
+    name: "!pause",
     aliases: ["pause", "hold"],
     inVoiceChannel: true,
     run: async (client, message, args) => {

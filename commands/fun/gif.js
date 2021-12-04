@@ -8,7 +8,6 @@ module.exports = {
 		.setDescription('send a gif in chat'),
 	async execute(interaction, message, args) {
 		var term = args[0];
-	  console.log(term);
 
       if(term == undefined)
       {

@@ -1,5 +1,5 @@
 module.exports = {
-    name: "play",
+    name: "!play",
     alias: [],
     run: async (client, message, args) => { 
 
@@ -10,5 +10,6 @@ module.exports = {
     const music = args.join(" ");
 
     await client.distube.play(message, music);
+    
     }
 }
