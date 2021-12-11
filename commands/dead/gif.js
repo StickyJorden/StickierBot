@@ -4,6 +4,7 @@ const request = require('request');
 module.exports = {
     name: "gif",
     alias: ["tenor"],
+	description: 'send a gif in chat',
     run: async (client, message, args) => { 
 	  var term = args[0];
 	  console.log(term);

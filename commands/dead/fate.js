@@ -8,6 +8,7 @@ function getRandomInt(max)
 module.exports = {
     name: "fate",
     alias: [],
+    description: 'determine your fate with this command',
     run: async (client, message, args) => { 
 
     if(!args[0]) return message.reply("I have no fate to determine.");

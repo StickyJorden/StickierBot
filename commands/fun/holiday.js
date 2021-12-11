@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
   name: "holiday",
   alias: [],
+  description: 'let\s celebrate something!',
   run: async (client, message, args) => { 
 
     if(!args[0]) return message.reply("We need something to celebrate!");

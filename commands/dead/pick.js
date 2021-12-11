@@ -6,6 +6,7 @@ function getRandomInt(max)
 module.exports = {
     name: "pick",
     alias: ["choose"],
+    description: 'pick from a selection',
     run: async (client, message, args) => { 
 
     if(!args[0]) return message.reply("I have nothing to choose from.");

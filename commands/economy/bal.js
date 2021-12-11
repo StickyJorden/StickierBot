@@ -11,6 +11,7 @@ const bank = "<a:money_bag:854228919376543754>"
 module.exports = {
     name: "bal",
     alias: [],
+    description: 'check your balance',
     run: async (client, message, args) => { 
    
         const user = message.mentions.users.first() || message.author

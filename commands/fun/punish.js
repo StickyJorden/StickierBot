@@ -13,6 +13,7 @@ function getRandomInt(max)
 module.exports = {
   name: "punish",
   alias: [],
+  description: 'the wheel of punishment',
   run: async (client, message, args) => { 
 
   if(!args[0]) return message.reply('Please select someone to face the wheel of punishment.');

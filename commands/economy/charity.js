@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 module.exports = {
     name: "charity",
     alias: [],
+    description: 'give money to another user',
     run: async (client, message, args) => { 
    
    const {guild, member} = message

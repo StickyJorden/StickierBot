@@ -11,6 +11,7 @@ function numberWithCommas(x) {
 module.exports = {
   name: "shambles",
   alias: ["crypto"],
+  description: 'look at the market for select cryptos',
   run: async (client, message, args) => { 
 
     //if user does not specific what they need then yell at them

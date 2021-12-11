@@ -1,6 +1,7 @@
 module.exports = {
     name: "!volume",
     aliases: ["v", "set", "set-volume"],
+    description: 'adjust the current song volume',
     inVoiceChannel: true,
     run: async (client, message, args) => {
 

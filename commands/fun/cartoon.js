@@ -210,7 +210,7 @@ function build_embed(message, image_name, style)
 module.exports = {
   name: "attach",
   alias: ["cartoon"],
-  description: 'Return a recieved image back to chat',
+  description: 'return a cartoon version of an image',
   run: async (client, message, args) => { 
 
     clear_input()

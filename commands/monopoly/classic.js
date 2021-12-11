@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
   name: "classic",
   alias: [],
+  description: 'classic leaderboard',
   run: async (client, message, args) => { 
 
     const embed = new Discord.MessageEmbed()

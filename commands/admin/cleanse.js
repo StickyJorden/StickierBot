@@ -4,6 +4,7 @@ const { Permissions } = require('discord.js');
 module.exports = {
     name: "cleanse",
     alias: ["clean"],
+    description: 'remove timeout role from all users',
     run: async (client, message, args) => {
 
     //Make sure someone has been selected to be put in timeout

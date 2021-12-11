@@ -18,6 +18,7 @@ function getRandomInt(max)
 module.exports = {
     name: "quote",
     alias: [],
+    description: 'send a quote to chat',
     run: async (client, message, args) => { 
 
     //number of quotes in JSON file quotes

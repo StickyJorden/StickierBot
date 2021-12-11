@@ -20,6 +20,7 @@ function getRandomInt(max)
 module.exports = {
     name: "pet",
     alias: [],
+    description: 'pet simulator',
     run: async (client, message, args) => { 
 
     //number of quotes in JSON file quotes

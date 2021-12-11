@@ -1,6 +1,7 @@
 module.exports = {
     name: "!play",
     alias: [],
+    description: 'play a song in a voice channel',
     run: async (client, message, args) => { 
 
     if(!message.member.voice.channel) return message.channel.send({content: "You must be in a voice channel to use this commmand."})

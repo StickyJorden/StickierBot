@@ -4,6 +4,7 @@ const Discord = require('discord.js');
 module.exports = {
     name: "level",
     alias: [],
+    description: 'check your current level',
     run: async (client, message, args) => { 
    
 

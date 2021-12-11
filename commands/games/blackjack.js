@@ -10,6 +10,7 @@ function numberWithCommas(x) {
   module.exports = {
     name: "blackjack",
     alias: ["b", "jack"],
+    description: 'play blackjack',
     run: async (client, message, args) => { 
   
     //Make sure the user gives us either the table or money to gamble with
@@ -47,7 +48,7 @@ function numberWithCommas(x) {
     else
     {
 
-    let game = await blackjack(message, client, {resultEmbed: true})
+    let game = await blackjack(message, Discord)
 
     switch (game.result) {
         

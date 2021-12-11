@@ -15,6 +15,7 @@ function getRandomInt(max)
 module.exports = {
     name: "schedule",
     alias: [""],
+    description: 'to-do list',
     run: async (client, message, args) => { 
 
         const channel = client.channels.cache.get('890807425865777175');
@@ -39,8 +40,8 @@ module.exports = {
 
             const title = 'I love you very much!'
             const fieldTitle = 'Here are your daily reminders.'
-            const itemOne = `1. Please remember to take your medicine.`
-            const itemTwo = `2. Please call the therapist.`
+            const itemOne = `1. Please remember to get more medicine.`
+            const itemTwo = `2. Please call the therapist for another appointment.`
 
             let embed = new Discord.MessageEmbed()
                 .setTitle(title)

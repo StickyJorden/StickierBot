@@ -1,6 +1,7 @@
 module.exports = {
     name: "shutdown",
     alias: ["end"],
+    description: "turn off the bot",
     run: async (client, message, args) => { 
 
         if(message.author.id != 338544317427875851)

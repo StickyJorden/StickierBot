@@ -7,6 +7,7 @@ const commandFolders = fs.readdirSync('./commands');
 module.exports = {
     name: "reload",
     alias: ["r"],
+    description: 'reload a command',
     run: async (client, message, args) => { 
 
     //If the user is not the client owner reject the reload

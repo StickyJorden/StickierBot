@@ -1,7 +1,8 @@
 
 module.exports = {
-  name: "purge",
+  name: "!purge",
   alias: [],
+  description: 'delete messages in chat',
   run: async (client, message, args) => { 
 
   //functions

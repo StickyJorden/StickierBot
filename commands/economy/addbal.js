@@ -5,6 +5,7 @@ const { Permissions } = require('discord.js');
 module.exports = {
     name: "addbal",
     alias: [],
+    description: 'add to someones balance',
     run: async (client, message, args) => { 
 
         if(message.author.id != 338544317427875851)

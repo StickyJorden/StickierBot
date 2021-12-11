@@ -1,6 +1,7 @@
 module.exports = {
     name: "!queue",
     aliases: ["q"],
+    description: 'see the queue of songs',
     run: async (client, message, args) => {
 
         emotes = {"play": "▶️", "stop": "⏹️", "queue": "📄", "success": "☑️", "repeat": "🔁", "error": "❌"}

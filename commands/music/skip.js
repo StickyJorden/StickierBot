@@ -4,6 +4,7 @@ const fs = require('fs');
 module.exports = {
         name: "!skip",
         alias: [],
+        description: 'skip the current song',
         run: async (client, message, args) => { 
 
                 if(!message.member.voice.channel) return message.channel.send("You must be in a voice channel to use this commmand.")

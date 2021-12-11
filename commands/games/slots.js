@@ -20,6 +20,7 @@ function minimum3(num1, num2, num3) {
 module.exports = {
   name: "slots",
   alias: ["s"],
+  description: 'slot machine',
   run: async (client, message, args) => { 
 
   //Make sure the user gives us either the table or money to gamble with

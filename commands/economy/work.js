@@ -31,6 +31,7 @@ function numberWithCommas(x) {
 module.exports = {
     name: "work",
     alias: [],
+    description: 'work for some money',
     run: async (client, message, args) => { 
 
     if (cooldown.has(message.author.id)) {

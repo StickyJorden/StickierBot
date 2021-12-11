@@ -28,6 +28,7 @@ function getRandomInt(max)
 module.exports = {
     name: "steal",
     alias: ["take"],
+    description: 'try to steal from another user\'s balance',
     run: async (client, message, args) => { 
    
     if (cooldown.has(message.author.id)) {

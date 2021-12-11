@@ -529,6 +529,7 @@ function makeNextMessage(message, embedMessage, mapObj, mapString, playerPositio
 module.exports = {
     name: "soko",
     alias: ["sokoban"],
+    description: 'play sokoban',
     run: async (client, message, args) => { 
 
     //Create mapObj To On

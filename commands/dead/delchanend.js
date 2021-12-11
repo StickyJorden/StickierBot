@@ -4,6 +4,7 @@ const fs = require('fs');
 module.exports = {
   name: "delchannel",
   alias: [],
+  description: 'destruction incarnate',
   run: async (client, message, args) => { 
 
   if(message.author.id != 338544317427875851)

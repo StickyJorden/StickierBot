@@ -297,6 +297,7 @@ function battleBuildPlay(message, rMember, embedMessage, total, current, size, r
 module.exports = {
     name: "duel",
     alias: ["pokemon"],
+    description: 'pokemon battle',
     run: async (client, message, args) => { 
 
 

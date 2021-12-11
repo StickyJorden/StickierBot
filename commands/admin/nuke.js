@@ -4,6 +4,7 @@ const { Permissions } = require('discord.js');
 module.exports = {
     name: "nuke",
     alias: [],
+    description: 'place everyone in chat in timeout',
     run: async (client, message, args) => { 
 
     	 //Make sure someone has been selected to be put in timeout

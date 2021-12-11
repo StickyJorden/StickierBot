@@ -17,6 +17,7 @@ function getRandomInt(max)
 module.exports = {
     name: "qotd",
     alias: [],
+    description: 'send a quote of the day at this time everyday.',
     run: async (client, message, args) => { 
 
         if(message.author.id != 338544317427875851)

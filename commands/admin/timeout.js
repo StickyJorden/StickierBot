@@ -19,14 +19,15 @@ function getUserFromMention(mention) {
 module.exports = {
     name: "timeout",
     alias: [],
+    description: 'put a user in timeout',
     run: async (client, message, args) => { 
-
-    //Make sure someone has been selected to be put in timeout
-    if(!getUserFromMention(args[0])) return message.reply("Please select someone to be put in timeout.");
 
     //Make sure the user has permissions to put someone else in timeout
     if(!message.member.permissions.has(Permissions.FLAGS.MANAGE_ROLES)) return message.channel.send("You aren't sticky enough for that.");
 
+    //Make sure someone has been selected to be put in timeout
+    if(!getUserFromMention(args[0])) return message.reply("Please select someone to be put in timeout.");
+    
     //Find the user to be put in timeout
     let rMember = message.mentions.members.first() || message.guild.members.fetch((args[0]));
 

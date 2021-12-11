@@ -32,6 +32,7 @@ const alreadyClaimed = "You have already claimed your daily rewards."
 module.exports = {
     name: "daily",
     alias: ["d"],
+    description: 'recieve a daily reward',
     run: async (client, message, args) => { 
    
         const {guild, member} = message

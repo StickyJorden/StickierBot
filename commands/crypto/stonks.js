@@ -8,6 +8,7 @@ require('dotenv').config();
 module.exports = {
   name: "stonks",
   alias: ["stocks"],
+  description: 'check the stock market',
   run: async (client, message, args) => { 
 
   //if user does not specific what they need then yell at them

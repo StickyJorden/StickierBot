@@ -3,6 +3,7 @@ const Discord = require('discord.js');
 module.exports = {
   name: "action",
   alias: [],
+  description: 'action cards leaderboard',
   run: async (client, message, args) => { 
 
     const embed = new Discord.MessageEmbed()

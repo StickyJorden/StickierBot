@@ -19,6 +19,7 @@ function getUserFromMention(mention) {
 module.exports = {
     name: "rrole",
     alias: ["remove"],
+    description: 'remove a role from another user',
     run: async (client, message, args) => { 
 
     //Make sure someone has been selected to be put in timeout
