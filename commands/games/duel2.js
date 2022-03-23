@@ -276,10 +276,10 @@ function battleBuildPlay(message, embedMessage, total, current, size, round, cho
 }
 
 module.exports = {
-	data: new SlashCommandBuilder()
-		.setName('duel2')
-		.setDescription('have a pokemon duel'),
-	async execute(interaction, message, args) {
+	name: "duel2",
+    alias: [],
+    description: 'pokemon battle',
+    run: async (client, message, args) => { 
 	/*
     //Make sure user is not a bot or themsevels
     if(rMember.user.bot == true || rMember == message.author.id)

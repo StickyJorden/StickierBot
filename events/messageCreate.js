@@ -36,9 +36,14 @@ client.on('messageCreate', async (message) => {
     
     if (!command) return;
 
-    await command.run(client, message, args);
-    console.log(`${message.author.username} ran the command: ${cmd.toLowerCase()}`);
 
+	await command.run(client, message, args)
+	.then(console.log(`${message.author.username} ran the command: ${cmd.toLowerCase()}`))
+	.catch(err => { 
+						message.channel.send("The command failed please try again.")
+						console.log(`${message.author.username} failed to ran the command: ${cmd.toLowerCase()}`);
+						console.error(err.message)  
+				  });
 
 });
 

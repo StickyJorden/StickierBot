@@ -11,6 +11,6 @@ client.on("ready", async () => {
     await mongo();
     levels.run(client);
 
-    const command = client.commands.get("schedule");
-    await command.run(client);
+    //const command = client.commands.get("schedule");
+    //await command.run(client);
 });

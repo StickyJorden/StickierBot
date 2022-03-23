@@ -317,12 +317,12 @@ module.exports = {
         return
     }
 
-    //Make sure user is not a client or themsevels
+    //Make sure user is not a bot or themsevels
     if(rMember.user.client == true || rMember == message.author.id)
     {
         let embed = new Discord.MessageEmbed()
             .setTitle("Duel") 
-            .setDescription("You cannot duel yourself or a client!")
+            .setDescription("You cannot duel yourself or a bot!")
             .setColor(0x800080)
             .setTimestamp();
     
@@ -425,7 +425,7 @@ module.exports = {
     var round = 0;
     var total = 100;
     var current = 100;
-    var size = 10, line = '🟩', slider = '🔘';
+    var size = 10;
     // Call the progressbar.filledBar method, first two arguments are mandatory
     // size (length of bar) default to 40, line default to '▬' and slider default to 🔘
 
@@ -434,7 +434,6 @@ module.exports = {
     let space = `\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0\xa0`;
     var bar = progressbar.filledBar(total, current, size)
     var moveNum = setMoves()
-
 
     //Build the embed for the user who started the duel
     let embed = new Discord.MessageEmbed()
