@@ -22,6 +22,7 @@ This is a Discord Bot made in Javascript.
 -Pets\
 -Play Music\
 -Daily Messages\
--Daily Rewards
+-Daily Rewards\
+-Machine Learning
 
 I am looking forward to adding more to the bot over time thank you so much for stopping by!
