@@ -1,4 +1,5 @@
 const { Client, Collection } = require("discord.js");
+import 'reflect-metadata';
 
 const client = new Client({
     intents: 32767,

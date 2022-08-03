@@ -62,7 +62,7 @@ function numberWithCommas(x) {
         case "Tie":
 
             //Add users coin balance
-            await economy.addCoins(username, guild.id, id, (Math.floor(-1 * args[0])))
+            
             break;
 
         case "Lose":
