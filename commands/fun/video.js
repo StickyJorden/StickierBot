@@ -4,6 +4,7 @@ const fetch = require('node-fetch')
 module.exports = {
     name: "video",
     alias: [],
+    description: "play youtube videos together in a call",
     run: async (client, message, args) => { 
 
     if(!message.member.voice.channel) return message.channel.send("You must be in a voice channel to use this commmand.")

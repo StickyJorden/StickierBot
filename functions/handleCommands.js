@@ -25,7 +25,7 @@ module.exports = (bot) => {
                 bot.handleCommands.set(file.name, file)
                 commands.push(command.data.toJSON());
             }
-
+            
         }
 
         const rest = new REST({ version: '9' }).setToken(process.env.TOKEN);
@@ -46,7 +46,4 @@ module.exports = (bot) => {
             }
         })();
     }
-
-
-
 }

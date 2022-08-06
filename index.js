@@ -1,5 +1,4 @@
 const { Client, Collection } = require("discord.js");
-import 'reflect-metadata';
 
 const client = new Client({
     intents: 32767,
@@ -12,6 +11,9 @@ client.slashCommands = new Collection();
 
 // Initializing the project
 require("./handler")(client);
+
+//Connect to port 3000
+require("./dashboard/server");
 
 //Get Token
 require('dotenv').config();

@@ -4,6 +4,8 @@ const { Client } = require("discord.js");
 
 const globPromise = promisify(glob);
 
+let commands = []
+
 /**
  * @param {Client} client
  */
@@ -18,6 +20,7 @@ module.exports = async (client) => {
         if (file.name) {
             const properties = { directory, ...file };
             client.commands.set(file.name, properties);
+            commands.push(properties);
         }
     });
 
@@ -51,3 +54,5 @@ module.exports = async (client) => {
         // await client.application.commands.set(arrayOfSlashCommands);
     });
 };
+
+module.exports.commands = commands;
