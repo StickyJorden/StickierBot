@@ -23,8 +23,8 @@ $('#search + button').on('click', () => {
         isCaseSensitive: false,
         keys: [
                 { name: 'name', weight: 1 }, 
-                { name: 'directory', weight: 0.5 }
+                { name: 'category', weight: 0.5 }
             ]
-    }).search(query);
+    }).search(query).map(r = r.item);
     console.log(results);
 });

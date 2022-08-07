@@ -1,16 +1,20 @@
 include includes/mixins
+
+
+
+
 doctype  
 html(lang="en")
     head
         include includes/header.pug
 
         script(src='https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js', defer)
-        script(src='/js/commands.js', defer)
-        link(rel='stylesheet', href='/css/commands.css')
+        script(src="/static/js/commands.js", defer)
 
         script(defer).
             let commands = !{commandsString};
 
+        link(ref="stylesheet", href='/static/css/commands.css')
     body
         include includes/navbar.pug
         .container

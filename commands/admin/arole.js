@@ -1,5 +1,3 @@
-//FIX SPACE ISSUE MAYBE ARG 2 TO 3 ISSUE RUN !AROLE @USER TIMEOUT WITH NO SPACE BETWEEN USER AND TIMEOUT SEE ERROR  
-
 const Discord = require('discord.js');
 const { Permissions } = require('discord.js');
 
@@ -17,6 +15,8 @@ function getUserFromMention(mention) {
 		return mention;
 	}
 }
+
+//FIX SPACE ISSUE MAYBE ARG 2 TO 3 ISSUE RUN !AROLE @USER TIMEOUT WITH NO SPACE BETWEEN USER AND TIMEOUT SEE ERROR  
 
 module.exports = {
     name: "arole",

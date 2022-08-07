@@ -4,7 +4,7 @@ const { Client } = require("discord.js");
 
 const globPromise = promisify(glob);
 
-let commands = []
+let commands = [ ]
 
 /**
  * @param {Client} client
