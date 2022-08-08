@@ -4,28 +4,18 @@ const path = require('path')
 const express = require('express');
 const { commands }  = require('../handler/index');
 
-const app = express();
+const authRoutes = require('./routes/auth-routes');
+const rootRoutes = require('./routes/root-routes');
 
-app.use('/static',express.static(path.join(__dirname, '/assets')));
-app.locals.basedir = `${__dirname}/assets`;
+const app = express();
 
 app.set('views', __dirname + '/views');
 app.set('view engine', 'pug');
 
-app.get('/', (req,res) => res.render('index'));
+app.use('/static',express.static(path.join(__dirname, '/assets')));
+app.locals.basedir = `${__dirname}/assets`;
 
-app.get('/commands', (req,res) => res.render('commands', {
-   subtitle: "Commands",
-   categories: [ 
-    {name: 'Admin', icon:'fas fa-gavel'}, 
-    {name: 'Economy', icon:'fas fa-sack-dollar'},
-    {name: 'Games', icon: 'fas fa-gamepad'},
-    {name: 'Music', icon: 'fas fa-compact-disc'},
-    {name: 'Fun', icon: 'fas fa-masks-theater'}
-    ], 
-    commands: Array.from(commands.values()),
-    commandsString: JSON.stringify(Array.from(commands.values()))
-}));
+app.use('/', rootRoutes, authRoutes);
 
 const port = process.env.PORT || 3000;
 

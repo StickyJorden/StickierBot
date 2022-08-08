@@ -12,6 +12,7 @@
     "cataas-api": "^1.1.2",
     "chartjs-node-canvas": "^3.2.0",
     "cron": "^1.8.2",
+    "disco-oauth": "^5.1.1",
     "discord-api-types": "^0.22.0",
     "discord-blackjack": "^2.0.5",
     "discord-gamecord": "^2.0.0",

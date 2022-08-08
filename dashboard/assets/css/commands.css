@@ -3,9 +3,14 @@
 }
 
 #search + button {
-    height: 50px
+    height: 40px
 }
 
 li {
     cursor: pointer;
+}
+
+.commands li {
+    margin: 5px 0;
+    border: 1px solid lightgray !important;
 }
