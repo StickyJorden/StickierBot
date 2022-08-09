@@ -11,7 +11,7 @@ module.exports.updateGuilds = async (req, res, next) => {
             }
     }
     finally {
-            next();
+            return next();
     }
 };
 
@@ -26,12 +26,20 @@ module.exports.updateUser = async (req, res, next) => {
             }
     }
     finally {
-            next();
+            return next();
     }
 };
 
-module.exports.validateUser = async (req, res, next) => {
+module.exports.valiadateGuild = async (req, res, next) => {
+
+    res.locals.guild = res.locals.guilds.find(g => g.id === req.params.id)
     
-    next()
+    return (res.locals.guild) ? next() : res.render('errors/404');
+
+}
+
+module.exports.validateUser = async (req, res, next) => {
+
+    return (res.locals.user) ? next() : res.render('errors/401');
 
 };

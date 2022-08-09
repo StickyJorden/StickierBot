@@ -62,6 +62,10 @@
     padding-top: 25px;
 }
 
+#sidebarExtension h4 {
+    cursor: pointer;
+}
+
 #sidebarExtension.closed {
     width: 0;
     padding: 0px 0;
