@@ -11,6 +11,7 @@
     "@types/node": "^18.6.3",
     "cataas-api": "^1.1.2",
     "chartjs-node-canvas": "^3.2.0",
+    "cookies": "^0.8.0",
     "cron": "^1.8.2",
     "disco-oauth": "^5.1.1",
     "discord-api-types": "^0.22.0",

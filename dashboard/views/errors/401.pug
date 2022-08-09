@@ -1,0 +1,13 @@
+doctype  
+html(lang='en')
+    head
+        include ../includes/header.pug
+
+        link(rel='stylesheet', href='/static/css/index.css')
+    body
+        include ../includes/navbar.pug
+        .jumbotron.text-center.bg-transparent 
+            h1.display-3 401
+            p.lead You are not sticky enough to access this. Please go back.  
+                i.fa-solid.fa-circle-question.pl-1
+            a.btn.btn-dark(href='/') Return Home
