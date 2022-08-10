@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-const Pagination = require('discord-paginationembed');
+//const Pagination = require('discord-paginationembed');
 
 //Get tokens
 require('dotenv').config();
@@ -167,6 +167,7 @@ module.exports = {
          //console.log(resultJSON.logo);
          //console.log(resultJSON.urls.website[0]);
 
+         /*
         new Pagination.Embeds()
         .setArray(embeds)
         .setChannel(message.channel)
@@ -184,6 +185,7 @@ module.exports = {
         .addField('Max Supply ', `${cryptoInfo[6]}`)
         .setTimestamp()
         .build();
+        */
 
       }).catch((err) => {
   

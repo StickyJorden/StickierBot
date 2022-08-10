@@ -12,7 +12,6 @@ const authRoutes = require('./routes/auth-routes');
 const rootRoutes = require('./routes/root-routes');
 const dashboardRoutes = require('./routes/dashboard-routes');
 
-
 const app = express();
 
 app.set('views', __dirname + '/views');

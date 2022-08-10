@@ -11,9 +11,9 @@ const SpotifyPlugin = require('@distube/spotify')
 client.distube = new DisTube.default(client, {
 	searchSongs: 10,
 	searchCooldown: 30,
-	leaveOnEmpty: true,
+	leaveOnEmpty: false,
 	emptyCooldown: 0,
-	leaveOnFinish: true,
+	leaveOnFinish: false,
 	leaveOnStop: true,
 	//plugins: [new SoundCloudPlugin(), new SpotifyPlugin()],
 })
@@ -107,3 +107,25 @@ client.distube
 	.on('finishSong', queue => queue.textChannel.send('Finish song!'))
 	.on('disconnect', queue => queue.textChannel.send('Disconnected!'))
 	.on('empty', queue => queue.textChannel.send('Empty!'))
+
+
+	/*
+	module.exports = new class {
+		// Create a new DisTube
+		let client = require("../index");
+
+		client.distube = new DisTube.default(client, {
+			searchSongs: 10,
+			searchCooldown: 30,
+			leaveOnEmpty: false,
+			emptyCooldown: 0,
+			leaveOnFinish: false,
+			leaveOnStop: true,
+			//plugins: [new SoundCloudPlugin(), new SpotifyPlugin()],
+		})
+	  
+		get(options) {
+		  return this.#client.get(options.guildId)
+			?? this.#client.create(options.guildId, options);
+		}
+	  }*/

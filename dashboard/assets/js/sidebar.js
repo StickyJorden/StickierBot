@@ -1,3 +1,3 @@
 $('.hamburger').on('click', function() {
-    $('#sidebardExtension').toggleClass('closed');
-})
+    $('#sidebarExtension').toggleClass('closed');
+});

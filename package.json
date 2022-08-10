@@ -3,7 +3,8 @@
   "lockfileVersion": 1,
   "dependencies": {
     "@discordjs/builders": "^0.5.0",
-    "@discordjs/opus": "^0.5.3",
+    "@discordjs/node-pre-gyp": "^0.4.4",
+    "@discordjs/opus": "^0.8.0",
     "@discordjs/rest": "^0.1.0-canary.0",
     "@discordjs/voice": "^0.6.0",
     "@distube/soundcloud": "^0.2.2",
@@ -18,7 +19,6 @@
     "discord-api-types": "^0.22.0",
     "discord-blackjack": "^2.0.5",
     "discord-gamecord": "^2.0.0",
-    "discord-paginationembed": "^2.1.0",
     "discord.js": "^13.2.0-dev.1629331451.d6e6244",
     "discord.js-pagination": "^1.0.3",
     "distube": "^3.0.1",

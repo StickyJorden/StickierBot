@@ -1,4 +1,5 @@
 const sessions = require('./sessions');
+const client = require('../../index');
 
 module.exports.updateGuilds = async (req, res, next) => {
     try {

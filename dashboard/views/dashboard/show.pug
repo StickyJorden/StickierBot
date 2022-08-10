@@ -5,7 +5,10 @@ html(lang="en")
 
         script(src='/static/js/sidebar.js', defer)
         script(src='/static/js/guild.js', defer)
+
         link(rel='stylesheet', href='/static/css/sidebar.css')
+        link(rel='stylesheet', href='/css/music.css')
+
         
     body
         include ../includes/sidebar.pug
@@ -26,8 +29,7 @@ html(lang="en")
                 a#music.cursor-pointer #[i.fas.fa-compact-disc.pr-1] Music
 
         include ../includes/navbar.pug
-        
-        
+
         include modules/overview
         include modules/moderation
         include modules/general

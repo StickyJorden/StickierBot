@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get('/dashboard', (req,res) => res.render('dashboard/index'));
 
-router.get('/servers/:id', valiadateGuild, async (req,res) => res.render('dashboard/show', { } ));
+router.get('/servers/:id', valiadateGuild, async (req,res) => res.render('dashboard/show'));
 
 router.put('/servers/:id/:module', valiadateGuild, async (req,res) => {
 
