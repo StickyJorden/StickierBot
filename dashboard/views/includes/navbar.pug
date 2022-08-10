@@ -9,7 +9,7 @@ nav.navbar.navbar-expand-lg.navbar-dark.bg-dark
         span.pl-1 Commands
     .navbar-nav.ml-auto
       if user
-        .dropdown
+        .dropdown.mr-2
           .dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
             img.user-avatar.round(src=user.avatarUrl(32))
             span.pl-2 #{user.username}
